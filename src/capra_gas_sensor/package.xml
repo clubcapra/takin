@@ -8,10 +8,8 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>rospy</depend>
-  <depend>std_msgs</depend>
-  <depend>nav_msgs</depend>
-  <depend>message_generation</depend>
-  <depend>message_runtime</depend>
+  <depend>capra_msgs</depend>
+
   <export>
   </export>
 </package>
