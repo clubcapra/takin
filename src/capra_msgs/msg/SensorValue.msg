@@ -1,3 +1,3 @@
-int32 CO2_level
+int32 value
 geometry_msgs/PoseWithCovariance pose
 time time_ref
