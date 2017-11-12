@@ -1,0 +1,5 @@
+<launch>
+	<group ns="capra_gas_sensor">
+		<node pkg="capra_gas_sensor" name="CO2_sensor" type="CO2_broadcast.py" />
+	</group>
+</launch>

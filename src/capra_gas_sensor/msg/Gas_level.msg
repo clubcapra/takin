@@ -1,0 +1,3 @@
+int32 CO2_level
+geometry_msgs/PoseWithCovariance pose
+time time_ref
