@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>capra_gas_sensor</name>
+  <version>0.0.2</version>
+  <description>Interacts with gas sensors (e.g. CO2) and pubish their data.</description>
+  <maintainer email="thibault.guillaume.01@gmail.com">Guillaume Thibault</maintainer>
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>capra_msgs</depend>
+
+  <export>
+  </export>
+</package>
