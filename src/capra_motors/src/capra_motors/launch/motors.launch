@@ -1,11 +1,9 @@
 <launch>
 
   <!-- joystick node -->
-  <node respawn="true" pkg="joy" name="motor_joystick" type="joy_node">
-      <!-- <param name="dev" type="string" value="/dev/input/js0"/> -->
-  </node>
+  <node respawn="true" pkg="joy" name="motor_joystick" type="joy_node"></node>
 
-
+  <!-- motor node --> 
   <!--node pkg="capra_motros" name="capra_motros" type="capra_motros"/> -->
   
 
