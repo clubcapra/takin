@@ -1,0 +1,35 @@
+<launch>
+  <arg name="frame_rate" default="15" />
+  <arg name="calibrated" default="1" />
+  <arg name="white_balance_blue" default="929" />
+  <arg name="white_balance_red" default="601" />
+  <arg name="auto_white_balance" default="false" />
+  <arg name="video_mode" default="format7_mode2" />
+  <arg name="auto_exposure" default="true" />
+  <arg name="exposure" default="2.0" />
+
+  <param name="/right_camera/camera/camera_nodelet/frame_rate" value="$(arg frame_rate)"/>
+  <param name="/left_camera/camera/camera_nodelet/frame_rate" value="$(arg frame_rate)"/>
+  <param name="/right_camera/camera/camera_nodelet/white_balance_blue" value="$(arg white_balance_blue)"/>
+  <param name="/left_camera/camera/camera_nodelet/white_balance_blue" value="$(arg white_balance_blue)"/>
+  <param name="/right_camera/camera/camera_nodelet/white_balance_red" value="$(arg white_balance_red)"/>
+  <param name="/left_camera/camera/camera_nodelet/white_balance_red" value="$(arg white_balance_red)"/>
+  <param name="/right_camera/camera/camera_nodelet/auto_white_balance" value="$(arg auto_white_balance)"/>
+  <param name="/left_camera/camera/camera_nodelet/auto_white_balance" value="$(arg auto_white_balance)"/>
+  <param name="/right_camera/camera/camera_nodelet/exposure" value="$(arg exposure)"/>
+  <param name="/left_camera/camera/camera_nodelet/exposure" value="$(arg exposure)"/>
+  <param name="/right_camera/camera/camera_nodelet/auto_exposure" value="$(arg auto_exposure)"/>
+  <param name="/left_camera/camera/camera_nodelet/auto_exposure" value="$(arg auto_exposure)"/>
+  <param name="/right_camera/camera/camera_nodelet/video_mode" value="$(arg video_mode)"/>
+  <param name="/left_camera/camera/camera_nodelet/video_mode" value="$(arg video_mode)"/>
+
+  <include ns="left_camera" file="$(find pointgrey_camera_driver)/launch/camera.launch">
+    <arg name="camera_serial" value="15360549" />
+    <arg name="calibrated" value="$(arg calibrated)" />
+  </include>
+
+  <include ns="right_camera" file="$(find pointgrey_camera_driver)/launch/camera.launch">
+    <arg name="camera_serial" value="15360545" />
+    <arg name="calibrated" value="$(arg calibrated)" />
+  </include>
+</launch>
