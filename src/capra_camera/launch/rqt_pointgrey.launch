@@ -1,0 +1,5 @@
+<launch>
+  <node name="rqt_pointgrey" pkg="rqt_gui" type="rqt_gui"
+    args="--perspective-file $(find capra_camera)/perspectives/rqt_pointgrey.perspective">
+  </node>
+</launch>
