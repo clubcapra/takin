@@ -1,11 +1,15 @@
 <launch>
 
-  <!-- joystick node -->
-  <node respawn="true" pkg="joy" name="motor_joystick" type="joy_node"></node>
+ <!-- Capra Cmd_Vel Node-->
+  <node pkg="capra_motors" type="capra_motors" name="capra_cmd_vel"/> 
 
-  <!-- motor node --> 
-  <!--node pkg="capra_motros" name="capra_motros" type="capra_motros"/> -->
-  
+
+ <!-- joy node -->
+  <node respawn="true" pkg="joy"
+        type="joy_node" name="capra_motors_joy" >
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.12" />
+  </node>
 
 
 </launch>
