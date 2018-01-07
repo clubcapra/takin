@@ -1,7 +1,7 @@
 <launch>
 
  <!-- Capra Cmd_Vel Node-->
-  <node pkg="capra_motors" type="capra_motors" name="capra_cmd_vel"/> 
+  <node pkg="capra_motors" type="capra_motors" name="cmd_veli_node"/> 
 
 
  <!-- joy node -->
