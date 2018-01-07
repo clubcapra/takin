@@ -23,6 +23,10 @@
   <param name="/right_camera/camera/camera_nodelet/video_mode" value="$(arg video_mode)"/>
   <param name="/left_camera/camera/camera_nodelet/video_mode" value="$(arg video_mode)"/>
 
+  <!-- Mappings -->
+  <remap from="/left_camera/camera/image_color" to="/left_camera/image_color" />
+  <remap from="/right_camera/camera/image_color" to="/right_camera/image_color" />
+
   <include ns="left_camera" file="$(find pointgrey_camera_driver)/launch/camera.launch">
     <arg name="camera_serial" value="15360549" />
     <arg name="calibrated" value="$(arg calibrated)" />
