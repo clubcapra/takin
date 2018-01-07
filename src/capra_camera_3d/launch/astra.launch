@@ -1,0 +1,49 @@
+<launch>
+    <!-- device_id can have the following formats:
+           "#1"  : the first device found
+           "2@X" : the Xth device on USB bus 2 -->
+    <arg name="device_id" default="#1" />
+
+    <!-- Hardware depth registration -->
+    <arg name="depth_registration" default="false" />
+
+    <arg name="auto_white_balance" default="true" />
+    <arg name="auto_exposure" default="true" />
+
+    <!-- Processing -->
+    <arg name="rgb_processing"                  default="true"  />
+    <arg name="debayer_processing"              default="false" />
+    <arg name="ir_processing"                   default="false" />
+    <arg name="depth_processing"                default="true" />
+    <arg name="depth_registered_processing"     default="true" />
+    <arg name="disparity_processing"            default="false" />
+    <arg name="disparity_registered_processing" default="false" />
+    <arg name="hw_registered_processing"        default="true" if="$(arg depth_registration)" />
+    <arg name="sw_registered_processing"        default="false" if="$(arg depth_registration)" />
+    <arg name="hw_registered_processing"        default="false" unless="$(arg depth_registration)" />
+    <arg name="sw_registered_processing"        default="true" unless="$(arg depth_registration)" />
+
+    <!-- Mappings -->
+    <remap from="/camera_3d/camera/rgb/image" to="/camera_3d/image_color" />
+    <remap from="/camera_3d/camera/ir/image" to="/camera_3d/image_ir" />
+    <remap from="/camera_3d/camera/depth/image" to="/camera_3d/image_depth" />
+
+    <include ns="camera_3d" file="$(find astra_launch)/launch/astra.launch">
+        <arg name="device_id" value="$(arg device_id)" />
+
+        <arg name="depth_registration" value="$(arg depth_registration)" />
+
+        <arg name="auto_white_balance" value="$(arg auto_white_balance)" />
+        <arg name="auto_exposure" value="$(arg auto_exposure)" />
+
+        <arg name="rgb_processing" value="$(arg rgb_processing)" />
+        <arg name="debayer_processing" value="$(arg debayer_processing)" />
+        <arg name="ir_processing" value="$(arg ir_processing)" />
+        <arg name="depth_processing" value="$(arg depth_processing)" />
+        <arg name="depth_registered_processing" value="$(arg depth_registered_processing)" />
+        <arg name="disparity_processing" value="$(arg disparity_processing)" />
+        <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)" />
+        <arg name="hw_registered_processing" value="$(arg hw_registered_processing)" />
+        <arg name="sw_registered_processing" value="$(arg sw_registered_processing)" />
+    </include>
+</launch>
