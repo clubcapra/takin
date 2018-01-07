@@ -1,0 +1,7 @@
+<launch>
+    <node name="imu_calibration" pkg="capra_imu" type="imu_calibration.py" output="screen">
+        <param name="serial_port" type="string" value="/dev/ttyUSB0" />
+	    <param name="serial_baud" type="int" value="115200" />
+	    <param name="converge_rate" type="string" value="5" />
+    </node>
+</launch>
