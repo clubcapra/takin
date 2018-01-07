@@ -198,3 +198,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(capra_motors src/cmd_vel.cpp)
+target_link_libraries(capra_motors ${catkin_LIBRARIES})
+
