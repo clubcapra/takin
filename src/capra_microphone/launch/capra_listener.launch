@@ -1,0 +1,5 @@
+<launch>  
+ 
+       <node pkg="capra_microphone" name="capra_microphone" type="capra_microphone"/>  
+    
+</launch>
