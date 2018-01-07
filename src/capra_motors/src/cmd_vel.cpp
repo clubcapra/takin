@@ -23,7 +23,13 @@ private:
 };
 
 
-CapraMotorCmdVel::CapraMotorCmdVel():
+
+/*
+Create a node that use the axes 2 and 3 from the joystick to publish it in a 
+cmd_vel format.
+*/
+
+CapraMotorCmdVel::CapraMotorCmdVel(): 
   linear_(3),
   angular_(2)
 {
@@ -41,6 +47,11 @@ CapraMotorCmdVel::CapraMotorCmdVel():
 
 }
 
+
+/*
+Callback function so that everytime joy publish the node catch it and convert 
+it.
+*/
 void CapraMotorCmdVel::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist twist;
