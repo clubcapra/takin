@@ -20,6 +20,8 @@ int main(int argc, char **argv)
 
     ros::Subscriber sub = n.subscribe("/audio/audio", 10, listen);
 
+    
+
     ros::spin();
  
     return 0;
