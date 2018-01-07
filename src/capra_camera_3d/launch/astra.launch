@@ -23,6 +23,11 @@
     <arg name="hw_registered_processing"        default="false" unless="$(arg depth_registration)" />
     <arg name="sw_registered_processing"        default="true" unless="$(arg depth_registration)" />
 
+    <!-- Mappings -->
+    <remap from="/camera_3d/camera/rgb/image" to="/camera_3d/image_color" />
+    <remap from="/camera_3d/camera/ir/image" to="/camera_3d/image_ir" />
+    <remap from="/camera_3d/camera/depth/image" to="/camera_3d/image_depth" />
+
     <include ns="camera_3d" file="$(find astra_launch)/launch/astra.launch">
         <arg name="device_id" value="$(arg device_id)" />
 
@@ -41,9 +46,4 @@
         <arg name="hw_registered_processing" value="$(arg hw_registered_processing)" />
         <arg name="sw_registered_processing" value="$(arg sw_registered_processing)" />
     </include>
-
-    <!-- Mappings -->
-    <remap from="/camera_3d/camera/rgb/image" to="/camera_3d/image_color" />
-    <remap from="/camera_3d/camera/ir/image" to="/camera_3d/image_ir" />
-    <remap from="/camera_3d/camera/depth/image" to="/camera_3d/image_depth" />
 </launch>
