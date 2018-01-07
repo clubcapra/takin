@@ -43,7 +43,7 @@
     </include>
 
     <!-- Mappings -->
-    <remap from="/camera_3d/camera/rgb/image" to="/camera_3d/rgb" />
-    <remap from="/camera_3d/camera/ir/image" to="/camera_3d/ir" />
-    <remap from="/camera_3d/camera/depth/image" to="/camera_3d/depth" />
+    <remap from="/camera_3d/camera/rgb/image" to="/camera_3d/image_color" />
+    <remap from="/camera_3d/camera/ir/image" to="/camera_3d/image_ir" />
+    <remap from="/camera_3d/camera/depth/image" to="/camera_3d/image_depth" />
 </launch>
