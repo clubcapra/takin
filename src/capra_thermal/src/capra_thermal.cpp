@@ -1,4 +1,5 @@
 #include "ThermalNode.h"
+#include "sensor_msgs/Image.h"
 
 int main(int argc, char** argv)
 {
@@ -6,12 +7,12 @@ int main(int argc, char** argv)
 
     ros::NodeHandle n;
 
-    ThermalNode arrayNode;
+    typedef sensor_msgs::Image Message;
+    typedef sensor_msgs::Image::ConstPtr MessageHandle;
 
-    arrayNode._array_pub = n.advertise<std_msgs::Int32MultiArray>("capra_thermal/array", 50);
-    arrayNode._IR_pub = n.advertise<sensor_msgs::Image>("capra_thermal/IR_data", 50);
-    arrayNode._array_sub = n.subscribe("array", 50, &ThermalNode::repost_array, &arrayNode);
-    arrayNode._IR_sub = n.subscribe("IR_data", 50, &ThermalNode::repost_IR, &arrayNode);
+    capra::NodeWrapper<Message, MessageHandle> capra_thermal;
+
+    capra_thermal.subscribe_republish(n, "IR_data", "capra_thermal/IR_data");
 
     ros::spin();
 

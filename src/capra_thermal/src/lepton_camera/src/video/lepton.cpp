@@ -336,7 +336,6 @@ int main(int argc, char *argv[]) {
 			if (j < 0 && j > -2) {
 				reset += 1;
 				usleep(1000);
-
 			} else if (j < -2) {
 				j = -1;
 			}
@@ -373,7 +372,7 @@ int main(int argc, char *argv[]) {
 			break;
 			
 		case 3: // calib mode
-			IR_data = calib(IR_data, lepton_image,c_threshold);
+			IR_data = calib(IR_data, lepton_image, c_threshold);
 			break;
 			
 		case 4: // inversion mode
