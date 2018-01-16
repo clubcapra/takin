@@ -28,5 +28,5 @@ target_link_libraries(video ${catkin_LIBRARIES})
 add_executable(i2c src/I2C_Lepton/main.cpp src/I2C_Lepton/I2C_Interface.cpp)
 target_link_libraries(i2c ${catkin_LIBRARIES})
 
-add_executable(capra_thermal src/capra_thermal.cpp src/ThermalNode.cpp)
+add_executable(capra_thermal src/capra_thermal.cpp)
 target_link_libraries(capra_thermal ${catkin_LIBRARIES})

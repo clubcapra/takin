@@ -1,4 +1,4 @@
-#include "ThermalNode.h"
+#include "NodeWrapper.h"
 #include "sensor_msgs/Image.h"
 
 int main(int argc, char** argv)
