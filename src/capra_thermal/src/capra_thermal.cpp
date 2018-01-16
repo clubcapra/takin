@@ -12,6 +12,9 @@ int main(int argc, char** argv)
 
     capra::NodeWrapper<Message, MessageHandle> capra_thermal;
 
+    // "IR_data" is a topic that the underlying driver publishes to.
+    // subscribe_republish will subscribe to "IR_data".
+    // subscribe_republish will republish to "capra_thermal/IR_data".
     capra_thermal.subscribe_republish(n, "IR_data", "capra_thermal/IR_data");
 
     ros::spin();
