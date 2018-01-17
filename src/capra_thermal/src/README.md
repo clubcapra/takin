@@ -1,2 +1,2 @@
-# Lepton IR Camera ROS NODE
-Package is currently built and aims to establishing stable ROS node for Lepton IR camera.
+# Lepton IR Camera ROS NODE abstraction
+copyrights go to https://github.com/PX4/Lepton
