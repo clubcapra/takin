@@ -6,8 +6,8 @@
 
 namespace capra {
     
-    //The NodeWrapper needs info about the type of message
-    //we subscribe to
+    // The NodeWrapper needs info about the type of message
+    // we subscribe to
     template <typename MsgType>
     class NodeWrapper {
         public:
@@ -16,6 +16,7 @@ namespace capra {
             explicit NodeWrapper();
             explicit NodeWrapper(const uint32_t);
 
+            // Methods to affect state
             virtual void add_observer(
                     std::function<void (const typename MsgType::ConstPtr& msg)>);
             void clear() { _callbacks.clear(); }
@@ -23,7 +24,7 @@ namespace capra {
             void silence() { this->_mode == Mode::Silent; }
             void wake_default() { this->_mode == Mode::Default; }
 
-            //These overloads subscribe with default callback
+            // These overloads subscribe with default callback
             void subscribe_republish(ros::NodeHandle& n, const std::string&, 
                     const std::string&);
             void subscribe_republish(ros::NodeHandle& n, const std::string&,
@@ -31,7 +32,7 @@ namespace capra {
             void subscribe_republish(ros::NodeHandle&n, const std::string&, 
                     const std::string&, uint32_t, uint32_t);
 
-            //These overloads replace default callback with custom callback
+            // These overloads replace default callback with custom callback
             void subscribe_republish(ros::NodeHandle&, 
                     const std::string&, const std::string&,
                     std::function<void (const typename MsgType::ConstPtr& msg)>);
@@ -44,20 +45,22 @@ namespace capra {
                     const uint32_t, const uint32_t,
                     std::function<void (const typename MsgType::ConstPtr& msg)>);
 
+        protected:
+            // Default callback
+            virtual void forward(const typename MsgType::ConstPtr& msg);
+
         private:
-            //Observers
+            // Observers
             typedef std::function<void (const typename MsgType::ConstPtr& msg)> 
                     TCallback;
             std::forward_list<TCallback> _callbacks;
-
-            //Default callback
-            virtual void forward(const typename MsgType::ConstPtr& msg);
 
             ros::Publisher _pub;
             ros::Subscriber _sub;
             uint32_t _default_queuesize = 1000;
 
-            enum Mode {
+            enum Mode 
+            {
                 Default,
                 Custom,
                 Silent
