@@ -8,9 +8,8 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     typedef sensor_msgs::Image Message;
-    typedef sensor_msgs::Image::ConstPtr MessageHandle;
 
-    capra::NodeWrapper<Message, MessageHandle> capra_thermal;
+    capra::NodeWrapper<Message> capra_thermal;
 
     // "IR_data" is a topic that the underlying driver publishes to.
     // subscribe_republish will subscribe to "IR_data".
