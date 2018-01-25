@@ -35,8 +35,8 @@
                 "/usr/include/x86_64-linux-gnu",
                 "/usr/include",
                 "${workspaceRoot}",
-                "/opt/ros/kinetic/include",
-                "${workspaceRoot}/include",
+                "/opt/ros/kinetic/include/",
+                "${workspaceRoot}/include/",
                 "${workspaceRoot}/include/flir_lepton"
             ],
             "defines": [],
