@@ -1,0 +1,9 @@
+<launch>
+    <arg name="robot_description" value="$(find capra_navigation)/models/capra6.urdf" />
+
+  <!-- Robot and TF -->
+  <node pkg="tf" type="static_transform_publisher" name="footprint_broadcaster" args="0 0 0 0 0 0 base_footprint base_link 30" />
+  <rosparam command="load" param="robot_description" file="$(arg robot_description)" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra6_state_publisher" />
+
+</launch>

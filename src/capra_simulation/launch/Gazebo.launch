@@ -6,7 +6,6 @@
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
     <arg name="tf_topic" default="/tf" />
 
-
      <!-- GAZEBO -->
     <group>
         <remap from="/tf" to="$(arg tf_topic)" />
@@ -15,11 +14,6 @@
         </include>
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra6" />
     </group>
-
-
-    <rosparam command="load" param="robot_description" file="$(arg robot_description)" />
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra6_state_publisher" />
-
 
 
 </launch>
