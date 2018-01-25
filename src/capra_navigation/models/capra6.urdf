@@ -191,6 +191,13 @@
               <stddev>0.01</stddev>
             </noise>
           </ray>
+          <plugin name="laser" filename="libgazebo_ros_laser.so">
+            <topicName>/scan</topicName>
+            <frameName>laser</frameName>
+          </plugin>
+          <always_on>1</always_on>
+          <update_rate>5</update_rate>
+          <visualize>true</visualize>
         </sensor>
     </gazebo>
 
