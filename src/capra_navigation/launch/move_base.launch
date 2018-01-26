@@ -4,8 +4,6 @@
 
   <!-- Run the map server -->
 
-  <!--- Run AMCL -->
-  <include file="$(find amcl)/examples/amcl_omni.launch" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find capra_navigation)/contexts/$(arg context)/costmap_common_params.yaml" command="load" ns="global_costmap" />
