@@ -19,5 +19,5 @@
       <param name="map_size" value="2048" />
     </node>
 
-    <node pkg="rviz" type="rviz" name="rviz" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find capra_simulation)/rviz/base.rviz" />
 </launch>
