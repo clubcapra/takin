@@ -20,4 +20,7 @@ $ roslaunch astra_launch astrapro.launch
 
 4,you can use rviz or image_view to verify driver
 
-
+After launching the driver, subscribers should wait
+until initialization phase is over. There is a certain 
+delay to respect before subscribing, else data might 
+be missing.
