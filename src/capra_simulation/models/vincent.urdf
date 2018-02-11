@@ -2,7 +2,7 @@
     <link name="base_link">
         <visual>
             <geometry>
-                <mesh filename="package://capra_simulation/models/capra6/capra6.dae"/>
+                <mesh filename="package://capra_simulation/models/vincent/vincent.dae"/>
             </geometry>
             <origin rpy="1.57 0 1.57" xyz="0 0 0.2" />
         </visual>
@@ -12,7 +12,7 @@
         </inertial>
         <collision>
             <geometry>
-                <mesh filename="package://capra_simulation/models/capra6/capra6.dae"/>
+                <mesh filename="package://capra_simulation/models/vincent/vincent.dae"/>
             </geometry>
             <origin rpy="1.57 0 1.57" xyz="0 0 0.2" />
         </collision>
@@ -191,13 +191,6 @@
               <stddev>0.01</stddev>
             </noise>
           </ray>
-          <plugin name="laser" filename="libgazebo_ros_laser.so">
-            <topicName>/scan</topicName>
-            <frameName>laser</frameName>
-          </plugin>
-          <always_on>1</always_on>
-          <update_rate>5</update_rate>
-          <visualize>true</visualize>
         </sensor>
     </gazebo>
 
@@ -208,32 +201,6 @@
             <odometryFrame>odom</odometryFrame>
             <odometryRate>20.0</odometryRate>
             <robotBaseFrame>base_footprint</robotBaseFrame>
-        </plugin>
-
-        <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so" >
-            <bodyName>base_link</bodyName>
-            <frameId>odom</frameId>
-            <topicName>/gps/fix</topicName>
-            <updateRate>50</updateRate>
-            <offset>0 0 0</offset>
-            <gaussianNoise>0.01 0.01 0</gaussianNoise>
-            <referenceLatitude>42.6788964267</referenceLatitude>
-            <referenceLongitude>-83.19547769</referenceLongitude>
-            <referenceHeading>0</referenceHeading>
-        </plugin>
-
-        <plugin name="gazebo_ros_imu" filename="libhector_gazebo_ros_imu.so">
-            <bodyName>base_link</bodyName>
-            <frameId>odom</frameId>
-            <topicName>/imu/data</topicName>
-            <updateRate>100</updateRate>
-            <headingGaussianNoise>0.1</headingGaussianNoise>
-            <headingOffset>0</headingOffset>
-            <headingDrift>0</headingDrift>
-            <accelOffset>0 0 0</accelOffset>
-            <accelDrift>0 0 0</accelDrift>
-            <accelDriftFrequency>0 0 0 </accelDriftFrequency>
-            <accelGaussianNoise>0.05 0.05 0.05</accelGaussianNoise>
         </plugin>
 
     </gazebo>
