@@ -2,7 +2,7 @@
     <link name="base_link">
         <visual>
             <geometry>
-                <mesh filename="package://capra_simulation/models/capra6/capra6.dae"/>
+                <mesh filename="package://capra_simulation/models/vincent/vincent.dae"/>
             </geometry>
             <origin rpy="1.57 0 1.57" xyz="0 0 0.2" />
         </visual>
@@ -12,7 +12,7 @@
         </inertial>
         <collision>
             <geometry>
-                <mesh filename="package://capra_simulation/models/capra6/capra6.dae"/>
+                <mesh filename="package://capra_simulation/models/vincent/vincent.dae"/>
             </geometry>
             <origin rpy="1.57 0 1.57" xyz="0 0 0.2" />
         </collision>

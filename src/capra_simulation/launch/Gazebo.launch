@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="robot_description" value="$(find capra_navigation)/models/capra6.urdf" />
+    <arg name="robot_description" value="$(find capra_simulation)/models/vincent.urdf" />
    <!-- <arg name="world" default="$(find capra_gazebo)/worlds/shapes2.world" /> -->
     <arg name="gui" default="true" />
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />

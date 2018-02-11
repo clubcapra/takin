@@ -1,0 +1,43 @@
+<robot
+  name="robotcapra">
+  <link
+    name="robotcapra">
+    <inertial>
+      <origin
+        xyz="0.12065 2.53500269386536E-17 -0.079421"
+        rpy="0 0 0" />
+      <mass
+        value="23.124" />
+      <inertia
+        ixx="0.660305822932852"
+        ixy="-1.78746213025648E-18"
+        ixz="-1.09446874096448E-34"
+        iyy="0.303668508672395"
+        iyz="8.59690879292841E-17"
+        izz="0.815602492280466" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotcapra/meshes/robotcapra.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotcapra/meshes/robotcapra.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>
