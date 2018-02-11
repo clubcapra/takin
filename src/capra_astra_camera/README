@@ -23,4 +23,6 @@ $ roslaunch astra_launch astrapro.launch
 After launching the driver, subscribers should wait
 until initialization phase is over. There is a certain 
 delay to respect before subscribing, else data might 
-be missing.
+be missing. We might have to write a launching script
+where we loop until initialization was done correctly
+without missing data, and stop/restart until right.
