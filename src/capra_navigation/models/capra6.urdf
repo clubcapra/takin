@@ -175,7 +175,6 @@
 
             <!-- Range defines characteristics of an individual beam -->
             <range>
-
               <!-- Minimum distance of the beam -->
               <min>0.2</min>
 
