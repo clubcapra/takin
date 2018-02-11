@@ -1,0 +1,6 @@
+<launch>
+
+    <node pkg="capra_thermal" type="video" name="thermal_driver"/>
+    <node pkg="capra_thermal" type="capra_thermal" name="thermal_node"/>
+
+</launch>
