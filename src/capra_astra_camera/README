@@ -1,7 +1,8 @@
 *** must download these packages
 - sudo apt install ros-kinetic-rgbd-launch
 - sudo apt install ros-kinetic-camera-info-manager
-- possibly need to download astra_launch package
+- sudo apt-get install ros-kinetic-astra-camera
+- sudo apt-get install ros-kinetic-astra-launch
   to /opt/ros/kinetic/share/ folder
 
 1,goto catkin workshop dir and compiler astra_camera
