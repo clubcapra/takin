@@ -32,7 +32,7 @@ logFile="logsetup.log"
 echo "=============================================================
 Installing Takin...
 The process may take a while. If you're worried something
-went wrong, juste check the logs ($logFile)
+went wrong, check the logs ($logFile)
 ============================================================="
 
 TAKIN_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -55,23 +55,27 @@ echo "Installing ROS..."
 	rosdep update
 	rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
     fi
-
-
 } >> $logFile
 
 echo "Adding rules..."
 {
-	sudo cp $TAKIN_DIR/49-capra.rules /etc/udev/rules.d/
+    sudo cp $TAKIN_DIR/49-capra.rules /etc/udev/rules.d/
     sudo addgroup $USER dialout
+}
+
+echo "Adding ros environment to .bashrc"
+{
+    echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+    source ~/.bashrc
 }
 
 echo "Installing Packages..."
 {
 	# Install installation tools
-	sudo apt-get install git python-pip python-wstool
+	sudo apt-get install git python-pip python-wstool -y
 
 	# Install other ros-kinetic packages
-	sudo apt-get install ros-kinetic-pointgrey-camera-driver ros-kinetic-scan-tools ros-kinetic-navigation ros-kinetic-joy ros-kinetic-serial ros-kinetic-lms1xx ros-kinetic-robot-localization ros-kinetic-hector-mapping ros-kinetic-hector-slam ros-kinetic-hector-mapping ros-kinetic-move-base-msgs ros-kinetic-move-base ros-kinetic-amcl ros-kinetic-astra-launch ros-kinetic-astra-camera 
+	sudo apt-get install ros-kinetic-pointgrey-camera-driver ros-kinetic-scan-tools ros-kinetic-navigation ros-kinetic-joy ros-kinetic-serial ros-kinetic-lms1xx ros-kinetic-robot-localization ros-kinetic-hector-mapping ros-kinetic-hector-slam ros-kinetic-hector-mapping ros-kinetic-move-base-msgs ros-kinetic-move-base ros-kinetic-amcl ros-kinetic-astra-launch ros-kinetic-astra-camera -y
 
 	# ROS Vendor libs install
 	rm -f $TAKIN_DIR/vendor/src/.rosinstall
