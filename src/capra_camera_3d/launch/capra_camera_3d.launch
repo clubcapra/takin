@@ -1,0 +1,6 @@
+<launch>
+
+    <include file="$(find astra_launch)/launch/astra.launch" />
+    <node pkg="capra_camera_3d" type="capra_camera_3d" name="capra_camera_3d"/>
+
+</launch>
