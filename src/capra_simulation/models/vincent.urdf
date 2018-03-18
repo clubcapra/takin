@@ -105,6 +105,22 @@
         <gravity>false</gravity>
     </gazebo>
 
+    <gazebo reference="base_link">
+        <gravity>false</gravity>
+        <sensor type="imu" name="imu">
+            <imu>
+
+            </imu>
+
+        </sensor>
+            <plugin name="imu_plugin" plugin="libgazebo_ros_imu.so">
+                <alwaysOn>true</alwaysOn>
+                <bodyName>imu_robot</bodyName>
+                <topicName>imu_data</topicName>
+                <serviceName>imu_service</serviceName>
+            </plugin>
+    </gazebo>
+
     <gazebo reference="camera">
         <gravity>false</gravity>
         <sensor name="camera" type="camera" update_rate="20.0" >
