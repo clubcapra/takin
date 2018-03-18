@@ -1,0 +1,191 @@
+<robot
+  name="robotcapra">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.12065 2.53500269386536E-17 -0.079421"
+        rpy="0 0 0" />
+      <mass
+        value="23.124" />
+      <inertia
+        ixx="0.660305822932852"
+        ixy="-1.78746213025648E-18"
+        ixz="-1.09446874096448E-34"
+        iyy="0.303668508672395"
+        iyz="8.59690879292841E-17"
+        izz="0.815602492280466" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotcapra/meshes/robotcapra.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotcapra/meshes/robotcapra.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint1" type="fixed">
+      <parent link="base_link" />
+      <child link="laser" />
+      <origin xyz="0.1 0.25 0.05" rpy="0 0 1.5707963267949" />
+  </joint>
+
+  <link name="laser">
+      <inertial>
+          <mass value="0" />
+          <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+      </inertial>
+      <collision>
+          <geometry>
+              <sphere radius="0.1" />
+          </geometry>
+      </collision>
+  </link>
+
+  <joint name="joint2" type="fixed">
+      <parent link="base_link" />
+      <child link="imu_robot" />
+      <!-- IMU orientation
+         - rotation autour de x de PI (180 degres) 
+           pour inverser le sens de rotation
+         - rotation autour de z de PI/2 (90 degres) 
+           pour avoir l'est comme reference
+         - autre rotation atour de Z pour la declinaison magnetique
+           (0.25 rad) (pi /2 + 0.25 = 1.82079) -->
+      <origin xyz="0 0 0.5" rpy="3.141593 0 1.22" />
+  </joint>
+
+  <link name="imu_robot">
+      <inertial>
+          <mass value="1" />
+          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+      </inertial>
+      <collision>
+          <geometry>
+              <sphere radius="0.1" />
+          </geometry>
+      </collision>
+  </link>
+
+  <gazebo reference="base_link">
+      <gravity>True</gravity>
+  </gazebo>
+
+  <gazebo reference="laser">
+      <gravity>false</gravity>
+      <material>Gazebo/Red</material>
+
+      <sensor type="ray" name="sensor">
+
+        <!-- Position the ray sensor based on the specification. Also rotate
+              it by 90 degrees around the X-axis so that the <horizontal> rays
+              become vertical -->
+        <pose>0 0 0 0 0 0</pose>
+
+        <!-- Enable visualization to see the rays in the GUI -->
+        <visualize>true</visualize>
+
+        <!-- Set the update rate of the sensor -->
+        <update_rate>30</update_rate>
+        <ray>
+
+          <!-- The scan element contains the horizontal and vertical beams.
+                We are leaving out the vertical beams for this tutorial. -->
+          <scan>
+
+            <!-- The horizontal beams -->
+            <horizontal>
+              <!-- The velodyne has 32 beams(samples) -->
+              <samples>540</samples>
+
+              <resolution>1</resolution>
+
+              <!-- Minimum angle in radians -->
+              <min_angle>-2.3562</min_angle>
+
+              <!-- Maximum angle in radians -->
+              <max_angle>2.3562</max_angle>   
+            </horizontal>
+          </scan>
+
+          <!-- Range defines characteristics of an individual beam -->
+          <range>
+            <!-- Minimum distance of the beam -->
+            <min>0.2</min>
+
+            <!-- Maximum distance of the beam -->
+            <max>4</max>
+
+            <!-- Linear resolution of the beam -->
+            <resolution>0.1</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <plugin name="laser" filename="libgazebo_ros_laser.so">
+          <topicName>/scan</topicName>
+          <frameName>laser</frameName>
+        </plugin>
+        <always_on>1</always_on>
+        <update_rate>5</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+  </gazebo>
+
+  <gazebo reference="base_link">
+      <gravity>false</gravity>
+      <sensor type="imu" name="imu">
+          <imu>
+
+          </imu>
+      </sensor>
+  </gazebo>
+
+  <gazebo>
+      <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+          <commandTopic>/cmd_vel</commandTopic>
+          <odometryTopic>/odom</odometryTopic>
+          <odometryFrame>odom</odometryFrame>
+          <odometryRate>20.0</odometryRate>
+          <robotBaseFrame>base_footprint</robotBaseFrame>
+      </plugin>
+
+  </gazebo>
+
+<!--   <gazebo>
+     <plugin name="gazebo_ros_imu" filename="libhector_gazebo_ros_imu.so">
+          <bodyName>base_link</bodyName>
+          <frameId>odom</frameId>
+          <topicName>/imu/data</topicName>
+          <updateRate>100</updateRate>
+          <headingGaussianNoise>0.1</headingGaussianNoise>
+          <headingOffset>0</headingOffset>
+          <headingDrift>0</headingDrift>
+          <accelOffset>0 0 0</accelOffset>
+          <accelDrift>0 0 0</accelDrift>
+          <accelDriftFrequency>0 0 0 </accelDriftFrequency>
+          <accelGaussianNoise>0.05 0.05 0.05</accelGaussianNoise>
+      </plugin>
+  </gazebo> -->
+
+</robot>

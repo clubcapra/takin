@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="robot_description" value="$(find capra_simulation)/urdf/robotcapra.urdf" />
+    <arg name="gui" default="true" />
+    <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
+    <arg name="tf_topic" default="/tf" />
+
+     <!-- GAZEBO -->
+    <group>
+        <remap from="/tf" to="$(arg tf_topic)" />
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="gui" value="$(arg gui)" />
+        </include>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra6" />
+    </group>
+
+
+</launch>
