@@ -1,3 +1,0 @@
-<launch>
-	<include file="$(find astra_launch)/launch/astra.launch"/>
-</launch>
