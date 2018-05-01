@@ -188,4 +188,4 @@ gtest
 *.swp
 
 #VS Code
-.vscode
+*.vscode
