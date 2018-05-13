@@ -12,11 +12,11 @@ Must have these packages downloaded in ros environment to run capra_camera_3d ex
 
 To interface with 3D camera in ROS, use following command:
 
-   roslaunch capra_camera_3d capra_camera_3d.launch
+    roslaunch capra_camera_3d capra_camera_3d.launch
 
 After roslaunch, to check which topics are published by capra_camera_3d executable :
 
-   rostopic list
+    rostopic list
 
 Topics should be :
 
@@ -139,11 +139,11 @@ Topics should be :
 
 If rviz isn't installed, install rviz :
 
-  sudo apt-get install ros-kinetic-rviz
+    sudo apt-get install ros-kinetic-rviz
 
-Launch rviz :
+Launch rviz with command :
 
-  rviz
+    rviz
   
 In rviz graphical interface :
   
