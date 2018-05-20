@@ -1,4 +1,4 @@
-#include "generic/NodeWrapper.h"
+#include "NodeWrapper.h"
 // #include "PACKAGE/MSG TYPE HEADER"
 
 #include <chrono>
