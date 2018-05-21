@@ -15,7 +15,9 @@ private:
 
   ros::NodeHandle nh_;
 
-  int linear_, angular_;
+  int linear_x, linear_y;
+  int angular_x, angular_y;
+
   double l_scale_, a_scale_;
   ros::Publisher vel_pub_;
   ros::Subscriber joy_sub_;
@@ -30,14 +32,18 @@ cmd_vel format.
 */
 
 CapraMotorCmdVel::CapraMotorCmdVel(): 
-  linear_(3),
-  angular_(2)
+  linear_x(3),
+  linear_y(4),
+  angular_x(6),
+  angular_y(7)
 {
 
-  nh_.param("axis_linear", linear_, linear_);
-  nh_.param("axis_angular", angular_, angular_);
-  nh_.param("scale_angular", a_scale_, a_scale_);
+  nh_.param("axis_linear", linear_x, linear_x);
+  nh_.param("axis_angular", linear_y, linear_y);
+  nh_.param("axis_angular", angular_x, angular_x);
+  nh_.param("axis_angular", angular_y, angular_y);
   nh_.param("scale_linear", l_scale_, l_scale_);
+  nh_.param("scale_angular", a_scale_, a_scale_);
 
 
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_motors/cmd_vel", 1);
@@ -55,8 +61,10 @@ it.
 void CapraMotorCmdVel::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist twist;
-  twist.angular.z = a_scale_*joy->axes[angular_];
-  twist.linear.x = l_scale_*joy->axes[linear_];
+  twist.linear.y = l_scale_*joy->axes[linear_y];
+  twist.linear.x = l_scale_*joy->axes[linear_x];
+  twist.angular.y = a_scale_*joy->axes[angular_y];
+  twist.angular.x = a_scale_*joy->axes[angular_x];
   vel_pub_.publish(twist);
 }
 
