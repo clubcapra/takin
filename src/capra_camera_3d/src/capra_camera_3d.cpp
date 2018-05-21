@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     // to let 3D camera initialize all its
     // topics
     using namespace std::chrono_literals;
-    std::this_thread::sleep_for(5s);
+    std::this_thread::sleep_for(10s);
 
     /*
     typedef <MSG TYPE HERE> Message;

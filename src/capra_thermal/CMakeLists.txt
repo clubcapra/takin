@@ -18,8 +18,8 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ../../include/
   ./include/flir_lepton/
-  ./include/
 )
 
 add_executable(video src/lepton_camera/src/video/lepton.cpp src/lepton_camera/src/SPI/SPI.cpp)
