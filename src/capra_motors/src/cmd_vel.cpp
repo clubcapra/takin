@@ -27,8 +27,8 @@ private:
 
 
 /*
-Create a node that use the axes 2 and 3 from the joystick to publish it in a 
-cmd_vel format.
+Create a nodethat uses the axes 3 and 4 for the linear value and 6 and 7 for the angular value. 
+It convert it  to a cmd_vel format. 
 */
 
 CapraMotorCmdVel::CapraMotorCmdVel(): 
@@ -49,7 +49,7 @@ CapraMotorCmdVel::CapraMotorCmdVel():
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_motors/cmd_vel", 1);
 
 
-  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &CapraMotorCmdVel::joyCallback, this);
+  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 100, &CapraMotorCmdVel::joyCallback, this);
 
 }
 
