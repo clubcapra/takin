@@ -8,7 +8,7 @@ namespace capra {
     
     // The NodeWrapper needs info about the type of message
     // we subscribe to
-    template <typename MsgType>
+    template <typename TMessage>
     class NodeWrapper {
         public:
             // No implicit conversion should be necessary for 
@@ -18,7 +18,7 @@ namespace capra {
 
             // Methods to affect state
             virtual void add_observer(
-                    std::function<void (const typename MsgType::ConstPtr& msg)>);
+                    std::function<void (const typename TMessage::ConstPtr& msg)>);
             void clear() { _callbacks.clear(); }
             void wake_observers() {this->mode == Mode::Custom; }
             void silence() { this->_mode == Mode::Silent; }
@@ -35,23 +35,23 @@ namespace capra {
             // These overloads replace default callback with custom callback
             void subscribe_republish(ros::NodeHandle&, 
                     const std::string&, const std::string&,
-                    std::function<void (const typename MsgType::ConstPtr& msg)>);
+                    std::function<void (const typename TMessage::ConstPtr& msg)>);
             void subscribe_republish(ros::NodeHandle&, 
                     const std::string&, const std::string&,
                     const uint32_t,
-                    std::function<void (const typename MsgType::ConstPtr& msg)>);
+                    std::function<void (const typename TMessage::ConstPtr& msg)>);
             void subscribe_republish(ros::NodeHandle&, 
                     const std::string&, const std::string&,
                     const uint32_t, const uint32_t,
-                    std::function<void (const typename MsgType::ConstPtr& msg)>);
+                    std::function<void (const typename TMessage::ConstPtr& msg)>);
 
         protected:
             // Default callback
-            virtual void forward(const typename MsgType::ConstPtr& msg);
+            virtual void forward(const typename TMessage::ConstPtr& msg);
 
         private:
             // Observers
-            typedef std::function<void (const typename MsgType::ConstPtr& msg)> 
+            typedef std::function<void (const typename TMessage::ConstPtr& msg)> 
                     TCallback;
             std::forward_list<TCallback> _callbacks;
 
@@ -70,20 +70,20 @@ namespace capra {
     /*
      *Constructors
      */
-    template <typename MsgType>
-    NodeWrapper<MsgType>::NodeWrapper()
+    template <typename TMessage>
+    NodeWrapper<TMessage>::NodeWrapper()
     {}
 
-    template <typename MsgType>
-    NodeWrapper<MsgType>::NodeWrapper(const uint32_t queuesize) : 
+    template <typename TMessage>
+    NodeWrapper<TMessage>::NodeWrapper(const uint32_t queuesize) : 
             _default_queuesize(queuesize)
     {}
 
     /*
      *Callback republishes messages
      */
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::forward(const typename MsgType::ConstPtr& msg)
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::forward(const typename TMessage::ConstPtr& msg)
     {
         // Uncomment line below to test connection
         // ROS_INFO("Republished message");
@@ -106,9 +106,9 @@ namespace capra {
     /*
      * Replaces function currently held by this->_callback
      */
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::add_observer(
-            std::function<void (const typename MsgType::ConstPtr& msg)> callback)
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::add_observer(
+            std::function<void (const typename TMessage::ConstPtr& msg)> callback)
     {
         this->_callbacks.emplace_front(callback);
     }
@@ -124,8 +124,8 @@ namespace capra {
      * of the default queue size constructor and the single
      * queue size parameter overload.
      */
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::subscribe_republish(
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::subscribe_republish(
             ros::NodeHandle& n, 
             const std::string& lowlevel_topic, 
             const std::string& new_topic)
@@ -134,8 +134,8 @@ namespace capra {
                 _default_queuesize, _default_queuesize);
     }
 
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::subscribe_republish(
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::subscribe_republish(
             ros::NodeHandle& n, 
             const std::string& lowlevel_topic, 
             const std::string& new_topic,
@@ -145,50 +145,50 @@ namespace capra {
                 pub_queuesize, _default_queuesize);
     }
 
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::subscribe_republish(
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::subscribe_republish(
             ros::NodeHandle& n, 
             const std::string& lowlevel_topic,
             const std::string& new_topic,
             const uint32_t pub_queuesize,
             const uint32_t sub_queuesize)
     {
-        this->_pub = n.advertise<MsgType>(new_topic, pub_queuesize);
+        this->_pub = n.advertise<TMessage>(new_topic, pub_queuesize);
         this->_sub = n.subscribe(lowlevel_topic, sub_queuesize, 
-                &NodeWrapper<MsgType>::forward, this);
+                &NodeWrapper<TMessage>::forward, this);
     }
 
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::subscribe_republish(
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::subscribe_republish(
             ros::NodeHandle& n, 
             const std::string& lowlevel_topic, 
             const std::string& new_topic,
-            std::function<void (const typename MsgType::ConstPtr& msg)> callback)
+            std::function<void (const typename TMessage::ConstPtr& msg)> callback)
     {
         this->subscribe_republish(n, lowlevel_topic, new_topic, 
                 _default_queuesize, _default_queuesize, callback);
     }
 
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::subscribe_republish(
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::subscribe_republish(
             ros::NodeHandle& n, 
             const std::string& lowlevel_topic, 
             const std::string& new_topic,
             const uint32_t pub_queuesize, 
-            std::function<void (const typename MsgType::ConstPtr& msg)> callback)
+            std::function<void (const typename TMessage::ConstPtr& msg)> callback)
     {
         this->subscribe_republish(n, lowlevel_topic, new_topic, 
                 pub_queuesize, _default_queuesize, callback);
     }
 
-    template <typename MsgType>
-    void NodeWrapper<MsgType>::subscribe_republish(
+    template <typename TMessage>
+    void NodeWrapper<TMessage>::subscribe_republish(
             ros::NodeHandle& n, 
             const std::string& lowlevel_topic, 
             const std::string& new_topic,
             const uint32_t pub_queuesize, 
             const uint32_t sub_queuesize,
-            std::function<void (const typename MsgType::ConstPtr& msg)> callback)
+            std::function<void (const typename TMessage::ConstPtr& msg)> callback)
     {
         this->_callbacks.emplace_front(callback);
         this->_mode = Mode::Custom;
