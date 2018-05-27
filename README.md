@@ -2,10 +2,10 @@
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
 
 ### Imu-Takin:
-le imu n'est présentement pas fonctionnel dans Takin. Il est fonctionnel uniquement sur l'ordinateur IBEX-1/2 dans Urial sur la branch Master.
+le imu n'est présentement pas fonctionnel dans Gazebo dans Takin. Il est fonctionnel uniquement sur l'ordinateur IBEX-1/2 dans Urial sur la branch Master.
 La commande est: `~/urial/src/capra_imu roslaunch IMU.launch`
 
-Pour faire fonctionner le imu
+Toutefois, il est possible d'obtenir les données du IMU en invite de commande sur tout les ordis:
 
 D'abord installer le nécessaire
 
