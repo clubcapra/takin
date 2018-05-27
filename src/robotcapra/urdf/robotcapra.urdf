@@ -1,48 +1,137 @@
-<robot
-  name="robotcapra">
-  <link
-    name="base_link">
+<?xml version="1.0" ?>
+<robot name="capra6">
+  <joint name="capra6__JOINT_WHEEL_F_R" type="revolute">
+    <parent link="capra6__base_link"/>
+    <child link="capra6__link_0"/>
+    <origin rpy="0  0  0" xyz="0.28816  0.15376 -0.19177"/>
+    <axis xyz="-1  0  0"/>
+    <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+  </joint>
+  <joint name="capra6__JOINT_WHEEL_R_R" type="revolute">
+    <parent link="capra6__base_link"/>
+    <child link="capra6__link_0_clone_0"/>
+    <origin rpy="0  0  0" xyz="0.29719 -0.15535 -0.19177"/>
+    <axis xyz="-1  0  0"/>
+    <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+  </joint>
+  <joint name="capra6__JOINT_WHEEL_R_L" type="revolute">
+    <parent link="capra6__base_link"/>
+    <child link="capra6__link_0_clone_1"/>
+    <origin rpy="0  0  0" xyz="-0.05803 -0.15462 -0.19177"/>
+    <axis xyz="1  0  0"/>
+    <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+  </joint>
+  <joint name="capra6__JOINT_WHEEL_F_L" type="revolute">
+    <parent link="capra6__base_link"/>
+    <child link="capra6__link_0_clone"/>
+    <origin rpy="0  0  0" xyz="-0.05127  0.15058 -0.19177"/>
+    <axis xyz="1  0  0"/>
+    <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+  </joint>
+  <link name="capra6__base_link">
     <inertial>
-      <origin
-        xyz="0.12065 2.53500269386536E-17 -0.079421"
-        rpy="0 0 0" />
-      <mass
-        value="23.124" />
-      <inertia
-        ixx="0.660305822932852"
-        ixy="-1.78746213025648E-18"
-        ixz="-1.09446874096448E-34"
-        iyy="0.303668508672395"
-        iyz="8.59690879292841E-17"
-        izz="0.815602492280466" />
+      <mass value="23.124"/>
+      <origin rpy="0  0  0" xyz="0.12065  0      -0.07942"/>
+      <inertia ixx="0.660306" ixy="-1.78746e-18" ixz="0" iyy="0.303669" iyz="8.59691e-17" izz="0.815602"/>
     </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
+    <collision name="capra6__base_link_collision">
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
       <geometry>
-        <mesh
-          filename="package://robotcapra/meshes/robotcapra.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
-      <geometry>
-        <mesh
-          filename="package://robotcapra/meshes/robotcapra.STL" />
+        <mesh filename="package://robotcapra/meshes/robotcapra.stl" scale="1 1 1"/>
       </geometry>
     </collision>
+    <collision name="capra6__base_link_fixed_joint_lump__laser_collision_1">
+      <origin rpy="0      0      1.5708" xyz="0.1   0.25  0.05"/>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+    </collision>
+    <visual name="capra6__base_link_visual">
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://robotcapra/meshes/robotcapra.stl" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="capra6__link_0">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="capra6__collision">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="capra6__visual">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="capra6__link_0_clone">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="capra6__collision">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="capra6__visual">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="capra6__link_0_clone_0">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="capra6__collision">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="capra6__visual">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="capra6__link_0_clone_1">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="capra6__collision">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="capra6__visual">
+      <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </visual>
   </link>
 
-  <joint name="joint1" type="fixed">
-      <parent link="base_link" />
+<joint name="joint1" type="fixed">
+      <parent link="capra6__base_link" />
       <child link="laser" />
       <origin xyz="0.1 0.25 0.05" rpy="0 0 1.5707963267949" />
   </joint>
@@ -59,11 +148,7 @@
       </collision>
   </link>
 
-  <gazebo reference="base_link">
-      <gravity>True</gravity>
-  </gazebo>
-
-  <gazebo reference="laser">
+<gazebo reference="laser">
       <gravity>false</gravity>
       <material>Gazebo/Red</material>
 
@@ -126,7 +211,6 @@
         <visualize>true</visualize>
       </sensor>
   </gazebo>
-
   <gazebo>
       <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
           <commandTopic>/cmd_vel</commandTopic>
@@ -137,5 +221,4 @@
       </plugin>
 
   </gazebo>
-
 </robot>
