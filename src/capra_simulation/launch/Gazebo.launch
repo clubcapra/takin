@@ -1,11 +1,9 @@
 <launch>
 
-    <arg name="robot_description" value="$(find capra_simulation)/models/vincent.urdf" />
-   <!-- <arg name="world" default="$(find capra_gazebo)/worlds/shapes2.world" /> -->
+    <arg name="robot_description" value="$(find robotcapra)/urdf/robotcapra.urdf" />
     <arg name="gui" default="true" />
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
     <arg name="tf_topic" default="/tf" />
-
 
      <!-- GAZEBO -->
     <group>
@@ -15,11 +13,6 @@
         </include>
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra6" />
     </group>
-
-
-    <rosparam command="load" param="robot_description" file="$(arg robot_description)" />
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra6_state_publisher" />
-
 
 
 </launch>

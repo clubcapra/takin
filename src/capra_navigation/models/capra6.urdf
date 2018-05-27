@@ -198,7 +198,6 @@
 
             <!-- Range defines characteristics of an individual beam -->
             <range>
-
               <!-- Minimum distance of the beam -->
               <min>0.2</min>
 
@@ -231,6 +230,32 @@
             <odometryFrame>odom</odometryFrame>
             <odometryRate>20.0</odometryRate>
             <robotBaseFrame>base_footprint</robotBaseFrame>
+        </plugin>
+
+        <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so" >
+            <bodyName>base_link</bodyName>
+            <frameId>odom</frameId>
+            <topicName>/gps/fix</topicName>
+            <updateRate>50</updateRate>
+            <offset>0 0 0</offset>
+            <gaussianNoise>0.01 0.01 0</gaussianNoise>
+            <referenceLatitude>42.6788964267</referenceLatitude>
+            <referenceLongitude>-83.19547769</referenceLongitude>
+            <referenceHeading>0</referenceHeading>
+        </plugin>
+
+        <plugin name="gazebo_ros_imu" filename="libhector_gazebo_ros_imu.so">
+            <bodyName>base_link</bodyName>
+            <frameId>odom</frameId>
+            <topicName>/imu/data</topicName>
+            <updateRate>100</updateRate>
+            <headingGaussianNoise>0.1</headingGaussianNoise>
+            <headingOffset>0</headingOffset>
+            <headingDrift>0</headingDrift>
+            <accelOffset>0 0 0</accelOffset>
+            <accelDrift>0 0 0</accelDrift>
+            <accelDriftFrequency>0 0 0 </accelDriftFrequency>
+            <accelGaussianNoise>0.05 0.05 0.05</accelGaussianNoise>
         </plugin>
 
     </gazebo>
