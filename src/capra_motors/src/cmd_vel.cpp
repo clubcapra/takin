@@ -1,9 +1,8 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
-
-
-
+#include <memory>
+#include "controller_logitech.h"
 
 class CapraMotorCmdVel
 {
@@ -22,6 +21,7 @@ private:
   ros::Publisher vel_pub_;
   ros::Subscriber joy_sub_;
 
+  std::unique_ptr<abstract_controller> controller;
 };
 
 
@@ -48,6 +48,7 @@ CapraMotorCmdVel::CapraMotorCmdVel():
 
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_motors/cmd_vel", 1);
 
+  controller = std::make_unique<abstract_controller>(controller_logitech());
 
   joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 100, &CapraMotorCmdVel::joyCallback, this);
 
@@ -66,6 +67,8 @@ void CapraMotorCmdVel::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   twist.angular.y = a_scale_*joy->axes[angular_y];
   twist.angular.x = a_scale_*joy->axes[angular_x];
   vel_pub_.publish(twist);
+  controller->conversion(joy);
+  
 }
 
 

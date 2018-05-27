@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(capra_motors)
+set (CMAKE_CXX_STANDARD 14)
 
 find_package(catkin REQUIRED COMPONENTS
   joy
@@ -21,7 +22,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+#set( src/controller_logitech.cpp )
 
-add_executable(capra_motors src/cmd_vel.cpp)
+add_executable(capra_motors src/cmd_vel.cpp src/controller_logitech.cpp)
 target_link_libraries(capra_motors ${catkin_LIBRARIES})
-
