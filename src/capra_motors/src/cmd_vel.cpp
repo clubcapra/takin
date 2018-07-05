@@ -3,6 +3,10 @@
 #include <sensor_msgs/Joy.h>
 #include <memory>
 #include "controller_logitech.h"
+#include <iostream>
+
+
+
 
 class CapraMotorCmdVel
 {
@@ -62,10 +66,11 @@ it.
 void CapraMotorCmdVel::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist twist;
-  twist.linear.y = l_scale_*joy->axes[linear_y];
-  twist.linear.x = l_scale_*joy->axes[linear_x];
-  twist.angular.y = a_scale_*joy->axes[angular_y];
-  twist.angular.x = a_scale_*joy->axes[angular_x];
+
+  twist.linear.y =(l_scale_*joy->axes[linear_y] > 0)? 1 : ((l_scale_*joy->axes[linear_y] < 0) ? -1 : 0);
+  twist.linear.x =(l_scale_*joy->axes[linear_x] > 0)? 1 : ((l_scale_*joy->axes[linear_x] < 0) ? -1 : 0);
+  twist.angular.y =(a_scale_*joy->axes[angular_y] > 0)? 1 : ((a_scale_*joy->axes[angular_y] < 0) ? -1 : 0);
+  twist.angular.x =(a_scale_*joy->axes[angular_x] > 0)? 1 : ((a_scale_*joy->axes[angular_x] < 0) ? -1 : 0);
   vel_pub_.publish(twist);
   controller->conversion(joy);
   
