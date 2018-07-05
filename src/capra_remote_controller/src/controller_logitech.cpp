@@ -7,7 +7,7 @@
     /*geometry_msgs::Twist*/
     void controller_logitech::conversion(const sensor_msgs::Joy::ConstPtr& joy) {
         
-        printf("%s\n", joy->axes[3]);
+        printf("%d\n", joy->axes[3]);
     }
 
     controller_logitech::controller_logitech(){};

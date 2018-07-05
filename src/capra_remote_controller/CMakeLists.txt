@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(capra_motors)
+project(capra_remote_controller)
 set (CMAKE_CXX_STANDARD 14)
 
 find_package(catkin REQUIRED COMPONENTS
@@ -24,5 +24,5 @@ include_directories(
 
 #set( src/controller_logitech.cpp )
 
-add_executable(capra_motors src/cmd_vel.cpp src/controller_logitech.cpp)
-target_link_libraries(capra_motors ${catkin_LIBRARIES})
+add_executable(capra_remote_controller src/remote_controller.cpp src/controller_logitech.cpp)
+target_link_libraries(capra_remote_controller ${catkin_LIBRARIES})

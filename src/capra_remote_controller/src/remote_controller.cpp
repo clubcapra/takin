@@ -3,15 +3,15 @@
 #include <sensor_msgs/Joy.h>
 #include <memory>
 #include "controller_logitech.h"
-#include <iostream>
 
 
 
 
-class CapraMotorCmdVel
+
+class CapraRemoteController
 {
 public:
-  CapraMotorCmdVel();
+  CapraRemoteController();
 
 private:
   void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
@@ -35,7 +35,7 @@ Create a nodethat uses the axes 3 and 4 for the linear value and 6 and 7 for the
 It convert it  to a cmd_vel format. 
 */
 
-CapraMotorCmdVel::CapraMotorCmdVel(): 
+CapraRemoteController::CapraRemoteController(): 
   linear_x(3),
   linear_y(4),
   angular_x(6),
@@ -50,11 +50,11 @@ CapraMotorCmdVel::CapraMotorCmdVel():
   nh_.param("scale_angular", a_scale_, a_scale_);
 
 
-  vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_motors/cmd_vel", 1);
+  vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_remote_controller", 1);
 
   controller = std::make_unique<abstract_controller>(controller_logitech());
 
-  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 100, &CapraMotorCmdVel::joyCallback, this);
+  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 100, &CapraRemoteController::joyCallback, this);
 
 }
 
@@ -63,7 +63,7 @@ CapraMotorCmdVel::CapraMotorCmdVel():
 Callback function so that everytime joy publish the node catch it and convert 
 it.
 */
-void CapraMotorCmdVel::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
+void CapraRemoteController::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist twist;
 
@@ -79,9 +79,8 @@ void CapraMotorCmdVel::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "capra_motors_cmd_vel");
-  CapraMotorCmdVel capra_motors_cmd_vel;
+  ros::init(argc, argv, "capra_remote_controller");
+  CapraRemoteController capra_remote_controller;
 
   ros::spin();
-// 
 }

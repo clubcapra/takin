@@ -1,0 +1,15 @@
+<launch>
+
+ <!-- Capra Remote Controller node-->
+  <node pkg="capra_remote_controller" type="capra_remote_controller" name="remote_controller_cmd_vel_node"/> 
+
+
+ <!-- joy node -->
+  <node respawn="true" pkg="joy"
+        type="joy_node" name="capra_remote_controller_joy" >
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+
+</launch>
