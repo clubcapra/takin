@@ -1,9 +1,12 @@
 <launch>
-    <arg name="context" default="simulation" />
-  <master auto="start"/>
+  
+  <arg name="context" default="simulation" />
+
+  <!--<master auto="start"/>-->
+
   <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS" />
 
-  <arg name="odom_topic" default="/odom" />
+  <!--<arg name="odom_topic" default="/odom" />-->
 
   <!-- Run the map server -->
 

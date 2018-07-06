@@ -1,52 +1,52 @@
 <?xml version="1.0" ?>
 <robot name="capra6">
   <joint name="capra6__JOINT_WHEEL_F_R" type="revolute">
-    <parent link="capra6__base_link"/>
+    <parent link="base_link"/>
     <child link="capra6__link_0"/>
     <origin rpy="0  0  0" xyz="0.28816  0.15376 -0.19177"/>
     <axis xyz="-1  0  0"/>
     <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
   </joint>
   <joint name="capra6__JOINT_WHEEL_R_R" type="revolute">
-    <parent link="capra6__base_link"/>
+    <parent link="base_link"/>
     <child link="capra6__link_0_clone_0"/>
     <origin rpy="0  0  0" xyz="0.29719 -0.15535 -0.19177"/>
     <axis xyz="-1  0  0"/>
     <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
   </joint>
   <joint name="capra6__JOINT_WHEEL_R_L" type="revolute">
-    <parent link="capra6__base_link"/>
+    <parent link="base_link"/>
     <child link="capra6__link_0_clone_1"/>
     <origin rpy="0  0  0" xyz="-0.05803 -0.15462 -0.19177"/>
     <axis xyz="1  0  0"/>
     <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
   </joint>
   <joint name="capra6__JOINT_WHEEL_F_L" type="revolute">
-    <parent link="capra6__base_link"/>
+    <parent link="base_link"/>
     <child link="capra6__link_0_clone"/>
     <origin rpy="0  0  0" xyz="-0.05127  0.15058 -0.19177"/>
     <axis xyz="1  0  0"/>
     <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
   </joint>
-  <link name="capra6__base_link">
+  <link name="base_link">
     <inertial>
       <mass value="23.124"/>
       <origin rpy="0  0  0" xyz="0.12065  0      -0.07942"/>
       <inertia ixx="0.660306" ixy="-1.78746e-18" ixz="0" iyy="0.303669" iyz="8.59691e-17" izz="0.815602"/>
     </inertial>
-    <collision name="capra6__base_link_collision">
+    <collision name="base_link_collision">
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
       <geometry>
         <mesh filename="package://robotcapra/meshes/robotcapra.stl" scale="1 1 1"/>
       </geometry>
     </collision>
-    <collision name="capra6__base_link_fixed_joint_lump__laser_collision_1">
+    <collision name="base_link_fixed_joint_lump__laser_collision_1">
       <origin rpy="0      0      1.5708" xyz="0.1   0.25  0.05"/>
       <geometry>
         <sphere radius="0.1"/>
       </geometry>
     </collision>
-    <visual name="capra6__base_link_visual">
+    <visual name="base_link_visual">
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
       <geometry>
         <mesh filename="package://robotcapra/meshes/robotcapra.stl" scale="1 1 1"/>
@@ -131,7 +131,7 @@
   </link>
 
 <joint name="joint1" type="fixed">
-      <parent link="capra6__base_link" />
+      <parent link="base_link" />
       <child link="laser" />
       <origin xyz="0.1 0.25 0.05" rpy="0 0 1.5707963267949" />
   </joint>
