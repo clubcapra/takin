@@ -1,5 +1,8 @@
-# Takin
- Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
+# capra_camera_3d
+
+ Capra-Takin's **capra_camera_3d** package is a wrapper for
+ a FLIR lepton camera publishing point cloud data, infrared data,
+ RGB data (see **Published topics** section) to Club Capra's rescue robot.
 
 ### Usage
 
@@ -18,7 +21,7 @@ After roslaunch, to check which topics are published by capra_camera_3d executab
 
     rostopic list
 
-Topics should be :
+**Published topics**
 
     - /camera/camera_nodelet_manager/bond
     - /camera/depth/camera_info
@@ -136,6 +139,8 @@ Topics should be :
     - /camera/rgb_rectify_color/parameter_updates
     - /tf
     - /tf_static
+
+**rviz**
 
 If rviz isn't installed, install rviz :
 
