@@ -1,18 +1,42 @@
 <launch>
 
     <arg name="robot_description" value="$(find robotcapra)/urdf/robotcapra.urdf" />
+    <!-- Set gui to true to display gazebo graphical user interface -->
     <arg name="gui" default="true" />
+    <!-- Set initial position of the spawned urdf -->
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
-    <!--<arg name="tf_topic" default="/tf" /> -->
 
-     <!-- GAZEBO -->
-    <group>
-        <!--<remap from="/tf" to="$(arg tf_topic)" /> -->
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="gui" value="$(arg gui)" />
-        </include>
-        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra6" />
-    </group>
+    <!--
+    Open gazebo with default empty_world
+    TODO : Create a custom gazebo world to run simulation in
+    -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="$(arg gui)" />
+    </include>
 
+    <!--
+    Spawn the robot in the created world
+    args="-file path_to_urdf_file -urdf -x x -y y -rpy rpy -model gazebo_model_name"
+    
+    See http://gazebosim.org/tutorials?tut=ros_roslaunch#UsingroslaunchtoSpawnURDFRobots
+    for more info.
+    -->
+    <node   name="spawn_urdf"
+            pkg="gazebo_ros"
+            type="spawn_model"
+            args="-file $(arg robot_description) -urdf $(arg initial_position) -model robotcapra" />
+
+    <!--
+    Run sensor publishing nodes here if necessary
+    (sensor publishing is currently done via the
+    downloaded gazebo plugins, see urdf and sdf files
+    of the robot)
+    -->
+
+    <!-- Simulate odometry information (for navigation stack to use) -->
+    <include file="$(find capra_odometry_simulation)/launch/capra_odometry_simulation.launch">
+        <arg name="base_link" value="base_link" />
+        <arg name="reference_frame" value="world" />
+    </include>
 
 </launch>
