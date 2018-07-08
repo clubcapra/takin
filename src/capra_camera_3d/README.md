@@ -1,7 +1,7 @@
 # Takin
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
 
-# Usage
+### Usage
 
 Must have these packages downloaded in ros environment to run capra_camera_3d executable :
 
