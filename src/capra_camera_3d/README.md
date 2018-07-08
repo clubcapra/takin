@@ -4,14 +4,9 @@
  a FLIR lepton camera publishing point cloud data, infrared data,
  RGB data (see **Published topics** section) to Club Capra's rescue robot.
 
+For info on dependencies, see [capra_camera_3d dependencies](doc/dependencies.md)
+
 ### Usage
-
-Must have these packages downloaded in ros environment to run capra_camera_3d executable :
-
-    sudo apt install ros-kinetic-rgbd-launch
-    sudo apt install ros-kinetic-camera-info-manager
-    sudo apt install ros-kinetic-astra-camera
-    sudo apt install ros-kinetic-astra-launch
 
 To interface with 3D camera in ROS, use following command:
 
