@@ -4,7 +4,9 @@
  a FLIR lepton camera publishing point cloud data, infrared data,
  RGB data (see **Published topics** section) to Club Capra's rescue robot.
 
-For info on dependencies, see [capra_camera_3d dependencies](doc/dependencies.md)
+### Dependencies
+
+See [capra_camera_3d dependencies](doc/dependencies.md)
 
 ### Usage
 
