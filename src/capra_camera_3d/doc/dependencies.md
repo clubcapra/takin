@@ -1,4 +1,8 @@
-###Dependencies
+## Dependencies
+
+#### External dependencies
+
+**Note** : Considering ROS Kinetic Full Desktop installed
 
 Must have these packages downloaded in ros environment to run capra_camera_3d executable :
 
