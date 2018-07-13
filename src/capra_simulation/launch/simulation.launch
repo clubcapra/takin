@@ -11,8 +11,12 @@ how to setup navigation stack
             name="map_broadcaster"
             args="0 0 0 0 0 0 odom map 50" />
 
+    <!-- Set the path for all the simulation worlds, so Gazebo will find them -->
+    <env name="GAZEBO_RESOURCE_PATH" value="$(find capra_simulation)/worlds"/>
+
+    <!-- launch Gazebo and set the world we want to open -->
     <include file="$(find capra_simulation)/launch/Gazebo.launch">
-        <!-- include args here if necessary -->
+       <arg name="world_name" value="random.world" />
     </include>
 
     <include file="$(find capra_navigation)/launch/capra_configuration.launch">

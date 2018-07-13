@@ -5,13 +5,16 @@
     <arg name="gui" default="true" />
     <!-- Set initial position of the spawned urdf -->
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
-
+    <!-- Set the world to load -->
+    <arg name="world_name" default="man1.world"/>
+    
     <!--
     Open gazebo with default empty_world
     TODO : Create a custom gazebo world to run simulation in
     -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <include file="$(find capra_simulation)/launch/world.launch">
         <arg name="gui" value="$(arg gui)" />
+        <arg name="world_name" value="$(arg world_name)" />
     </include>
 
     <!--
