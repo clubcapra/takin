@@ -1,0 +1,234 @@
+<?xml version="1.0" ?>
+<robot name="capra_robot">
+
+    <!-- Joint that fixes base_link to the laser tower -->
+    <joint name="capra_robot__laser_tower" type="fixed">
+
+        <!-- Parent = base_link -->
+        <parent link="base_link"/>
+        <!-- Child = laser -->
+        <child link="capra_robot__laser"/>
+        <!-- The base link is 0.2 units long, so we center
+        the joint so that its edge ends at 0.2 units 
+        and it is 0.16 units tall -->
+        <origin rpy="0  0  0" xyz="0.195  0     0.16"/>
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+    
+    <!-- Joint around which the front-right wheel revolves around  -->
+    <joint name="capra_robot__right_wheel_front_hinge" type="revolute">
+
+        <!-- Parent = base_link -->
+        <parent link="base_link"/>
+        <!-- Child = front-right wheel -->
+        <child link="capra_robot__right_wheel_front"/>
+        <!-- The center of the wheel must be at 0.15, since its radius
+        is 0.5 an must be within 0.1 to 0.2 of the base link's length 
+        and is almost 0.1 units high from its center -->
+        <origin rpy="0      1.5707  1.5707" xyz="0.14999 -0.17     0.09999"/>
+        <!-- Revolution occurs around Y axis -->
+        <axis xyz="0  1  0"/>
+
+        <!-- Auto-generated -->
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- Joint around which the front-left wheel revolves around  -->
+    <joint name="capra_robot__left_wheel_front_hinge" type="revolute">
+
+        <!-- See capra_robot__right_wheel_front documentation  
+        to understand following tags -->
+        <parent link="base_link"/>
+        <child link="capra_robot__left_wheel_front"/>
+        <origin rpy="0      1.5707  1.5707" xyz="0.15  0.17  0.1"/>
+        <axis xyz="0  1  0"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- Joint around which the back-right wheel revolves around  -->
+    <joint name="capra_robot__right_wheel_back_hinge" type="revolute">
+
+        <!-- See capra_robot__right_wheel_front documentation  
+        to understand following tags -->
+        <parent link="base_link"/>
+        <child link="capra_robot__right_wheel_back"/>
+        <origin rpy="0      1.5707  1.5707" xyz="-0.15    -0.17     0.09999"/>
+        <axis xyz="0  1  0"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- Joint around which the back-left wheel revolves around  -->
+    <joint name="capra_robot__left_wheel_back_hinge" type="revolute">
+
+        <!-- See capra_robot__right_wheel_front documentation
+        to understand following tags -->
+        <parent link="base_link"/>
+        <child link="capra_robot__left_wheel_back"/>
+        <origin rpy="0      1.5707  1.5707" xyz="-0.14999  0.17     0.1"/>
+        <axis xyz="0  1  0"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- The robot's base link  -->
+    <link name="base_link">
+
+        <inertial>
+            <mass value="0"/>
+            <origin rpy="0  0  0" xyz="0   0   0.1"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0   0   0.1"/>
+            <geometry>
+                <box size=".4 .2 .1"/>
+            </geometry>
+        </collision>
+
+        <collision name="capra_robot__caster_collision">
+            <origin rpy="0  0  0" xyz="-0.15  0    0.05"/>
+            <geometry>
+                <sphere radius=".05"/>
+            </geometry>
+        </collision>
+
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0   0   0.1"/>
+            <geometry>
+                <box size=".4 .2 .1"/>
+            </geometry>
+        </visual>
+
+        <visual name="capra_robot__caster_visual">
+            <origin rpy="0  0  0" xyz="-0.15  0    0.05"/>
+            <geometry>
+                <sphere radius=".05"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <!-- The tower onto which the laser is located -->
+    <link name="capra_robot__laser">
+        
+        <inertial>
+            <mass value="0"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .1"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The back-right wheel -->
+    <link name="capra_robot__right_wheel_back">
+      
+        <inertial>
+            <mass value="0"/>
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The back-left wheel -->
+    <link name="capra_robot__left_wheel_back">
+      
+        <inertial>
+            <mass value="0"/>
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The front-left wheel -->
+    <link name="capra_robot__left_wheel_front">
+      
+        <inertial>
+            <mass value="0"/>
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The front-right wheel -->
+    <link name="capra_robot__right_wheel_front">
+      
+        <inertial>
+            <mass value="0"/>
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+      
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </collision>
+      
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+</robot>
