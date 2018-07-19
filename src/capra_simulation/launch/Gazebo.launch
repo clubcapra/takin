@@ -1,6 +1,10 @@
 <launch>
 
-    <arg name="robot_description" value="$(find robotcapra)/urdf/robotcapra.urdf" />
+    <!-- Arg value can be overridden if specified as command-line argument
+    or if this launch file is included in another launch file -->
+    <arg    name="robot_description"
+            default="$(find robotcapra)/urdf/robotcapra.urdf" />
+
     <!-- Set gui to true to display gazebo graphical user interface -->
     <arg name="gui" default="true" />
     <!-- Set initial position of the spawned urdf -->
@@ -27,7 +31,7 @@
     <node   name="spawn_urdf"
             pkg="gazebo_ros"
             type="spawn_model"
-            args="-file $(arg robot_description) -urdf $(arg initial_position) -model robotcapra" />
+            args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra_robot" />
 
     <!--
     Run sensor publishing nodes here if necessary

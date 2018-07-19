@@ -1,6 +1,9 @@
 <launch>
    
-    <arg name="robot_description" value="$(find robotcapra)/urdf/robotcapra.urdf" />
+    <!-- Arg value can be overridden if specified as command-line argument
+    or if this launch file is included in another launch file -->
+    <arg    name="robot_description"
+            default="$(find robotcapra)/urdf/robotcapra.urdf" />
 
     <!--
     Load urdf as the "robot_description" parameter's value on ROS Parameter Server
