@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 
     // Declare Odometry publishing msg types
     ros::Publisher capra_odometry_publisher = 
-        node.advertise<nav_msgs::Odometry>("capra/simulation/odom", 1000);
+        node.advertise<nav_msgs::Odometry>(/*capra/simulation*/"/odom", 1000);
 
     // Create a persistent proxy from which to call gazebo's GetLinkState service
     ros::ServiceClient proxy = 
