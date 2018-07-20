@@ -2,7 +2,6 @@
 See http://wiki.ros.org/navigation/Tutorials/RobotSetup for info on
 how to setup navigation stack
 -->
-
 <launch>
 
     <!-- Publish static transform from map to robot's odom (zero transformation) -->
