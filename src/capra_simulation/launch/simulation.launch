@@ -15,17 +15,17 @@ how to setup navigation stack
 
     <!-- launch Gazebo and set the world we want to open -->
     <include file="$(find capra_simulation)/launch/Gazebo.launch">
-       <arg name="world_name" value="random.world" />
-       <arg     name="robot_description"
-                value="$(find capra_simulation)/models/urdf/capra_robot.urdf" />
+       <!-- <arg name="world_name" value="random.world" /> -->
+       <!-- <arg     name="robot_description"
+                value="$(find capra_simulation)/models/urdf/capra_robot.urdf" /> -->
     </include>
 
     <include file="$(find capra_navigation)/launch/capra_configuration.launch">
-        <arg    name="robot_description"
-                value="$(find capra_simulation)/models/urdf/capra_robot.urdf" />
+        <!-- <arg    name="robot_description"
+                value="$(find capra_simulation)/models/urdf/capra_robot.urdf" /> -->
     </include>
 
-    <include file="$(find capra_navigation)/launch/move_base.launch">
+    <include file="$(find capra_navigation)/launch/navigation_stack.launch">
         <!-- include args here if necessary -->
     </include>
 

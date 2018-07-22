@@ -3,14 +3,14 @@
     <!-- Arg value can be overridden if specified as command-line argument
     or if this launch file is included in another launch file -->
     <arg    name="robot_description"
-            default="$(find robotcapra)/urdf/robotcapra.urdf" />
+            default="$(find capra_simulation)/models/urdf/robotcapra.urdf" />
 
     <!-- Set gui to true to display gazebo graphical user interface -->
     <arg name="gui" default="true" />
     <!-- Set initial position of the spawned urdf -->
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
     <!-- Set the world to load -->
-    <arg name="world_name" default="man1.world"/>
+    <arg name="world_name" default="random.world"/>
     
     <!--
     Open gazebo with default empty_world
