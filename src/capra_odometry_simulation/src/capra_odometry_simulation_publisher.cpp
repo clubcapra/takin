@@ -57,7 +57,7 @@ int main(int argc, char** argv)
     gazebo_msgs::GetLinkStateResponse link_state_response;
 
     // Set service call rate
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(5);
 
     // Blocks until service is available
     proxy.waitForExistence();
