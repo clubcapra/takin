@@ -13,7 +13,8 @@ $ *roslaunch capra_simulation simulation.launch*
 
 By default, the launch files will open the Gazebo GUI and rviz GUI.
 
-For more information on how to use rviz, see http://wiki.ros.org/rviz/UserGuide
+For more information on how to use rviz, see http://wiki.ros.org/rviz/UserGuide<br />
+For an overview of how to extend this package, see [capra_simulation overview](doc/overview.md)
 
 ### Published Topics
 
