@@ -100,26 +100,12 @@
             </geometry>
         </collision>
 
-        <!-- <collision name="capra_robot__caster_collision">
-            <origin rpy="0  0  0" xyz="-0.15  0    0.05"/>
-            <geometry>
-                <sphere radius=".05"/>
-            </geometry>
-        </collision> -->
-
         <visual name="capra_robot__visual">
             <origin rpy="0  0  0" xyz="0   0   0.1"/>
             <geometry>
                 <box size=".4 .2 .1"/>
             </geometry>
         </visual>
-
-        <!-- <visual name="capra_robot__caster_visual">
-            <origin rpy="0  0  0" xyz="-0.15  0    0.05"/>
-            <geometry>
-                <sphere radius=".05"/>
-            </geometry>
-        </visual> -->
 
     </link>
 
@@ -298,7 +284,7 @@
     </link>
 
     <gazebo reference="capra_robot__laser">
-        <gravity>false</gravity>
+        <!-- <gravity>false</gravity> -->
         <material>Gazebo/Red</material>
 
         <sensor type="ray" name="sensor">
@@ -331,7 +317,7 @@
                         <min_angle>-2.3562</min_angle>
 
                         <!-- Maximum angle in radians -->
-                        <max_angle>2.3562</max_angle>   
+                        <max_angle>2.3562</max_angle>
                     </horizontal>
                 </scan>
 
