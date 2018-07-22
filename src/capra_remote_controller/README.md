@@ -1,7 +1,7 @@
 # capra_remote_controller
 
  Capra-Takin's **capra_remote_controller** package is a wrapper for
- a Logitech remote controller publishing joy msg, capra_remote_controller 
+ a Logitech remote controller publishing the topics joy and capra_remote_controller 
  (see **Published topics** section) to Club Capra's rescue robot.
 
 ### Dependencies
