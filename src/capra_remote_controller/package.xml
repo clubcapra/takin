@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>capra_motors</name>
+  <name>capra_remote_controller</name>
   <version>0.0.1</version>
-  <description>The Capra motors package</description>
+  <description>The Capra remote controller package</description>
 
   <maintainer email="ludovicvanasse@gmail.com">ludovic</maintainer>
   <author email="ludovicvanasse@gmail.com">ludovic</author>
   <license>GPLv3</license>
-
 
   <buildtool_depend>catkin</buildtool_depend>
  
@@ -25,6 +24,5 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-
 
 </package>
