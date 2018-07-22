@@ -11,15 +11,15 @@
         </include>
 
         <!-- A testing model that includes the Velodyne sensor model -->
-        <model name="capra_robot">
+        <!-- <model name="capra_robot">
             <include>
                 <uri>model://capra_robot</uri>
-            </include>
+            </include> -->
 
             <!-- Attach the plugin to this model -->
-            <plugin name="capra_robot_controller" filename="libcapra_robot_controller.so"/>
+            <!-- <plugin name="capra_robot_controller" filename="libcapra_robot_controller.so"/>
             
-        </model>
+        </model> -->
 
     </world>
 </sdf>
