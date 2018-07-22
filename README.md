@@ -3,28 +3,28 @@
 
 ## Getting Started
 
-This section will help you get ready working on the Takin project. It is suppose to give you the information to understand ROS and how our projet is build. There's also the documentation to launch and use the project.
+This section will help you get ready to work on the Takin project. It is supposed to give you the necessary information to understand ROS and how our projet is built. There's also documentation on how to launch and use our project.
 
 ### ROS Documentation \ Tutorial
 
-The ROS documentation can be find at : [http://wiki.ros.org/](http://wiki.ros.org/)
+The ROS documentation can be found at : [http://wiki.ros.org/](http://wiki.ros.org/)
 
-It is a requirement to understand the basic of ROS and Linux to be proficient in the project. 
+It is a requirement to understand the basics of ROS and Linux to be proficient in the project. 
 
-As a initiation task, we ask you to complete the series of tutorials offerd by ROS : [http://wiki.ros.org/ROS/Tutorials](http://wiki.ros.org/ROS/Tutorials) It is generally advise to stop at the roswtf tutorial.
+As an initiation task, we ask that you complete the series of tutorials offered by ROS : [http://wiki.ros.org/ROS/Tutorials](http://wiki.ros.org/ROS/Tutorials). It is generally advised to stop at the roswtf tutorial.
 
-It is also recommanded to be familiar with Gazebo which is the simulation suite used in our project. The tutorial for Gazebo can be find at : [http://gazebosim.org/](http://gazebosim.org/). If you're assigned to a projet that contain simulation, it would be highly advise to at some Gazebo tutorial such as : 
+It is also recommended to be familiar with Gazebo which is the simulation suite used in our project. The tutorial for Gazebo can be found at : [http://gazebosim.org/](http://gazebosim.org/). If you're assigned to a task related to simulation, it would be highly advised to look at some Gazebo tutorials such as : 
     * Overview and Installation
     * Understanding the GUI
     * Model Editor
     * Building Editor
-Those can be find the beginner section of the guided tutorial. 
+Those can be found in the beginner section of the guided tutorial. 
 
 ### Building our project
 
-To build our projet you need to execute the `catkin_make` command which will compile and regenerate the necessary binding to use ROS with our nodes.
+To build our projet, you need to execute the `catkin_make` command which will compile and regenerate the necessary bindings to use ROS with our nodes.
 
-Here's are the steps to build our project : 
+Here are the steps to build our project : 
 
 1. `git https://github.com/clubcapra/Takin.git Takin`
 2. `cd Takin`
@@ -36,17 +36,17 @@ You need to select the right setup file for your shell when sourcing.
 
 ### Launch : Simulation
 
-Before launching the projet you must have build (this imply that you have also source your environment) it once before. After this you can use ROS to launch the simulation. 
+Before launching the projet you must have built it (this implies that you have also sourced your environment) once before. After this, you can use ROS to launch the simulation. 
 
 `roslaunch capra_simulation simulation.launch`
 
 ### Launch : Real case
 
-Right now the robot is not build, so there's no way to launch the robot in a real world scenario. 
+Right now the robot is not built, so there's no way to launch the robot in a real world scenario. 
 
 ## Contibution 
 
-If you have to contribute to the projet you can fork it and then do a PR to add or modify code. 
+If you want to contribute to the projet, you can fork it and then PR to add or modify code. 
 
 ### Standard
 
