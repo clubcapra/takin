@@ -15,6 +15,9 @@ http://gazebosim.org
 - ros-kinetic-gazebo-ros
 - ros-kinetic-tf
 - ros-kinetic-rviz
+- ros-kinetic-gmapping
+- ros-kinetic-map-server
+- ros-kinetic-amcl
 
 ### Internal Dependencies
 
