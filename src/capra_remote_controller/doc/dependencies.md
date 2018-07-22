@@ -6,4 +6,4 @@
 
     sudo apt install ros-kinetic-joy
     sudo apt install ros-kinetic-joystick-drivers
-    sudo apt install 
+    
