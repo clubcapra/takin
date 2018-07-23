@@ -10,7 +10,9 @@
     <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS" />
 
     <!-- Run the map server if map is available -->
-    <!-- <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:=scan">
+
+    
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:=/scan">
     </node> -->
 
     <!-- Run AMCL for localization -->
