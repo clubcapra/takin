@@ -42,7 +42,7 @@
         <collision name="base_link_collision">
             <origin rpy="1.5708  0      0" xyz="0  0  0"/>
             <geometry>
-                <mesh filename="package://robotcapra/meshes/robotcapra.stl" scale="1 1 1"/>
+                <mesh filename="package://capra_simulation/models/meshes/robotcapra.stl" scale="1 1 1"/>
             </geometry>
         </collision>
         <collision name="base_link_fixed_joint_lump__laser_collision_1">
@@ -54,7 +54,7 @@
         <visual name="base_link_visual">
             <origin rpy="1.5708  0      0" xyz="0  0  0"/>
             <geometry>
-                <mesh filename="package://robotcapra/meshes/robotcapra.stl" scale="1 1 1"/>
+                <mesh filename="package://capra_simulation/models/meshes/robotcapra.stl" scale="1 1 1"/>
             </geometry>
         </visual>
     </link>

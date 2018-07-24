@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Takin
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
 
@@ -167,4 +168,6 @@ In rviz graphical interface :
     
   ![Alt text](doc/rviz_topics.png "Popup Window")
 >>>>>>> master
+=======
+>>>>>>> 881a879f6bc634718129174bfadb5f2d731d3506
 

@@ -1,0 +1,34 @@
+<launch>
+  
+    <!--
+    The "context" argument holds the directory's name
+    in which all the costmaps and common parameters are,
+    along with the local_planner params.
+    -->
+    <arg name="context" default="simulation" />
+
+    <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS" />
+
+    <!-- Run the map server if map is available -->
+
+    
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:=/scan">
+    </node> -->
+
+    <!-- Run AMCL for localization -->
+    <!-- <include file="$(find amcl)/examples/amcl_omni.launch" /> -->
+
+    <!--
+    Load costmaps, common params and local planner params on parameter server
+    for move_base node to use for path planning
+    See http://wiki.ros.org/move_base for more info.
+    -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/base_local_planner_params.yaml" command="load" />
+    </node>
+
+</launch>
