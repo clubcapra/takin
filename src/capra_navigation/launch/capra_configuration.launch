@@ -5,6 +5,14 @@
     <arg    name="robot_description"
             default="$(find robotcapra)/urdf/robotcapra.urdf" />
 
+    <!-- Set the rate of tf transforms publishing for joint_states -->
+    <arg    name="joint_state_publish_rate"
+            default="5" />
+
+    <!-- Set the rate of tf transforms publishing for robot_state (links) -->
+    <arg    name="robot_state_publish_rate"
+            default="5" />
+
     <!--
     Load urdf as the "robot_description" parameter's value on ROS Parameter Server
     See http://wiki.ros.org/roslaunch/XML/rosparam for more info.
@@ -24,7 +32,9 @@
     See http://wiki.ros.org/joint_state_publisher for more info
     and additional parameters.
     -->
-    <node pkg="joint_state_publisher" type="joint_state_publisher" name="capra_joint_state_publisher" />
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="capra_joint_state_publisher" >
+        <param name="rate" value="$(arg joint_state_publish_rate)" />
+    </node>
 
     <!--
     The robot_state_publisher node publishes the robot's tf info
@@ -38,6 +48,9 @@
     See http://wiki.ros.org/robot_state_publisher for more info
     and additional parameters.
     -->
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra_robot_state_publisher" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra_robot_state_publisher" >
+        <!-- <param name="publish_frequency" value="$(arg robot_state_publish_rate)" /> -->
+        <param name="ignore_timestamp" value="true" />
+    </node>
 
 </launch>

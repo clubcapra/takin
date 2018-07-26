@@ -9,11 +9,14 @@
 
     <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS" />
 
-    <!-- Run the map server if map is available -->
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+        <param name="map_frame" value="/map" />
+        <param name="odom_frame" value="/odom" />
+        <param name="base_frame" value="/base_link" />
+    </node>
 
-    
-    <!-- <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:=/scan">
-    </node> -->
+    <!-- If not using the SLAM, run a map_server and AMCL -->
+    <!-- Run the map server if map is available -->
 
     <!-- Run AMCL for localization -->
     <!-- <include file="$(find amcl)/examples/amcl_omni.launch" /> -->
