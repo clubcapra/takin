@@ -4,11 +4,23 @@ how to setup navigation stack
 -->
 <launch>
 
-    <!-- Publish static transform from map to robot's odom (zero transformation) -->
-    <node   pkg="tf"
+    <!-- 
+        Publish static transform from map to robot's odom (zero transformation) 
+        
+        args : x y z roll pitch yaw frame_id child_frame_id period_in_ms
+
+        Note*** : 
+        If gmapping's slam_gapping node is running, the map to odom
+        transform will be publishes by slam_gmapping, so the
+        static_transform_publisher should not run, as it will create
+        a lot of contention and accumulative synchronization errors
+        will occur because of differing tf publishing frequency and
+        remapping of map to odom transforms.
+    -->
+    <!-- <node   pkg="tf"
             type="static_transform_publisher"
             name="map_broadcaster"
-            args="0 0 0 0 0 0 odom map 50" />
+            args="0 0 0 0 0 0 map odom 200" /> -->
 
     <!-- Set the path for all the simulation worlds, so Gazebo will find them -->
     <env name="GAZEBO_RESOURCE_PATH" value="$(find capra_simulation)/worlds" />
