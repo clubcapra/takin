@@ -16,4 +16,16 @@ For an overview of how to extend this package, see [capra_navigation overview](d
 
 ### Published topics
 
+None.
+
 ### Subscribed topics
+
+None.
+
+### For topics published or subscribed to internally
+
+See http://wiki.ros.org/joint_state_publisher
+
+See http://wiki.ros.org/robot_state_publisher
+
+See 
