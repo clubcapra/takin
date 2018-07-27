@@ -16,6 +16,7 @@ http://gazebosim.org
 - ros-kinetic-tf
 - ros-kinetic-rviz
 - ros-kinetic-gmapping
+- ros-kinetic-move-base
 - ros-kinetic-map-server
 - ros-kinetic-amcl
 
