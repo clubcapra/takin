@@ -49,9 +49,9 @@
         of published transforms) in transform data. Localization and
         mapping will be significantly hindered.  
     -->
-    <!-- <include file="$(find capra_odometry_simulation)/launch/capra_odometry_simulation.launch">
+    <include file="$(find capra_simulation)/launch/capra_odometry_simulation.launch">
         <arg name="base_link" value="base_link" />
         <arg name="reference_frame" value="world" />
-    </include> -->
+    </include>
 
 </launch>
