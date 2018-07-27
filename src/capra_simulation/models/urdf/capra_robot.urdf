@@ -18,6 +18,7 @@
         <limit effort="0" lower="0" upper="0" velocity="0"/>
     </joint>
     
+    <!-- Joint that fixes the actual laser to the laser tower -->
     <joint name="capra_robot__laser_joint" type="fixed">
 
         <parent link="capra_robot__laser_tower" />
@@ -300,6 +301,7 @@
 
             <!-- Set the update rate of the sensor -->
             <update_rate>30</update_rate>
+
             <ray>
 
                 <!-- The scan element contains the horizontal and vertical beams.
@@ -327,7 +329,7 @@
                     <min>0.2</min>
 
                     <!-- Maximum distance of the beam -->
-                    <max>4</max>
+                    <max>8</max>
 
                     <!-- Linear resolution of the beam -->
                     <resolution>1</resolution>
@@ -346,7 +348,6 @@
             </plugin>
 
             <always_on>1</always_on>
-            <update_rate>5</update_rate>
             <visualize>true</visualize>
         </sensor>
     </gazebo>
@@ -356,7 +357,7 @@
             <commandTopic>/cmd_vel</commandTopic>
             <odometryTopic>/odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
-            <odometryRate>20.0</odometryRate>
+            <odometryRate>5.0</odometryRate>
             <robotBaseFrame>base_link</robotBaseFrame>
         </plugin>
     </gazebo>
