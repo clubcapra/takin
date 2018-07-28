@@ -13,8 +13,7 @@
     <arg name="world_name" default="random.world"/>
     
     <!--
-    Open gazebo with default empty_world
-    TODO : Create a custom gazebo world to run simulation in
+    Open gazebo with passed in world_name arg
     -->
     <include file="$(find capra_simulation)/launch/world.launch">
         <arg name="gui" value="$(arg gui)" />
