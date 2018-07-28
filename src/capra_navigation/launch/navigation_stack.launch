@@ -41,6 +41,7 @@
         <rosparam file="$(find capra_navigation)/contexts/$(arg context)/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find capra_navigation)/contexts/$(arg context)/global_costmap_params.yaml" command="load" />
         <rosparam file="$(find capra_navigation)/contexts/$(arg context)/base_local_planner_params.yaml" command="load" />
+        <param name="controller_frequency" value="2.0" />
     </node>
 
 </launch>
