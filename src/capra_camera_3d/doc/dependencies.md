@@ -1,5 +1,9 @@
 ## Dependencies
 
+Packages are downloadable from Ubuntu 16.04's advanced packaging tool :
+
+  *sudo apt install ros-kinetic-\<hyphen-separated-package-name\>*
+
 #### External dependencies
 
 **Note** : Considering ROS Kinetic Full Desktop installed

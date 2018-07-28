@@ -8,6 +8,11 @@
 
 See [capra_camera_3d dependencies](doc/dependencies.md)
 
+### Overview
+
+For an overview on how to extend/modify this package,
+see [capra_camera_3d overview](doc/overview.md)
+
 ### Usage
 
 To interface with 3D camera in ROS, use following command:
