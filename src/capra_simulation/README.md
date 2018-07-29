@@ -17,6 +17,8 @@ $ *roslaunch capra_simulation simulation.launch*
 
 By default, the launch files will open the Gazebo GUI and rviz GUI.
 
+Use rviz to send 2d Nav Goals to the robot and watch automatic navigation unfold.
+
 For more information on how to use rviz, see http://wiki.ros.org/rviz/UserGuide<br />
 
 ### Published/Subscribed Topics
