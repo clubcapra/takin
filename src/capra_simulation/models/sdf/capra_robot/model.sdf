@@ -116,7 +116,7 @@
             </sensor>
         </link>
 
-        <joint type="fixed" name="laser_tower">
+        <joint type="fixed" name="sensor_tower">
             <pose>0 0 0 0 0 0</pose>
 
             <child>laser</child>

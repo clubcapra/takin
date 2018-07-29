@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <robot name="capra_robot">
 
-    <!-- Joint that fixes base_link to the laser tower -->
-    <joint name="capra_robot__laser_tower_joint" type="fixed">
+    <!-- Joint that fixes base_link to the sensor tower -->
+    <joint name="capra_robot__sensor_tower_joint" type="fixed">
 
         <!-- Parent = base_link -->
         <parent link="base_link"/>
-        <!-- Child = laser -->
-        <child link="capra_robot__laser_tower"/>
+        <!-- Child = sensor tower -->
+        <child link="capra_robot__sensor_tower"/>
         <!-- The base link is 0.2 units long, so we center
         the joint so that its edge ends at 0.2 units 
         and it is 0.22 units tall -->
@@ -18,11 +18,24 @@
         <limit effort="0" lower="0" upper="0" velocity="0"/>
     </joint>
     
-    <!-- Joint that fixes the actual laser to the laser tower -->
+    <!-- Joint that fixes the actual laser to the sensor tower -->
     <joint name="capra_robot__laser_joint" type="fixed">
 
-        <parent link="capra_robot__laser_tower" />
+        <parent link="capra_robot__sensor_tower" />
         <child link="capra_robot__laser" />
+
+        <origin rpy="0  0  0" xyz="0  0  0.05" />
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- Joint that fixes the camera to the sensor tower -->
+    <joint name="capra_robot__camera_joint" type="fixed">
+
+        <parent link="capra_robot__sensor_tower" />
+        <child link="capra_robot__camera" />
 
         <origin rpy="0  0  0" xyz="0  0  0.05" />
 
@@ -111,7 +124,7 @@
     </link>
 
     <!-- The tower onto which the laser is located -->
-    <link name="capra_robot__laser_tower">
+    <link name="capra_robot__sensor_tower">
         
         <inertial>
             <mass value="1.0"/>
@@ -135,6 +148,28 @@
     </link>
 
     <link name="capra_robot__laser">
+        <inertial>
+            <mass value=".1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .01"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .01"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="capra_robot__camera">
         <inertial>
             <mass value=".1"/>
             <origin rpy="0  0  0" xyz="0  0  0"/>
@@ -360,6 +395,48 @@
             <odometryRate>5.0</odometryRate>
             <robotBaseFrame>base_link</robotBaseFrame>
         </plugin>
+    </gazebo>
+
+    <!-- camera -->
+    <gazebo reference="capra_robot__camera">
+
+        <sensor type="camera" name="capra_camera">
+            <update_rate>30.0</update_rate>
+            <camera name="head">
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <width>800</width>
+                    <height>800</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <!-- Noise is sampled independently per pixel on each frame.
+                        That pixel's noise value is added to each of its color
+                        channels, which at that point lie in the range [0,1]. -->
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>10.0</updateRate>
+                <cameraName>capra_camera</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>camera_link</frameName>
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>0.0</distortionK1>
+                <distortionK2>0.0</distortionK2>
+                <distortionK3>0.0</distortionK3>
+                <distortionT1>0.0</distortionT1>
+                <distortionT2>0.0</distortionT2>
+            </plugin>
+        </sensor>
     </gazebo>
 
 </robot>
