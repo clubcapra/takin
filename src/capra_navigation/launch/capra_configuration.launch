@@ -49,8 +49,8 @@
     and additional parameters.
     -->
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra_robot_state_publisher" >
-        <!-- <param name="publish_frequency" value="$(arg robot_state_publish_rate)" /> -->
-        <param name="ignore_timestamp" value="true" />
+        <param name="publish_frequency" value="$(arg robot_state_publish_rate)" />
+        <!-- <param name="ignore_timestamp" value="true" /> -->
     </node>
 
 </launch>

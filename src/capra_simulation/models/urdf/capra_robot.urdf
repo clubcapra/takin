@@ -458,7 +458,7 @@
             <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
                 <alwaysOn>true</alwaysOn>
                 <updateRate>10.0</updateRate>
-                <cameraName>capra_camera</cameraName>
+                <cameraName>capra/camera</cameraName>
                 <imageTopicName>image_raw</imageTopicName>
                 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
                 <frameName>camera_link</frameName>
