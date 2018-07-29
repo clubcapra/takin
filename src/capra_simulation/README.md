@@ -25,6 +25,20 @@ For more information on how to use rviz, see http://wiki.ros.org/rviz/UserGuide<
 
 ![Alt text](doc/rosgraph.png "ROS graph of nodes and topics")
 
+
+
 ### tf
 
 ![Alt text](doc/tf_tree.png "tf tree simulation configuration")
+
+
+
+### rviz
+
+![Alt text](doc/rviz.png "rviz configuration")
+
+
+
+### Gazebo
+
+![Alt text](doc/gazebo.jpg "gazebo simulation world")
