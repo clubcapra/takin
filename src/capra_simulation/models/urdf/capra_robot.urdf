@@ -1,6 +1,22 @@
 <?xml version="1.0" ?>
 <robot name="capra_robot">
 
+    <!-- Joint that fixes IMU centered on top of base link -->
+    <joint name="capra_robot__IMU_joint" type="fixed">
+        <!-- Parent = base_link -->
+        <parent link="base_link" />
+        <!-- Child = the IMU -->
+        <child link="capra_robot__IMU" />
+        
+        <!-- Center in on the base link and on top
+        knowing base_link is .1 in z axis geometry -->
+        <origin rpy="0  0  0" xyz="0  0  0.135" />
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1" />
+        <limit effort="0" lower="0" upper="0" velocity="0" />
+    </joint>
+
     <!-- Joint that fixes base_link to the sensor tower -->
     <joint name="capra_robot__sensor_tower_joint" type="fixed">
 
@@ -123,6 +139,30 @@
 
     </link>
 
+    <!-- IMU link -->
+    <link name="capra_robot__IMU">
+
+        <inertial>
+            <mass value=".1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .05"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .05"/>
+            </geometry>
+        </visual>
+    </link>
+
     <!-- The tower onto which the laser is located -->
     <link name="capra_robot__sensor_tower">
         
@@ -147,6 +187,7 @@
         </visual>
     </link>
 
+    <!-- laser link -->
     <link name="capra_robot__laser">
         <inertial>
             <mass value=".1"/>
@@ -169,6 +210,7 @@
         </visual>
     </link>
 
+    <!-- camera link -->
     <link name="capra_robot__camera">
         <inertial>
             <mass value=".1"/>
@@ -319,6 +361,7 @@
         </visual>
     </link>
 
+    <!-- laser -->
     <gazebo reference="capra_robot__laser">
         <!-- <gravity>false</gravity> -->
         <material>Gazebo/Red</material>
@@ -386,17 +429,7 @@
             <visualize>true</visualize>
         </sensor>
     </gazebo>
-
-    <gazebo>
-        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-            <commandTopic>/cmd_vel</commandTopic>
-            <odometryTopic>/odom</odometryTopic>
-            <odometryFrame>odom</odometryFrame>
-            <odometryRate>5.0</odometryRate>
-            <robotBaseFrame>base_link</robotBaseFrame>
-        </plugin>
-    </gazebo>
-
+    
     <!-- camera -->
     <gazebo reference="capra_robot__camera">
 
@@ -438,5 +471,42 @@
             </plugin>
         </sensor>
     </gazebo>
+
+    <!-- IMU -->
+    <gazebo reference="capra_robot__IMU">
+        <!-- IMU needs gravity -->
+        <gravity>true</gravity>
+
+        <sensor name="imu_sensor" type="imu">
+
+            <always_on>true</always_on>
+            <update_rate>20</update_rate>
+            <visualize>true</visualize>
+            <topic>capra/simulation/IMU</topic>
+            <pose>0 0 0 0 0 0</pose>
+
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>capra/simulation/IMU</topicName>
+                <bodyName>imu_link</bodyName>
+                <updateRateHZ>5.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>capra_robot__IMU</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!-- Controller -->
+    <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>/cmd_vel</commandTopic>
+            <odometryTopic>/odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>5.0</odometryRate>
+            <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>
+    </gazebo>
+
 
 </robot>
