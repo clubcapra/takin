@@ -2,8 +2,6 @@
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
 #include <memory>
-#include "controller_logitech.h"
-
 
 
 
@@ -24,14 +22,13 @@ private:
   double l_scale_, a_scale_;
   ros::Publisher vel_pub_;
   ros::Subscriber joy_sub_;
-
-  std::unique_ptr<abstract_controller> controller;
+  
 };
 
 
 
 /*
-Create a nodethat uses the axes 3 and 4 for the linear value and 6 and 7 for the angular value. 
+Create a node that uses the axes 3 and 4 for the linear value and 6 and 7 for the angular value. 
 It convert it  to a cmd_vel format. 
 */
 
@@ -52,8 +49,6 @@ CapraRemoteController::CapraRemoteController():
 
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_remote_controller", 1);
 
-  controller = std::make_unique<abstract_controller>(controller_logitech());
-
   joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 100, &CapraRemoteController::joyCallback, this);
 
 }
@@ -72,7 +67,6 @@ void CapraRemoteController::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   twist.angular.y =(a_scale_*joy->axes[angular_y] > 0)? 1 : ((a_scale_*joy->axes[angular_y] < 0) ? -1 : 0);
   twist.angular.x =(a_scale_*joy->axes[angular_x] > 0)? 1 : ((a_scale_*joy->axes[angular_x] < 0) ? -1 : 0);
   vel_pub_.publish(twist);
-  controller->conversion(joy);
   
 }
 
