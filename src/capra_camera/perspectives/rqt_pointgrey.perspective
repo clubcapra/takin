@@ -37,7 +37,7 @@
                 },
                 "mouse_pub_topic": {
                   "type": "repr",
-                  "repr": "u'/right_camera/camera/image_color_mouse_right'"
+                  "repr": "u'/right_camera/image_color_mouse_right'"
                 },
                 "num_gridlines": {
                   "type": "repr",
@@ -57,7 +57,7 @@
                 },
                 "topic": {
                   "type": "repr",
-                  "repr": "u'/right_camera/camera/image_color'"
+                  "repr": "u'/right_camera/image_color'"
                 },
                 "publish_click_location": {
                   "type": "repr",
@@ -96,7 +96,7 @@
                 },
                 "mouse_pub_topic": {
                   "type": "repr",
-                  "repr": "u'/left_camera/camera/image_color_mouse_left'"
+                  "repr": "u'/left_camera/image_color_mouse_left'"
                 },
                 "num_gridlines": {
                   "type": "repr",
@@ -116,7 +116,7 @@
                 },
                 "topic": {
                   "type": "repr",
-                  "repr": "u'/left_camera/camera/image_color'"
+                  "repr": "u'/left_camera/image_color'"
                 },
                 "publish_click_location": {
                   "type": "repr",
