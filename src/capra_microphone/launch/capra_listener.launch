@@ -1,0 +1,13 @@
+<launch>  
+ 
+
+  <!-- arecord -l will show available input devices, use the car number as
+      the first number and the subdevice number as the second in a string
+      like hw:1,0 -->
+ <include file ="$(find capra_microphone)audio_common/audio_capture/launch/capture.launch" />
+
+<node pkg="capra_microphone" name="capra_microphone" type="capra_microphone"/> 
+
+
+
+</launch>
