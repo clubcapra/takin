@@ -1,0 +1,3 @@
+[submodule "src/capra_motors/can-talon-srx-ros"]
+	path = src/capra_motors/can-talon-srx-ros
+	url = https://github.com/LunarKnights/can-talon-srx-ros.git
