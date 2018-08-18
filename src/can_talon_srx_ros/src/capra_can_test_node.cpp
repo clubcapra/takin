@@ -29,7 +29,8 @@ int main(int argc, char **argv)
     // testTalon2.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
     // testTalon3.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
     testTalon4.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
-    testTalon4.GetEncPosition(0);
+    int pos = 0;
+    testTalon4.GetEncPosition(pos);
     
     int count = 0;
     while (running)
