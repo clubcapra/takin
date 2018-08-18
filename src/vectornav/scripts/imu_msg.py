@@ -44,7 +44,7 @@ if __name__ == '__main__':
   
   global pub
   
-  pub = rospy.Publisher("vectornav/imu/orient", Imu)
+  pub = rospy.Publisher("vectornav/imu/orient", Imu, queue_size=10)
 
   rospy.Subscriber("vectornav/ins", ins, subCB)
   rospy.spin()

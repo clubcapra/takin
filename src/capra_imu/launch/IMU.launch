@@ -1,15 +1,16 @@
 <launch>
-   <!-- <include file="$(find capra_imu)/launch/VN300.launch" />
+
+    <include file="$(find capra_imu)/launch/VN300.launch" />
     <arg name="rviz" default="1" />
 
     <node pkg="vectornav" name="imu_msg" type="imu_msg.py" clear_params="true">
-        <remap from="vectornav/imu/orient" to="/imu/raw" />
+        <remap from="vectornav/imu/orient" to="capra/imu/raw" />
     </node>
 
-    <node pkg="capra_imu" type="imu_change_frame.py" name="imu_change_frame" output="screen" clear_params="true"/>
+    <!-- <node pkg="capra_imu" type="imu_change_frame.py" name="imu_change_frame" output="screen" clear_params="true"/>
     <node name="imu_zero" pkg="capra_imu" type="imu_zero.py" output="screen" />
-    <node pkg="capra_imu" type="imu_display.py" name="imu_display" output="screen" clear_params="true"/>-->
+    <node pkg="capra_imu" type="imu_display.py" name="imu_display" output="screen" clear_params="true"/>
 
-    <node name="listener" pkg="capra_imu" type="listener.py" />
+    <node name="listener" pkg="capra_imu" type="listener.py" /> -->
 
 </launch>
