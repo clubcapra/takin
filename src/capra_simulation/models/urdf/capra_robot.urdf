@@ -1,0 +1,512 @@
+<?xml version="1.0" ?>
+<robot name="capra_robot">
+
+    <!-- Joint that fixes IMU centered on top of base link -->
+    <joint name="capra_robot__IMU_joint" type="fixed">
+        <!-- Parent = base_link -->
+        <parent link="base_link" />
+        <!-- Child = the IMU -->
+        <child link="capra_robot__IMU" />
+        
+        <!-- Center in on the base link and on top
+        knowing base_link is .1 in z axis geometry -->
+        <origin rpy="0  0  0" xyz="0  0  0.135" />
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1" />
+        <limit effort="0" lower="0" upper="0" velocity="0" />
+    </joint>
+
+    <!-- Joint that fixes base_link to the sensor tower -->
+    <joint name="capra_robot__sensor_tower_joint" type="fixed">
+
+        <!-- Parent = base_link -->
+        <parent link="base_link"/>
+        <!-- Child = sensor tower -->
+        <child link="capra_robot__sensor_tower"/>
+        <!-- The base link is 0.2 units long, so we center
+        the joint so that its edge ends at 0.2 units 
+        and it is 0.22 units tall -->
+        <origin rpy="0  0  0" xyz="0.195  0     0.16"/>
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+    
+    <!-- Joint that fixes the actual laser to the sensor tower -->
+    <joint name="capra_robot__laser_joint" type="fixed">
+
+        <parent link="capra_robot__sensor_tower" />
+        <child link="capra_robot__laser" />
+
+        <origin rpy="0  0  0" xyz="0  0  0.05" />
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- Joint that fixes the camera to the sensor tower -->
+    <joint name="capra_robot__camera_joint" type="fixed">
+
+        <parent link="capra_robot__sensor_tower" />
+        <child link="capra_robot__camera" />
+
+        <origin rpy="0  0  0" xyz="0  0  0.05" />
+
+        <!-- Auto-generated -->
+        <axis xyz="0  0  1"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/>
+    </joint>
+
+    <!-- Joint around which the front-right wheel revolves around  -->
+    <joint name="capra_robot__right_wheel_front_hinge" type="revolute">
+
+        <!-- Parent = base_link -->
+        <parent link="base_link"/>
+        <!-- Child = front-right wheel -->
+        <child link="capra_robot__right_wheel_front"/>
+        <!-- The center of the wheel must be at 0.15, since its radius
+        is 0.5 an must be within 0.1 to 0.2 of the base link's length 
+        and is almost 0.1 units high from its center -->
+        <origin rpy="0      1.5707  1.5707" xyz="0.14999 -0.17     0.09999"/>
+        <!-- Revolution occurs around Y axis -->
+        <axis xyz="0  0  1"/>
+
+        <!-- Auto-generated -->
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <!-- Joint around which the front-left wheel revolves around  -->
+    <joint name="capra_robot__left_wheel_front_hinge" type="revolute">
+
+        <!-- See capra_robot__right_wheel_front documentation  
+        to understand following tags -->
+        <parent link="base_link"/>
+        <child link="capra_robot__left_wheel_front"/>
+        <origin rpy="0      1.5707  1.5707" xyz="0.15  0.17  0.1"/>
+        <axis xyz="0  0  1"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <!-- Joint around which the back-right wheel revolves around  -->
+    <joint name="capra_robot__right_wheel_back_hinge" type="revolute">
+
+        <!-- See capra_robot__right_wheel_front documentation  
+        to understand following tags -->
+        <parent link="base_link"/>
+        <child link="capra_robot__right_wheel_back"/>
+        <origin rpy="0      1.5707  1.5707" xyz="-0.15    -0.17     0.09999"/>
+        <axis xyz="0  0  1"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <!-- Joint around which the back-left wheel revolves around  -->
+    <joint name="capra_robot__left_wheel_back_hinge" type="revolute">
+
+        <!-- See capra_robot__right_wheel_front documentation
+        to understand following tags -->
+        <parent link="base_link"/>
+        <child link="capra_robot__left_wheel_back"/>
+        <origin rpy="0      1.5707  1.5707" xyz="-0.14999  0.17     0.1"/>
+        <axis xyz="0  0  1"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <!-- The robot's base link  -->
+    <link name="base_link">
+
+        <inertial>
+            <mass value="23.124"/>
+            <origin rpy="0  0  0" xyz="0   0   0.1"/>
+            <inertia ixx="0.660306" ixy="-1.78746e-18" ixz="0" iyy="0.303669" iyz="8.59691e-17" izz="0.815602"/>
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0   0   0.1"/>
+            <geometry>
+                <box size=".4 .2 .1"/>
+            </geometry>
+        </collision>
+
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0   0   0.1"/>
+            <geometry>
+                <box size=".4 .2 .1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <!-- IMU link -->
+    <link name="capra_robot__IMU">
+
+        <inertial>
+            <mass value=".1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .05"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The tower onto which the laser is located -->
+    <link name="capra_robot__sensor_tower">
+        
+        <inertial>
+            <mass value="1.0"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .1"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- laser link -->
+    <link name="capra_robot__laser">
+        <inertial>
+            <mass value=".1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .01"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .01"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- camera link -->
+    <link name="capra_robot__camera">
+        <inertial>
+            <mass value=".1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .01"/>
+            </geometry>
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <geometry>
+                <box size=".01 .01 .01"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The back-right wheel -->
+    <link name="capra_robot__right_wheel_back">
+      
+        <inertial>
+            <mass value="1.0"/>
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+            <!-- <surface>
+                <friction>
+                    <ode>
+                        <mu>0.01</mu>
+                        <mu2>0.01</mu2>
+                    </ode>
+                </friction>
+            </surface> -->
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The back-left wheel -->
+    <link name="capra_robot__left_wheel_back">
+      
+        <inertial>
+            <mass value="1.0"/>
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+            <!-- <surface>
+                <friction>
+                    <ode>
+                        <mu>0.01</mu>
+                        <mu2>0.01</mu2>
+                    </ode>
+                </friction>
+            </surface> -->
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The front-left wheel -->
+    <link name="capra_robot__left_wheel_front">
+      
+        <inertial>
+            <mass value="1.0"/>
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+            <!-- <surface>
+                <friction>
+                    <ode>
+                        <mu>0.01</mu>
+                        <mu2>0.01</mu2>
+                    </ode>
+                </friction>
+            </surface> -->
+        </collision>
+        
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0   -0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- The front-right wheel -->
+    <link name="capra_robot__right_wheel_front">
+      
+        <inertial>
+            <mass value="1.0"/>
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+      
+        <collision name="capra_robot__collision">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+            <!-- <surface>
+                <friction>
+                    <ode>
+                        <mu>0.01</mu>
+                        <mu2>0.01</mu2>
+                    </ode>
+                </friction>
+            </surface> -->
+        </collision>
+      
+        <visual name="capra_robot__visual">
+            <origin rpy="0  0  0" xyz="0    0    0.03"/>
+            <geometry>
+                <cylinder length=".05" radius=".1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- laser -->
+    <gazebo reference="capra_robot__laser">
+        <!-- <gravity>false</gravity> -->
+        <material>Gazebo/Red</material>
+
+        <sensor type="ray" name="sensor">
+
+            <!-- Position the ray sensor based on the specification. Also rotate
+                    it by 90 degrees around the X-axis so that the <horizontal> rays
+                    become vertical -->
+            <!-- Note => The pose doesn't seem to work -->
+            <pose>0 0 0 0 0 0</pose>
+
+            <!-- Enable visualization to see the rays in the GUI -->
+            <visualize>true</visualize>
+
+            <!-- Set the update rate of the sensor -->
+            <update_rate>30</update_rate>
+
+            <ray>
+
+                <!-- The scan element contains the horizontal and vertical beams.
+                    We are leaving out the vertical beams for this tutorial. -->
+                <scan>
+
+                    <!-- The horizontal beams -->
+                    <horizontal>
+                        <!-- The velodyne has 32 beams(samples) -->
+                        <samples>540</samples>
+
+                        <resolution>1</resolution>
+
+                        <!-- Minimum angle in radians -->
+                        <min_angle>-2.3562</min_angle>
+
+                        <!-- Maximum angle in radians -->
+                        <max_angle>2.3562</max_angle>
+                    </horizontal>
+                </scan>
+
+                <!-- Range defines characteristics of an individual beam -->
+                <range>
+                    <!-- Minimum distance of the beam -->
+                    <min>0.2</min>
+
+                    <!-- Maximum distance of the beam -->
+                    <max>8</max>
+
+                    <!-- Linear resolution of the beam -->
+                    <resolution>1</resolution>
+                </range>
+
+                <!-- <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise> -->
+            </ray>
+
+            <plugin name="laser" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>capra_robot__laser</frameName>
+            </plugin>
+
+            <always_on>1</always_on>
+            <visualize>true</visualize>
+        </sensor>
+    </gazebo>
+    
+    <!-- camera -->
+    <gazebo reference="capra_robot__camera">
+
+        <sensor type="camera" name="capra_camera">
+            <update_rate>30.0</update_rate>
+            <camera name="head">
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <width>800</width>
+                    <height>800</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <!-- Noise is sampled independently per pixel on each frame.
+                        That pixel's noise value is added to each of its color
+                        channels, which at that point lie in the range [0,1]. -->
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>10.0</updateRate>
+                <cameraName>capra/simulation/camera</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>camera_link</frameName>
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>0.0</distortionK1>
+                <distortionK2>0.0</distortionK2>
+                <distortionK3>0.0</distortionK3>
+                <distortionT1>0.0</distortionT1>
+                <distortionT2>0.0</distortionT2>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!-- IMU -->
+    <gazebo reference="capra_robot__IMU">
+        <!-- IMU needs gravity -->
+        <gravity>true</gravity>
+
+        <sensor name="imu_sensor" type="imu">
+
+            <always_on>true</always_on>
+            <update_rate>20</update_rate>
+            <visualize>true</visualize>
+            <topic>capra/simulation/IMU</topic>
+            <pose>0 0 0 0 0 0</pose>
+
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>capra/simulation/IMU</topicName>
+                <bodyName>imu_link</bodyName>
+                <updateRateHZ>5.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>capra_robot__IMU</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!-- Controller -->
+    <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>/cmd_vel</commandTopic>
+            <odometryTopic>/odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>5.0</odometryRate>
+            <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>
+    </gazebo>
+
+
+</robot>

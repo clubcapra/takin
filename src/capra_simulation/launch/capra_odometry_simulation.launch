@@ -1,0 +1,12 @@
+<launch>
+
+    <arg name="base_link" default="base_link" />
+    <arg name="reference_frame" default="world" />
+
+    <!-- args="base_link_name reference_frame_relative_to_base_link" -->
+    <node   pkg="capra_simulation"
+            name="capra_odometry_simulation_publisher"
+            type="capra_odometry_simulation_publisher"
+            args="$(arg base_link) $(arg reference_frame)"/>
+
+</launch>

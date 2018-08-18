@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+    <world name="default">
+      <include>
+        <uri>model://sun</uri>
+      </include>
+      <model name="man5">
+      <pose>0 0 0  1.5708 0 0</pose>
+      <static>true</static>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://man5.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='base_link_collision'>
+          <geometry>
+            <mesh>
+              <uri>file://man5.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    </world>
+  </sdf>

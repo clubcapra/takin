@@ -1,18 +1,56 @@
 <launch>
 
-    <arg name="robot_description" value="$(find robotcapra)/urdf/robotcapra.urdf" />
+    <!-- Arg value can be overridden if specified as command-line argument
+    or if this launch file is included in another launch file -->
+    <arg    name="robot_description"
+            default="$(find capra_simulation)/models/urdf/robotcapra.urdf" />
+
+    <!-- Set gui to true to display gazebo graphical user interface -->
     <arg name="gui" default="true" />
+    <!-- Set initial position of the spawned urdf -->
     <arg name="initial_position" default="-x 0 -y 0 -rpy 0" />
-    <arg name="tf_topic" default="/tf" />
+    <!-- Set the world to load -->
+    <arg name="world_name" default="random.world"/>
+    
+    <!--
+    Open gazebo with passed in world_name arg
+    -->
+    <include file="$(find capra_simulation)/launch/world.launch">
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="world_name" value="$(arg world_name)" />
+    </include>
 
-     <!-- GAZEBO -->
-    <group>
-        <remap from="/tf" to="$(arg tf_topic)" />
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="gui" value="$(arg gui)" />
-        </include>
-        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra6" />
-    </group>
+    <!--
+    Spawn the robot in the created world
+    args="-file path_to_urdf_file -urdf -x x -y y -rpy rpy -model gazebo_model_name"
+    
+    See http://gazebosim.org/tutorials?tut=ros_roslaunch#UsingroslaunchtoSpawnURDFRobots
+    for more info.
+    -->
+    <node   name="spawn_urdf"
+            pkg="gazebo_ros"
+            type="spawn_model"
+            args="-file $(arg robot_description) -urdf $(arg initial_position) -model capra_robot" />
 
+    <!--
+    Run sensor publishing nodes here if necessary
+    (sensor publishing is currently done via the
+    downloaded gazebo plugins, see urdf and sdf files
+    of the robot)
+    -->
+
+    <!-- Simulate odometry information (for navigation stack to use) 
+
+        Controller gazebo plugins for gazebo-ros interfacing might 
+        publish odometry if included in URDF. In that case, we must
+        not publish odometry, or else tf transforms contention will
+        accumulate errors (synchronization and chronological coherence
+        of published transforms) in transform data. Localization and
+        mapping will be significantly hindered.  
+    -->
+    <!-- <include file="$(find capra_simulation)/launch/capra_odometry_simulation.launch">
+        <arg name="base_link" value="base_link" />
+        <arg name="reference_frame" value="world" />
+    </include> -->
 
 </launch>
