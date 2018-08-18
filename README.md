@@ -13,7 +13,7 @@ D'abord installer le nécessaire
 
 Ensuite
 
-1. cd ~/Urial
+1. cd ~/Urial ou cd ~/
 2. git clone https://github.com/dawonn/vectornav.git
 3. catkin_make
 4. source devel/setup.sh
@@ -23,4 +23,4 @@ Autre terminal
 1. roslaunch vectornav vectornav.launch
 
 Autre terminal
-1. rostopic echo /vectornav/IMU
+1. rosrun capra_imu listener.py
