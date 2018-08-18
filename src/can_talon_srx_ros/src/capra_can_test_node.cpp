@@ -38,14 +38,20 @@ int main(int argc, char **argv)
 
       ROS_INFO("count %d",count);
 
-      if ((count % 10) == 0)
+      if ((count % 20) == 0)
       {
-        int val;
-        testTalon4.GetEncPosition(val);
-        ROS_INFO("position: %d",val);
-      }
-      if ((count % 10) == 0)
-      {
+        int encPos;
+        testTalon4.GetEncPosition(encPos);
+        ROS_INFO("position: %d",encPos);
+  
+        int encVel;
+        testTalon4.GetEncPosition(encVel);
+        ROS_INFO("position: %d",encVel);
+
+        int senVel;
+        testTalon4.GetSensorVelocity(senVel);
+        ROS_INFO("sensor velocity: %d",senVel);
+
         testTalon4.SetDemand(500);
         ROS_INFO("TRYING TO MOVE THE MOTOR");
       }
