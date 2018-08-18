@@ -36,8 +36,6 @@ int main(int argc, char **argv)
     while (running)
     {
 
-      testTalon4.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
-
       ROS_INFO("count %d",count);
 
       if ((count % 20) == 0)
