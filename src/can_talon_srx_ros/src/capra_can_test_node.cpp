@@ -21,7 +21,7 @@ int main(int argc, char **argv)
   // CanTalonSRX testTalon1(11);
   // CanTalonSRX testTalon2(12);
   // CanTalonSRX testTalon3(61);
-  CanTalonSRX testTalon4(0);
+  CanTalonSRX testTalon4(62);
 
 
 
