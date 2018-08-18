@@ -21,8 +21,8 @@ int main(int argc, char **argv)
   // CanTalonSRX testTalon1(11);
   // CanTalonSRX testTalon2(12);
   // CanTalonSRX testTalon3(61);
-  CanTalonSRX testTalon4(62);
-
+  // CanTalonSRX testTalon4(62);
+  std::shared_ptr<CanTalonSRX> testTalon4 = std::shared_ptr<CanTalonSRX>(new CanTalonSRX(62));
 
 
   std::atomic<bool> running(true);
@@ -30,9 +30,9 @@ int main(int argc, char **argv)
     // testTalon1.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
     // testTalon2.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
     // testTalon3.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
-    testTalon4.SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop, 100);
+    testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop, 100);
     int pos = 0;
-    testTalon4.GetEncPosition(pos);
+    testTalon4->GetEncPosition(pos);
     
     int count = 0;
     while (running)
@@ -43,30 +43,30 @@ int main(int argc, char **argv)
       if ((count % 20) == 0)
       {
         int encPos;
-        testTalon4.GetEncPosition(encPos);
+        testTalon4->GetEncPosition(encPos);
         ROS_INFO("position: %d",encPos);
   
         int encVel;
-        testTalon4.GetEncVel(encVel);
+        testTalon4->GetEncVel(encVel);
         ROS_INFO("velocity: %d",encVel);
 
         int senVel;
-        testTalon4.GetSensorVelocity(senVel);
+        testTalon4->GetSensorVelocity(senVel);
         ROS_INFO("sensor velocity: %d",senVel);
 
-        testTalon4.SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100);
+        testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100);
         
         int mode;
-        testTalon4.GetModeSelect(mode);
+        testTalon4->GetModeSelect(mode);
         ROS_INFO("mode : %d",mode);
 
-        testTalon4.SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100);
+        testTalon4->SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100);
 
-        testTalon4.GetModeSelect(mode);
+        testTalon4->GetModeSelect(mode);
         ROS_INFO("mode : %d",mode);
 
 
-        testTalon4.SetDemand(500);
+        testTalon4->SetDemand(500);
         ROS_INFO("TRYING TO MOVE THE MOTOR");
       }
 
