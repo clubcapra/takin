@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     int pos = 0;
     testTalon4->GetEncPosition(pos);
 
-    int firm_vers;
+    int firm_vers=2;
     testTalon4->GetFirmVers(firm_vers);
     ROS_INFO("Firm version %d",firm_vers);
 
