@@ -36,6 +36,8 @@ int main(int argc, char **argv)
     while (running)
     {
 
+      testTalon4.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
+
       ROS_INFO("count %d",count);
 
       if ((count % 20) == 0)
@@ -52,9 +54,17 @@ int main(int argc, char **argv)
         testTalon4.GetSensorVelocity(senVel);
         ROS_INFO("sensor velocity: %d",senVel);
 
+        testTalon4.SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100);
+        
         int mode;
         testTalon4.GetModeSelect(mode);
         ROS_INFO("mode : %d",mode);
+
+        testTalon4.SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100);
+
+        testTalon4.GetModeSelect(mode);
+        ROS_INFO("mode : %d",mode);
+
 
         testTalon4.SetDemand(500);
         ROS_INFO("TRYING TO MOVE THE MOTOR");
