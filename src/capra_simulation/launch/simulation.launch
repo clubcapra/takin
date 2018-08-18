@@ -39,6 +39,7 @@ how to setup navigation stack
 
     <include file="$(find capra_navigation)/launch/navigation_stack.launch">
         <!-- include args here if necessary -->
+        <arg    name="SLAM" value="false" />
     </include>
 
     <!-- Start rviz with desired display -->
