@@ -140,19 +140,19 @@ add_library(can_talon_srx_ros
 # add_dependencies(lk_rover ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # Declare a C++ executable
-add_executable(can_talon_srx_node
-  src/can_talon_srx_node.cpp
+add_executable(capra_can_test_node
+  src/capra_can_test_node.cpp
 )
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(can_talon_srx_node
+add_dependencies(capra_can_test_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS}
 )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(can_talon_srx_node
+target_link_libraries(capra_can_test_node
   can_talon_srx_ros
   ${catkin_LIBRARIES}
 )
