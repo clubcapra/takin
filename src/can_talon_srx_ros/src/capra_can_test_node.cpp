@@ -43,30 +43,30 @@ int main(int argc, char **argv)
       if ((count % 20) == 0)
       {
         int encPos;
-        testTalon4->GetEncPosition(encPos);
+        ROS_INFO("CRTE CODE : %d",testTalon4->GetEncPosition(encPos));
         ROS_INFO("position: %d",encPos);
-  
+        
         int encVel;
-        testTalon4->GetEncVel(encVel);
+        ROS_INFO("CRTE CODE : %d",testTalon4->GetEncVel(encVel));
         ROS_INFO("velocity: %d",encVel);
 
         int senVel;
-        testTalon4->GetSensorVelocity(senVel);
+        ROS_INFO("CRTE CODE : %d",testTalon4->GetSensorVelocity(senVel));
         ROS_INFO("sensor velocity: %d",senVel);
 
-        testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100);
+        ROS_INFO("CRTE CODE : %d",testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100));
         
         int mode;
-        testTalon4->GetModeSelect(mode);
+        ROS_INFO("CRTE CODE : %d",testTalon4->GetModeSelect(mode));
         ROS_INFO("mode : %d",mode);
 
-        testTalon4->SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100);
+        ROS_INFO("CRTE CODE : %d",testTalon4->SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100));
 
-        testTalon4->GetModeSelect(mode);
+        ROS_INFO("CRTE CODE : %d",testTalon4->GetModeSelect(mode));
         ROS_INFO("mode : %d",mode);
 
 
-        testTalon4->SetDemand(500);
+        ROS_INFO("CRTE CODE : %d",testTalon4->SetDemand(500));
         ROS_INFO("TRYING TO MOVE THE MOTOR");
       }
 
