@@ -21,7 +21,9 @@ int main(int argc, char **argv)
   // CanTalonSRX testTalon1(11);
   // CanTalonSRX testTalon2(12);
   // CanTalonSRX testTalon3(61);
-  CanTalonSRX testTalon4(62);
+  CanTalonSRX testTalon4(0);
+
+
 
   std::atomic<bool> running(true);
   auto thr = std::thread([&]() {
