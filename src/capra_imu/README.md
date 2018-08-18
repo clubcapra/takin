@@ -8,7 +8,7 @@ See [capra_imu dependencies](doc/dependencies.md)
 
 ### Overview
 
-See [capra_imu overview.md](doc/overview.md)
+For an overview on how to extend this package, see [capra_imu overview.md](doc/overview.md)
 
 ### Usage
 
