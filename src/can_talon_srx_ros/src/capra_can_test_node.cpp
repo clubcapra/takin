@@ -32,6 +32,9 @@ int main(int argc, char **argv)
     int count = 0;
     while (running)
     {
+
+      ROS_INFO("count %d",count);
+
       if ((count % 10) == 0)
       {
         int vals[4];

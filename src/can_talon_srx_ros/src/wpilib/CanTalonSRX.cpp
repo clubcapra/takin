@@ -106,7 +106,7 @@
  */
 #include "wpilib/CanTalonSRX.h"
 #include "wpilib/CANSessionMux.h"  //CAN Comm
-#include <string.h>                                  // memset
+#include <string.h>                // memset
 
 #define STATUS_1 0x02041400
 #define STATUS_2 0x02041440
