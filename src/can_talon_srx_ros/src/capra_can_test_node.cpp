@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     testTalon1.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
     testTalon2.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
     testTalon3.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
-    testTalon4.SetModeSelect(CanTalonSRX::kMode_DutyCycle, 100);
+    testTalon4.SetModeSelect(CanTalonSRX::kMode_VelocityCloseLoop, 100);
     int count = 0;
     while (running)
     {
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
         testTalon3.SetDemand(-200);
         testTalon4.SetDemand(-200);
       }
-      std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       ++count;
     }
   });
