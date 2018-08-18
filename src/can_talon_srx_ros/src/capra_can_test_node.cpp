@@ -22,7 +22,7 @@ int main(int argc, char **argv)
   // CanTalonSRX testTalon2(12);
   // CanTalonSRX testTalon3(61);
   // CanTalonSRX testTalon4(62);
-  std::shared_ptr<CanTalonSRX> testTalon4 = std::shared_ptr<CanTalonSRX>(new CanTalonSRX(62));
+  std::shared_ptr<CanTalonSRX> testTalon4 = std::shared_ptr<CanTalonSRX>(new CanTalonSRX(0x3E));
 
 
   std::atomic<bool> running(true);
@@ -33,45 +33,52 @@ int main(int argc, char **argv)
     testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop, 100);
     int pos = 0;
     testTalon4->GetEncPosition(pos);
-    
-    int count = 0;
-    while (running)
-    {
 
-      ROS_INFO("count %d",count);
+    int firm_vers;
+    testTalon4->GetFirmVers(firm_vers);
+    ROS_INFO("Firm version %d",firm_vers);
 
-      if ((count % 20) == 0)
-      {
-        int encPos;
-        ROS_INFO("CRTE CODE : %d",testTalon4->GetEncPosition(encPos));
-        ROS_INFO("position: %d",encPos);
+    // int count = 0;
+    // while (running)
+    // {
+
+    //   ROS_INFO("count %d",count);
+
+    //   if ((count % 20) == 0)
+    //   {
+    //     int encPos;
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->GetEncPosition(encPos));
+    //     ROS_INFO("position: %d",encPos);
         
-        int encVel;
-        ROS_INFO("CRTE CODE : %d",testTalon4->GetEncVel(encVel));
-        ROS_INFO("velocity: %d",encVel);
 
-        int senVel;
-        ROS_INFO("CRTE CODE : %d",testTalon4->GetSensorVelocity(senVel));
-        ROS_INFO("sensor velocity: %d",senVel);
-
-        ROS_INFO("CRTE CODE : %d",testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100));
         
-        int mode;
-        ROS_INFO("CRTE CODE : %d",testTalon4->GetModeSelect(mode));
-        ROS_INFO("mode : %d",mode);
 
-        ROS_INFO("CRTE CODE : %d",testTalon4->SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100));
+    //     int encVel;
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->GetEncVel(encVel));
+    //     ROS_INFO("velocity: %d",encVel);
 
-        ROS_INFO("CRTE CODE : %d",testTalon4->GetModeSelect(mode));
-        ROS_INFO("mode : %d",mode);
+    //     int senVel;
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->GetSensorVelocity(senVel));
+    //     ROS_INFO("sensor velocity: %d",senVel);
+
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->SetModeSelect(CanTalonSRX::kMode_CurrentCloseLoop,100));
+        
+    //     int mode;
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->GetModeSelect(mode));
+    //     ROS_INFO("mode : %d",mode);
+
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->SetModeSelect(CanTalonSRX::kMode_PositionCloseLoop,100));
+
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->GetModeSelect(mode));
+    //     ROS_INFO("mode : %d",mode);
 
 
-        ROS_INFO("CRTE CODE : %d",testTalon4->SetDemand(500));
-        ROS_INFO("TRYING TO MOVE THE MOTOR");
-      }
+    //     ROS_INFO("CRTE CODE : %d",testTalon4->SetDemand(500));
+    //     ROS_INFO("TRYING TO MOVE THE MOTOR");
+    //   }
 
-      std::this_thread::sleep_for(std::chrono::milliseconds(50));
-      ++count;
+    //   std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    //   ++count;
     }
   });
 
