@@ -45,12 +45,16 @@ int main(int argc, char **argv)
         ROS_INFO("position: %d",encPos);
   
         int encVel;
-        testTalon4.GetEncPosition(encVel);
-        ROS_INFO("position: %d",encVel);
+        testTalon4.GetEncVel(encVel);
+        ROS_INFO("velocity: %d",encVel);
 
         int senVel;
         testTalon4.GetSensorVelocity(senVel);
         ROS_INFO("sensor velocity: %d",senVel);
+
+        int mode;
+        testTalon4.GetModeSelect(mode);
+        ROS_INFO("mode : %d",mode);
 
         testTalon4.SetDemand(500);
         ROS_INFO("TRYING TO MOVE THE MOTOR");
