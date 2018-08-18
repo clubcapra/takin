@@ -6,3 +6,9 @@ in [IMU.launch](../launch/IMU.launch).
 Example :
 
 `<remap from="vectornav/IMU" to="<your_custom_topic>" />`
+
+To avoid some problem, it could be a good idea to make a udev rule for the wire of the IMU. In this case, you need to change the serial_port parameter from the node in [IMU.launch](../launch/IMU.launch).
+
+Example:
+
+ `<param name="serial_port" type="string" value="/dev/new_usb_name" />
