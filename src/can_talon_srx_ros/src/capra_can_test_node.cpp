@@ -22,7 +22,7 @@ int main(int argc, char **argv)
   // CanTalonSRX testTalon2(12);
   // CanTalonSRX testTalon3(61);
   // CanTalonSRX testTalon4(62);
-  std::shared_ptr<CanTalonSRX> testTalon4 = std::shared_ptr<CanTalonSRX>(new CanTalonSRX(62));
+  std::shared_ptr<CanTalonSRX> testTalon4 = std::shared_ptr<CanTalonSRX>(new CanTalonSRX(-2));
 
 
   std::atomic<bool> running(true);
