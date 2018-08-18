@@ -3,6 +3,7 @@
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
 
 ## Getting Started
+
 This section will help you get ready to work on the Takin project. It is supposed to give you the necessary information to understand ROS and how our projet is built. There's also documentation on how to launch and use our project.
 
 ### ROS Documentation \ Tutorial
