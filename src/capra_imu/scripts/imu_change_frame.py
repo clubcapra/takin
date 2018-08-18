@@ -73,9 +73,9 @@ def imu_cb(msg):
 if __name__ == "__main__":
     rospy.init_node('imu_change_frame')
     global pub_imu
-    pub_imu_zero = rospy.Publisher("/imu/zero", Imu, queue_size=10)
-    pub_imu = rospy.Publisher("/imu/data", Imu, queue_size=10)
+    pub_imu_zero = rospy.Publisher("capra/imu/zero", Imu, queue_size=10)
+    pub_imu = rospy.Publisher("capra/imu/data", Imu, queue_size=10)
     #pub_odom = rospy.Publisher("/odometry/gps_mod", Odometry, queue_size=10)
-    rospy.Subscriber("/imu/raw", Imu,  imu_cb)
+    rospy.Subscriber("capra/imu/raw", Imu,  imu_cb)
     #rospy.Subscriber("/odometry/gps", Odometry,  odom_cb)
     rospy.spin()

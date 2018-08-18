@@ -34,10 +34,10 @@ if __name__ == "__main__":
     rospy.init_node('imu_wrapper')
     global pub_pose_raw
     global pub_pose
-    pub_pose = rospy.Publisher("/imu/pose", PoseStamped, queue_size=10)
-    pub_pose_raw = rospy.Publisher("/imu/pose_raw", PoseStamped, queue_size=10)
-    rospy.Subscriber("/imu/data", Imu,  imu_cb)
-    rospy.Subscriber("/imu/raw", Imu,  imu_cb_raw)
+    pub_pose = rospy.Publisher("capra/imu/pose", PoseStamped, queue_size=10)
+    pub_pose_raw = rospy.Publisher("capra/imu/pose_raw", PoseStamped, queue_size=10)
+    rospy.Subscriber("capra/imu/data", Imu,  imu_cb)
+    rospy.Subscriber("capra/imu/raw", Imu,  imu_cb_raw)
     listener = tf.TransformListener()
     br = tf.TransformBroadcaster()
     rospy.spin()

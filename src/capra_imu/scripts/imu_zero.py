@@ -9,7 +9,7 @@ if __name__ == "__main__":
     try:
         rospy.init_node('imu_zero')
         # publish (0,0,0,1)
-        pub_imu_zero = rospy.Publisher("/imu/zero", Imu, queue_size=10)
+        pub_imu_zero = rospy.Publisher("capra/imu/zero", Imu, queue_size=10)
         rate = rospy.Rate(10)
         zero = Imu()
         zero.header.frame_id = "odom"
