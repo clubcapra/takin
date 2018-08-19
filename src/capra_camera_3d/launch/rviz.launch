@@ -1,0 +1,9 @@
+<launch>
+
+        <node   pkg="rviz"
+                type="rviz"
+                name="rviz"
+                args="-d $(find capra_camera_3d)/rviz/config.rviz" />
+
+</launch>
+
