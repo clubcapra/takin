@@ -12,10 +12,11 @@ For an overview on how to extend this package, see [capra_imu overview.md](doc/o
 
 ### Usage
 
-The command is :
-  $ roslaunch capra_imu IMU.launch
+First get permission for /dev access, for example : 
+  $ sudo -i
 
-  $ roslaunch capra_imu IMU.launch
+  $ roslaunch capra_imu imu.launch
+  $ roslaunch capra_imu imu_visualization.launch
 
 In others terminals, you can observe multiple data from the IMU:
   - $ rostopic echo /capra/imu
