@@ -17,11 +17,11 @@ see [capra_camera_3d overview](doc/overview.md)
 
 To interface with 3D camera in ROS, use following commands:
 
-    roslaunch capra_camera_3d capra_camera_3d.launch
+    $ roslaunch capra_camera_3d capra_camera_3d.launch
 
 **rviz**
 
-    roslaunch capra_camera_3d rviz.launch
+    $ roslaunch capra_camera_3d rviz.launch
 
 **Published topics**
 
@@ -36,8 +36,8 @@ If you have issues with opening the camera:
 
  * Generate a file with the name orbbec-usb.rules
  * add to the file: SUBSYSTEM=="usb", ATTR{idProduct}=="0404", ATTR{idVendor}=="2bc5", MODE:="0666", OWNER:="root", GROUP:="video"
- * sudo cp orbbec-usb.rules /etc/udev/rules.d/
+ * $ sudo cp orbbec-usb.rules /etc/udev/rules.d/
  * unplug the camera
- * udevadm control --reload-rules
+ * $ udevadm control --reload-rules
  * plug the camera
  
