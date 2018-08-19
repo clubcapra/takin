@@ -19,14 +19,14 @@ To interface with 3D camera in ROS, use following commands:
 
     roslaunch capra_camera_3d capra_camera_3d.launch
 
+**rviz**
+
+    roslaunch capra_camera_3d rviz.launch
+
 **Published topics**
 
 Published topics will be namespaced under the /capra/camera_3d/ and
 the tf tree
-
-**rviz**
-
-    roslaunch capra_camera_3d rviz.launch
   
 **Failed to open USB device**
 
