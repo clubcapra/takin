@@ -15,13 +15,9 @@ see [capra_camera_3d overview](doc/overview.md)
 
 ### Usage
 
-To interface with 3D camera in ROS, use following command:
+To interface with 3D camera in ROS, use following commands:
 
     roslaunch capra_camera_3d capra_camera_3d.launch
-
-After roslaunch, to check which topics are published by capra_camera_3d executable :
-
-    rostopic list
 
 **Published topics**
 
@@ -30,35 +26,7 @@ the tf tree
 
 **rviz**
 
-If rviz isn't installed, install rviz :
-
-    sudo apt-get install ros-kinetic-rviz
-
-Launch rviz with command :
-
-    rviz
-  
-In rviz graphical interface :
-  
-  Under Global Options, changed the Fixed Frame to one of the following :
-    
-    - camera_depth_frame
-    - camera_depth_optical_frame
-    - camera_link
-    - camera_rgb_frame
-    - camera_rgb_optical_frame
-
-  Global Status should be "Global Status: Ok" with "Fixed Frame OK"
-  
-  ![Alt text](doc/display_pane.png "Display Pane")
-  
-  In rviz graphical interface :
-  
-    - Click on "Add" button below in the "Displays" left pane
-    - In popup window, choose tab "by topic"
-    - Choose topic to subscribe to and visualize camera data
-    
-  ![Alt text](doc/rviz_topics.png "Popup Window")
+    roslaunch capra_camera_3d rviz.launch
   
 **Failed to open USB device**
 
