@@ -1,7 +1,7 @@
 # SocketCAN documentation
 
 ## Settings in the .bashrc file
-    $ sudo modprobe can0
+    $ sudo modprobe can
     $ sudo modprobe can_raw
     $ sudo modprobe mttcan
 
