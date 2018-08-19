@@ -20,6 +20,3 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ../../include/
 )
-
-add_executable(capra_camera_3d src/capra_camera_3d.cpp)
-target_link_libraries(capra_camera_3d ${catkin_LIBRARIES})
