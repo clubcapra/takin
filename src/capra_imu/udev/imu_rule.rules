@@ -1,2 +1,2 @@
-#udev rules pour la reconnaissance du fil du IMU
+#possible udev rules for imu device
 SUBSYSTEM=="tty", ATTRS{serial}=="FTVJUC1E", SYMLINK+="ttyUSB100"

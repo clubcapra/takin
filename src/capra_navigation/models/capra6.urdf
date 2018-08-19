@@ -158,7 +158,6 @@
         </sensor>
     </gazebo>
 
-
     <gazebo reference="laser">
         <gravity>false</gravity>
         <material>Gazebo/Red</material>
