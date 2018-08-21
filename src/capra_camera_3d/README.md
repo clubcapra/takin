@@ -15,6 +15,10 @@ see [capra_camera_3d overview](doc/overview.md)
 
 ### Usage
 
+First get permission for /dev access, for example : 
+
+    $ sudo -i
+
 To interface with 3D camera in ROS, use following commands:
 
     $ roslaunch capra_camera_3d capra_camera_3d.launch
