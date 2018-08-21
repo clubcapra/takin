@@ -18,6 +18,8 @@ see [capra_camera_3d overview](doc/overview.md)
 First get permission for /dev access, for example : 
 
     $ sudo -i
+    
+    $ source <workspace>/devel/setup.bash
 
 To interface with 3D camera in ROS, use following commands:
 
