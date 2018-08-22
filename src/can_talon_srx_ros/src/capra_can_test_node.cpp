@@ -37,6 +37,7 @@ int main(int argc, char **argv)
     int firm_vers=2;
     testTalon4->GetFirmVers(firm_vers);
     ROS_INFO("Firm version %d",firm_vers);
+    ROS_INFO("CRTE CODE FOR SET DEMAND : %d",testTalon4->SetDemand(500));  
 
     // int count = 0;
     // while (running)
