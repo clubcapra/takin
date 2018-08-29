@@ -1,5 +1,5 @@
-=======
-# Takin
+
+# Takin [![Build Status](https://travis-ci.com/clubcapra/Takin.svg?branch=master)](https://travis-ci.com/clubcapra/Takin)
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
 
 ## Getting Started
