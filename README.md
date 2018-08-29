@@ -29,7 +29,7 @@ To build our projet, you need to execute the `catkin_make` command which will co
 
 Here are the steps to build our project : 
 
-1. `git https://github.com/clubcapra/Takin.git Takin`
+1. `git clone https://github.com/clubcapra/Takin.git Takin`
 2. `cd Takin`
 3. `./install.sh`
 4. `catkin_make`
