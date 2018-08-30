@@ -29,11 +29,23 @@ sudo echo ""
 # Setup logfile.
 logFile="logsetup.log"
 
-echo "=============================================================
+echo "
+       *@@@@@@@@@@@@     @@@@@@@@@@@@    @@@@@@@@@@@@@@  @@@@@@@@@@@@@@@     &@@@@@@@@@@@* 
+     @@@@@@@@@@@@@@@@ #@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@#@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@ 
+   *@@@@@@@  @@@@@@@ @@@@@@@  @@@@@@@ @@@@@@@@  @@@@@@@*@@@@@@  @@@@@@@@ @@@@@@@@ @@@@@@@@ 
+   @@@@@@@          @@@@@@@  #@@@@@@@ @@@@@@@  @@@@@@@ @@@@@@  @@@@@@@@ #@@@@@@@  @@@@@@@  
+  @@@@@@@          @@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@   
+ &@@@@@@@         *@@@@@@@@@@@@@@@@ &@@@@@@@@@@@@@@  &@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@   
+@@@@@@@@  @@@@@@@ @@@@@@@  @@@@@@@ @@@@@@@@         @@@@@@@@ @@@@@@@@ @@@@@@@  @@@@@@@@    
+@@@@@@@@@@@@@@@@ @@@@@@@  %@@@@@@@ @@@@@@@          @@@@@@@ #@@@@@@@ @@@@@@@@  @@@@@@@     
+@@@@@@@@@@@@@@@@&@@@@@@  @@@@@@@@ @@@@@@@          @@@@@@@ @@@@@@@@@ @@@@@@@  @@@@@@@      
+@@@@@@@@@@@@@  @@@@@@@@  @@@@@@@ #@@@@@@          %@@@@@@  @@@@@@@@ @@@@@@@  &@@@@@@@                      
+===========================================================================================
 Installing Takin...
 The process may take a while. If you're worried something
 went wrong, check the logs ($logFile)
-============================================================="
+==========================================================================================="
 
 TAKIN_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -69,38 +81,54 @@ echo "Adding ros environment to .bashrc"
     source ~/.bashrc
 }
 
+dependancies=(
+	ros-kinetic-rgbd-launch 
+	ros-kinetic-camera-info-manager
+	ros-kinetic-astra-camera
+	ros-kinetic-astra-launch
+	ros-kinetic-octomap
+	ros-kinetic-serial
+	ros-kinetic-move-base-msgs
+	ros-kinetic-joy
+	ros-kinetic-joystick-drivers
+	ros-kinetic-image-publisher
+	ros-kinetic-image-transport
+	ros-kinetic-opencv3
+	ros-kinetic-zbar-ros
+	ros-kinetic-image-geometry
+	ros-kinetic-cv-bridge
+	ros-kinetic-gazebo-ros
+	ros-kinetic-tf
+	ros-kinetic-rviz
+	ros-kinetic-gmapping
+	ros-kinetic-move-base
+	ros-kinetic-map-server
+	ros-kinetic-amcl
+)
+
 echo "Installing Packages..."
 {
 	# Install installation tools
-	sudo apt-get install git python-pip python-wstool -y
+	sudo apt-get install git -y
 
 	# Install other ros-kinetic packages
-	sudo apt-get install ros-kinetic-pointgrey-camera-driver ros-kinetic-scan-tools ros-kinetic-navigation ros-kinetic-joy ros-kinetic-serial ros-kinetic-lms1xx ros-kinetic-robot-localization ros-kinetic-hector-mapping ros-kinetic-hector-slam ros-kinetic-hector-mapping ros-kinetic-move-base-msgs ros-kinetic-move-base ros-kinetic-amcl ros-kinetic-astra-launch ros-kinetic-astra-camera -y
-
-	# ROS Vendor libs install
-	rm -f $TAKIN_DIR/vendor/src/.rosinstall
-	wstool init $TAKIN_DIR/vendor/src $TAKIN_DIR/rosinstall/capra.rosinstall
-	wstool update -t $TAKIN_DIR/vendor/src
-} >> $logFile
+	sudo apt-get install ${dependancies[@]}
+}
 
 
 echo "Building workspace... This can take a while"
 
 source /opt/ros/kinetic/setup.bash
 
-cd $TAKIN_DIR/vendor/
-catkin_make >> $logFile
-
 cd $TAKIN_DIR
 catkin_make >> $logFile
 
 source $TAKIN_DIR/devel/setup.bash
-cwd="$PWD"
 
 echo "
-=========================================================
+===========================================================================================
 Takin installation successful.
-========================================================="
+==========================================================================================="
 
 allDone=1
 
