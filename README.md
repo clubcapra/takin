@@ -1,6 +1,22 @@
-
 # Takin [![Build Status](https://travis-ci.com/clubcapra/Takin.svg?branch=master)](https://travis-ci.com/clubcapra/Takin)
+
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
+
+## Features
+
+This section will help you find what you need in Takin project. 
+
+| Package | Description |
+| ------ | ------ |
+| [Simulation](src/capra_simulation/) | This package is the Gazebo to ROS interfacing stack for autonomous robot simulation.  |
+| [Navigation](src/capra_navigation/) | This package is the ROS navigation stack setup for capra's autonomous robot navigation. |
+| [QR Code](src/capra_qrcode_detection/) | This package is a simple wrapper around zbar_ros's barcode_reader, used to detect QR code data in real-time simulation. |
+| [Remote](src/capra_remote/) | This package is a wrapper for a remote controller.  |
+| [Thermal](src/capra_thermal/) | This package is a wrapper around the FLIR Lepton thermal camera's ROS driver. |
+| [Motor](src/capra_motors/) | This package is a wrapper around the motors |
+| [IMU](src/capra_imu/) | This package contains the launch file for publishing many topics from the VN-300 driver |
+| [Camera](src/capra_camera/) | This package is a wrapper around the camera. |
+| [Camera3D](src/capra_camera_3d/) | This package is a wrapper around the camera 3D. |
 
 ## Getting Started
 
@@ -25,15 +41,15 @@ Those can be find the beginner section of the guided tutorial.
 
 ### Building our project
 
-To build our projet, you need to execute the `catkin_make` command which will compile and regenerate the necessary bindings to use ROS with our nodes.
+To build the projet the first time, you need to execute the `install.sh` which will configure, compile and regenerate the necessary bindings to use ROS with our nodes. After you can just use `catkin_make` and source your `source devel/setup.bash` manually.
 
 Here are the steps to build our project : 
 
-1. `git clone https://github.com/clubcapra/Takin.git Takin`
-2. `cd Takin`
-3. `./install.sh`
-4. `catkin_make`
-5. `source devel/setup.sh`
+ ```sh
+$ git clone https://github.com/clubcapra/Takin
+$ cd Takin
+$ ./install.sh
+```
 
 You need to select the right setup file for your shell when sourcing.
 
@@ -41,7 +57,9 @@ You need to select the right setup file for your shell when sourcing.
 
 Before launching the projet you must have built it (this implies that you have also sourced your environment) once before. After this, you can use ROS to launch the simulation. 
 
-`roslaunch capra_simulation simulation.launch`
+```sh
+$ roslaunch capra_simulation simulation.launch
+```
 
 ### Launch : Real case
 
@@ -53,8 +71,4 @@ If you want to contribute to the projet, you can fork it and then PR to add or m
 
 ### Standard
 
-Right now we don't really have any coding standard, but it is something we want to implement in the project. So the status of this part is TBD 
-
-#### Code
-
-#### Documentation
+Right now we don't really have any coding standard, but it is something we want to implement in the project. So the status of this part is TBD.
