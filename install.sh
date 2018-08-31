@@ -65,14 +65,26 @@ dependancies=(
 	ros-kinetic-zbar-ros
 	ros-kinetic-image-geometry
 	ros-kinetic-cv-bridge
-	ros-kinetic-gazebo-ros
 	ros-kinetic-tf
-	ros-kinetic-rviz
 	ros-kinetic-gmapping
 	ros-kinetic-move-base
 	ros-kinetic-map-server
 	ros-kinetic-amcl
 )
+
+uidependancies=(
+	ros-kinetic-rviz
+	ros-kinetic-gazebo-ros
+)
+
+read -p "Do you want to install the lightweight version ? [Y/n]" -n 1 -r
+echo
+
+lightVersion=false
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    lightVersion=true
+fi
 
 echo "Installing ROS..."
 {
@@ -82,7 +94,12 @@ echo "Installing ROS..."
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
 
-	sudo apt-get install -y ros-kinetic-desktop-full -y
+	if [ "$lightVersion" = "true" ]
+	then
+		sudo apt-get install ros-kinetic-ros-base -y
+	else
+		sudo apt-get install ros-kinetic-desktop-full -y
+	fi
 
 	if [ -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]
     then
@@ -113,6 +130,12 @@ echo "Installing Packages..."
 
 	# Install other ros-kinetic packages
 	sudo apt-get install ${dependancies[@]} -y
+
+	# Install other ros-kinectic ui packages
+	if [ "$lightVersion" = "false" ]
+	then
+		sudo apt-get install ${uidependancies[@]} -y
+	fi
 }
 
 

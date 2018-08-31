@@ -11,18 +11,12 @@ Librairies utilisées :
 [pyfun]
 [pywoohoo]
 
-Est-ce que les librairies sont intégrées dans docker ? : 
-[pygames - oui]
+Avez-vous ajouté les dépendances dans le fichier install.sh ?
 
-Si la librarie n'est pas intégrée dans docker, où aller la chercher?  quelles sont les étapes nécessaires pour le faire? : [Aller cherche pygames dans apt]
+Si la librarie n'est pas intégrée dans le projet, où aller la chercher?  quelles sont les étapes nécessaires pour le faire? : 
+[Aller cherche pygames dans apt]
 
-Langage de programmation : [Python]
-
-Niveau de commentaires (Cocher) : 
-[ ] Aucun
-[X] Minimal (Attributs importants, méthodes)
-[ ] Complet (Minimal + description algorithmes)
-[ ] Autre (Préciser)
+Avez-vous bien documenté vos changements ?
 
 Travail fait : [Correction d'un bug pour le controlleur]
 

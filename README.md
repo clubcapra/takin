@@ -15,7 +15,7 @@ This section will help you find what you need in Takin project.
 | [Motor](src/capra_motors/) | This package is a wrapper around the motors |
 | [IMU](src/capra_imu/) | This package contains the launch file for publishing many topics from the VN-300 driver |
 | [Camera](src/capra_camera/) | This package is a wrapper around the camera. |
-| [Camera 3D](src/capra_camera_3d/) | This package is a wrapper around the camera 3D. |
+| [Camera3D](src/capra_camera_3d/) | This package is a wrapper around the camera 3D. |
 
 ## Getting Started
 
@@ -40,12 +40,12 @@ Those can be find the beginner section of the guided tutorial.
 
 ### Building our project
 
-To build our projet, you need to execute the `catkin_make` command which will compile and regenerate the necessary bindings to use ROS with our nodes.
+To build the projet the first time, you need to execute the `install.sh` which will configure, compile and regenerate the necessary bindings to use ROS with our nodes. After you can just use `catkin_make` and source your `source devel/setup.bash` manually.
 
 Here are the steps to build our project : 
 
  ```sh
-$ git https://github.com/clubcapra/Takin.git Takin
+$ git clone https://github.com/clubcapra/Takin
 $ cd Takin
 $ ./install.sh
 ```
