@@ -12,7 +12,7 @@ This section will help you find what you need in Takin project.
 | [Navigation](src/capra_navigation/) | This package is the ROS navigation stack setup for capra's autonomous robot navigation. |
 | [QR Code](src/capra_qrcode_detection/) | This package is a simple wrapper around zbar_ros's barcode_reader, used to detect QR code data in real-time simulation. |
 | [CO2 Detection](src/capra_co2_detector) | This package is a ROS node to communicate with the Telaire T6703 CO2 sensor |
-| [Remote](src/capra_remote/) | This package is a wrapper for a remote controller.  |
+| [Remote](src/capra_remote_controller/) | This package is a wrapper for a remote controller.  |
 | [Thermal](src/capra_thermal/) | This package is a wrapper around the FLIR Lepton thermal camera's ROS driver. |
 | [Motor](src/capra_motors/) | This package is a wrapper around the motors |
 | [IMU](src/capra_imu/) | This package contains the launch file for publishing many topics from the VN-300 driver |
