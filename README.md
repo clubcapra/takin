@@ -1,4 +1,4 @@
-# Takin [![Build Status](https://travis-ci.com/clubcapra/Takin.svg?branch=master)](https://travis-ci.com/clubcapra/Takin)
+# Takin [![Build Status](https://travis-ci.com/clubcapra/Takin.svg?branch=master)](https://travis-ci.com/clubcapra/Takin) [![Total alerts](https://img.shields.io/lgtm/alerts/g/clubcapra/Takin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/clubcapra/Takin/alerts/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/clubcapra/Takin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/clubcapra/Takin/context:python)
 
  Capra-Takin is a ROS-based solution for managing and operating Club Capra's rescue robot.
 
