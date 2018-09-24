@@ -49,34 +49,6 @@ went wrong, check the logs ($logFile)
 
 TAKIN_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-dependancies=(
-	ros-kinetic-rgbd-launch 
-	ros-kinetic-camera-info-manager
-	ros-kinetic-astra-camera
-	ros-kinetic-astra-launch
-	ros-kinetic-octomap
-	ros-kinetic-serial
-	ros-kinetic-move-base-msgs
-	ros-kinetic-joy
-	ros-kinetic-joystick-drivers
-	ros-kinetic-image-publisher
-	ros-kinetic-image-transport
-	ros-kinetic-opencv3
-	ros-kinetic-zbar-ros
-	ros-kinetic-image-geometry
-	ros-kinetic-cv-bridge
-	ros-kinetic-tf
-	ros-kinetic-gmapping
-	ros-kinetic-move-base
-	ros-kinetic-map-server
-	ros-kinetic-amcl
-)
-
-uidependancies=(
-	ros-kinetic-rviz
-	ros-kinetic-gazebo-ros
-)
-
 read -p "Do you want to install the lightweight version ? [Y/n]" -n 1 -r
 echo
 
@@ -127,15 +99,6 @@ echo "Installing Packages..."
 {
 	# Install installation tools
 	sudo apt-get install git -y
-
-	# Install other ros-kinetic packages
-	sudo apt-get install ${dependancies[@]} -y
-
-	# Install other ros-kinectic ui packages
-	if [ "$lightVersion" = "false" ]
-	then
-		sudo apt-get install ${uidependancies[@]} -y
-	fi
 }
 
 
