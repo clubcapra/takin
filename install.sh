@@ -58,6 +58,12 @@ then
     lightVersion=true
 fi
 
+echo "Installing Packages..."
+{
+	# Install installation tools
+	sudo apt-get install git -y
+}
+
 echo "Installing ROS..."
 {
 	sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -72,33 +78,34 @@ echo "Installing ROS..."
 	else
 		sudo apt-get install ros-kinetic-desktop-full -y
 	fi
+}
 
-	if [ -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]
+cd $TAKIN_DIR
+
+echo "Installing ROS Dependancies..."
+{
+	if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]
     then
-	echo "Rosdep already initialized, skipping... "
-    else
-	sudo rosdep init
+		sudo rosdep init
+    fi
+
 	rosdep update
 	rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
-    fi
 }
 
 echo "Adding rules..."
 {
-    sudo cp $TAKIN_DIR/49-capra.rules /etc/udev/rules.d/
+    sudo cp 49-capra.rules /etc/udev/rules.d/
     sudo addgroup $USER dialout
 }
 
 echo "Adding ros environment to .bashrc"
 {
-    echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-    source ~/.bashrc
-}
+	if ! grep -q "source /opt/ros/kinetic/setup.bash" "/opt/ros/kinetic/setup.bash"; then
+		echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+	fi
 
-echo "Installing Packages..."
-{
-	# Install installation tools
-	sudo apt-get install git -y
+    source ~/.bashrc
 }
 
 
@@ -106,7 +113,6 @@ echo "Building workspace... This can take a while"
 
 source /opt/ros/kinetic/setup.bash
 
-cd $TAKIN_DIR
 catkin_make >> $logFile
 
 source devel/setup.bash
