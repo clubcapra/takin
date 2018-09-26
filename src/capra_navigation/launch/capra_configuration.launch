@@ -1,9 +1,56 @@
 <launch>
-    <arg name="robot_description" value="$(find robotcapra)/urdf/robotcapra.urdf" />
+   
+    <!-- Arg value can be overridden if specified as command-line argument
+    or if this launch file is included in another launch file -->
+    <arg    name="robot_description"
+            default="$(find robotcapra)/urdf/robotcapra.urdf" />
 
-  <!-- Robot and TF -->
-  <node pkg="tf" type="static_transform_publisher" name="footprint_broadcaster" args="0 0 0 0 0 0 base_footprint base_link 30" />
-  <rosparam command="load" param="robot_description" file="$(arg robot_description)" />
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robotcapra_state_publisher" />
+    <!-- Set the rate of tf transforms publishing for joint_states -->
+    <arg    name="joint_state_publish_rate"
+            default="5" />
+
+    <!-- Set the rate of tf transforms publishing for robot_state (links) -->
+    <arg    name="robot_state_publish_rate"
+            default="5" />
+
+    <!--
+    Load urdf as the "robot_description" parameter's value on ROS Parameter Server
+    See http://wiki.ros.org/roslaunch/XML/rosparam for more info.
+    -->
+    <rosparam command="load" param="robot_description" file="$(arg robot_description)" />
+
+    <!--
+    The joint_state_publisher node publishes the joint_states topic as
+    sensor_msgs/JointState messages base on various possible sources.
+    In our case, the joint_state_publisher uses the "robot_description"
+    parameter on the parameter server to publish joint_states.
+    If the source of the sensor_msgs/JointState messages is not
+    named "robot_description", use :
+        <remap from="robot_description" to="other">
+    for the joint_state_publisher node to get its sensor_msgs/JointState
+    info.
+    See http://wiki.ros.org/joint_state_publisher for more info
+    and additional parameters.
+    -->
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="capra_joint_state_publisher" >
+        <param name="rate" value="$(arg joint_state_publish_rate)" />
+    </node>
+
+    <!--
+    The robot_state_publisher node publishes the robot's tf info
+    as a static_transform_publisher in ROS using the "robot_description"
+    parameter's value (URDF file loaded on parameter server).
+    If the URDF is not loaded on the parameter server as "robot_description",
+    use :
+        <remap from="robot_description" to="other">
+    to redirected the robot_state_publisher towards the desired
+    URDF source.
+    See http://wiki.ros.org/robot_state_publisher for more info
+    and additional parameters.
+    -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="capra_robot_state_publisher" >
+        <param name="publish_frequency" value="$(arg robot_state_publish_rate)" />
+        <!-- <param name="ignore_timestamp" value="true" /> -->
+    </node>
 
 </launch>

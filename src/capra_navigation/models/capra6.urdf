@@ -97,13 +97,35 @@
         </collision>
     </link>
 
-    <gazebo reference="base_link">
+    <gazebo reference="imu_robot">
         <gravity>false</gravity>
     </gazebo>
 
     <gazebo reference="pole">
         <gravity>false</gravity>
     </gazebo>
+
+    <gazebo reference="base_link">
+        <gravity>false</gravity>
+        <sensor type="imu" name="imu">
+            <imu>
+                <gyro>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+                </gyro>
+            </imu>
+  	    <plugin name="imu_plugin" plugin="libgazebo_ros_imu.so">
+                <alwaysOn>true</alwaysOn>       
+                <bodyName>imu_robot</bodyName>
+                <topicName>imu_data</topicName>
+                <serviceName>imu_service</serviceName>
+    	    </plugin>
+        </sensor>
+    </gazebo>
+
 
     <gazebo reference="camera">
         <gravity>false</gravity>

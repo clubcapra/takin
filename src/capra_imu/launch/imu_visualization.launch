@@ -1,0 +1,9 @@
+<launch>
+
+    <!-- Visualize VN300 IMU data -->
+    <node   pkg="rviz"
+            type="rviz"
+            name="rviz"
+            args="-d $(find capra_imu)/rviz/config.rviz" />
+
+</launch>

@@ -1,0 +1,26 @@
+<launch>
+
+    <!-- <include file="$(find vectornav)/launch/vectornav.launch" /> -->
+
+    <node   pkg="vectornav"
+            type="vnpub"
+            name="vectornav"
+            output="screen" >
+            
+        <!-- Remappings to name the topics with capra prefixes names -->
+        <remap from="vectornav/IMU" to="capra/imu" />
+        <remap from="vectornav/GPS" to="capra/gps" />
+        <remap from="vectornav/Mag" to="capra/mag" />
+        <remap from="vectornav/Pres" to="capra/pres" />
+        <remap from="vectornav/Temp" to="capra/temp" />
+
+        <param name="serial_port" type="string" value="/dev/ttyUSB0" />
+        <param name="serial_baud" type="int"    value="115200" />
+
+        <param name="async_output_rate" type="int"    value="40" />
+        
+        <param name="frame_id" type="string" value="base_link" />
+	
+	</node>
+    
+</launch>

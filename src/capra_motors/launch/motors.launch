@@ -1,0 +1,15 @@
+<launch>
+
+ <!-- Capra Cmd_Vel Node-->
+  <node pkg="capra_motors" type="capra_motors" name="cmd_veli_node"/> 
+
+
+ <!-- joy node -->
+  <node respawn="true" pkg="joy"
+        type="joy_node" name="capra_motors_joy" >
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+
+</launch>

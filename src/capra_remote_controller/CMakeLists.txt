@@ -24,5 +24,5 @@ include_directories(
 
 #set( src/controller_logitech.cpp )
 
-add_executable(capra_remote_controller src/remote_controller.cpp src/controller_logitech.cpp)
+add_executable(capra_remote_controller src/remote_controller.cpp )
 target_link_libraries(capra_remote_controller ${catkin_LIBRARIES})

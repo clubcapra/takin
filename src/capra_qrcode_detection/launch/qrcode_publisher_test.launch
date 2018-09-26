@@ -1,0 +1,21 @@
+<launch>
+
+    <arg name="imagefile" default="$(find capra_qrcode_detection)/images/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png" />
+
+    <!-- Publishes sensor_msgs/Image from filesystem image file periodically -->
+    <node   pkg="image_publisher"
+            name="image_publisher"
+            type="image_publisher"
+            args="$(arg imagefile)" >
+        <!-- publish to /image topic for the barcode_reader to read -->
+        <remap from="image_publisher/image_raw" to="image" />
+        <!-- publish at 1 Hz -->
+        <param name="publish_rate" value="1.0" />
+    </node>
+
+    <!-- Reads qr codes from /image topic -->
+    <node pkg="zbar_ros" type="barcode_reader_node" name="barcode_reader">
+        <param name="throttle_repeated_barcodes" type="double" value="2.0"/>
+    </node>
+
+</launch>

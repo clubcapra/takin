@@ -1,0 +1,53 @@
+<launch>
+
+    <arg name="SLAM" default="true" />
+
+    <!--
+    The "context" argument holds the directory's name
+    in which all the costmaps and common parameters are,
+    along with the local_planner params.
+    -->
+    <arg name="context" default="simulation" />
+
+    <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS" />
+
+    <!-- If a map is not available, run gmapping for 
+    SLAM (simultaneous localization and mapping) -->
+    <group if="$(arg SLAM)">
+        <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+            <param name="map_frame" value="/map" />
+            <param name="odom_frame" value="/odom" />
+            <param name="base_frame" value="/base_link" />
+        </node>
+    </group>
+
+    <!-- 
+        If not using the SLAM, run a map_server and AMCL
+        Run the map server if map is available 
+    -->
+    <group unless="$(arg SLAM)">
+        <node   pkg="map_server"
+                type="map_server"
+                name="map_server" 
+                args="$(find capra_simulation)/maps/random.yaml"/>
+
+
+        <!-- Run AMCL for localization -->
+        <include file="$(find amcl)/examples/amcl_omni.launch" />
+    </group>
+
+    <!--
+    Load costmaps, common params and local planner params on parameter server
+    for move_base node to use for path planning
+    See http://wiki.ros.org/move_base for more info.
+    -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find capra_navigation)/contexts/$(arg context)/base_local_planner_params.yaml" command="load" />
+        <param name="controller_frequency" value="2.0" />
+    </node>
+
+</launch>
