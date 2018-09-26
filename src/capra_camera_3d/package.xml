@@ -4,20 +4,21 @@
   <version>0.0.0</version>
   <description>The capra_camera_3d package</description>
 
-  <maintainer email="tonthat.quocminh@gmail.com">minh</maintainer>
+  <maintainer email="capra@clubcapra.com">Capra</maintainer>
 
-  <license>BSD</license>
+  <license>GPLv3</license>
 
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>std_msgs</build_export_depend>
-  <exec_depend>roscpp</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
+
+  <depend>rgbd_launch</depend>
+  <depend>astra_camera</depend>
+  <depend>astra_launch</depend>
+
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
   
   <!-- The export tag contains other, unspecified, tags -->
   <export>
