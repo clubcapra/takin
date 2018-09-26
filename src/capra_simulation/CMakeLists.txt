@@ -12,6 +12,13 @@ find_package(catkin REQUIRED COMPONENTS
     rospy
     tf
     std_msgs
+    geometry_msgs
+    rviz
+    gazebo_ros
+    gmapping
+    move_base
+    map_server
+    amcl
 )
 
 catkin_package(

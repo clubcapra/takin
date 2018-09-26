@@ -4,9 +4,9 @@
   <version>0.0.0</version>
   <description>The capra_camera_3d package</description>
 
-  <maintainer email="tonthat.quocminh@gmail.com">minh</maintainer>
+  <maintainer email="capra@clubcapra.com">Capra</maintainer>
 
-  <license>BSD</license>
+  <license>GPLv3</license>
 
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>

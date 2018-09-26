@@ -9,6 +9,10 @@ find_package(catkin REQUIRED COMPONENTS
   image_geometry
   image_transport
   roscpp
+  std_msgs
+  sensor_msgs
+  zbar_ros
+  image_publisher
 )
 
 find_package(OpenCV REQUIRED)
