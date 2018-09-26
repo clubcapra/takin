@@ -10,9 +10,10 @@
   <buildtool_depend>catkin</buildtool_depend>
   
   <depend>joy</depend>
-  <depend>joystick_drivers</depend>
   <depend>roscpp</depend>
   <depend>rospy</depend>
   <depend>std_msgs</depend>
 
+  <exec_depend>joystick_drivers</exec_depend>
+  
 </package>

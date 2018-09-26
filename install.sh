@@ -49,13 +49,13 @@ went wrong, check the logs ($logFile)
 
 TAKIN_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-read -p "Do you want to install the lightweight version ? [Y/n]" -n 1 -r
+read -p "Do you want to install the full-desktop version ? [Y/n]" -n 1 -r
 echo
 
-lightVersion=false
+fullVersion=false
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    lightVersion=true
+    fullVersion=true
 fi
 
 echo "Installing Packages..."
@@ -72,7 +72,7 @@ echo "Installing ROS..."
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
 
-	if [ "$lightVersion" = "true" ]
+	if [ "$fullVersion" = "true" ]
 	then
 		sudo apt-get install ros-kinetic-ros-base -y
 	else
@@ -101,7 +101,7 @@ echo "Adding rules..."
 
 echo "Adding ros environment to .bashrc"
 {
-	if ! grep -q "source /opt/ros/kinetic/setup.bash" "/opt/ros/kinetic/setup.bash"; then
+	if ! grep -q "source /opt/ros/kinetic/setup.bash" ~/.bashrc; then
 		echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 	fi
 
