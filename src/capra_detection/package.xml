@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>capra_camera_3d</name>
+  <name>capra_detection</name>
   <version>0.0.0</version>
-  <description>The capra_camera_3d package</description>
+  <description>The capra_detection package</description>
 
   <maintainer email="capra@clubcapra.com">Capra</maintainer>
 
@@ -10,13 +10,14 @@
   
   <buildtool_depend>catkin</buildtool_depend>
 
-  <depend>rgbd_launch</depend>
-  <depend>astra_camera</depend>
-  <depend>astra_launch</depend>
-
-  <depend>roscpp</depend>
+  <depend>image_publisher</depend>
+  <depend>cv_bridge</depend>
+  <depend>opencv3</depend>
+  <depend>image_transport</depend>
   <depend>std_msgs</depend>
-  
+  <depend>sensor_msgs</depend>
+  <depend>roscpp</depend>
+
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

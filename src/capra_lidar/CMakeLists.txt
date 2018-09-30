@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(capra_lidar)
 
 find_package(catkin REQUIRED COMPONENTS
-  sick_tim
 )
 
 catkin_package(
