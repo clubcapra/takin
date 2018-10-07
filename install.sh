@@ -74,9 +74,9 @@ echo "Installing ROS..."
 
 	if [ "$fullVersion" = "true" ]
 	then
-		sudo apt-get install ros-kinetic-ros-base -y
-	else
 		sudo apt-get install ros-kinetic-desktop-full -y
+	else
+		sudo apt-get install ros-kinetic-ros-base -y
 	fi
 }
 
