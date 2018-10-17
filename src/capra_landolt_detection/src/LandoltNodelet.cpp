@@ -22,6 +22,7 @@ class LandoltNodelet : public nodelet::Nodelet
 {
     public:
         LandoltNodelet() {}
+        virtual void onInit();
     private:
         boost::shared_ptr<image_transport::ImageTransport> it_;
         image_transport::CameraSubscriber sub_camera_;
@@ -31,14 +32,15 @@ class LandoltNodelet : public nodelet::Nodelet
         image_transport::Publisher pub_land_;
         RNG _rng;
 
-        virtual void onInit();
         void connectCb();
         void imageCb(const sensor_msgs::ImageConstPtr &image_msg, const sensor_msgs::CameraInfoConstPtr& info_msg);
-        void findLandolt(vector<vector<Point>>& contours, vector<array<Point, 3>> gaps, int minEdge = 12, float minRatioCircle = 0.8f, int minDepth = 10);
+        void markAndFindLandolt(Mat imageRaw);
+        void findLandolt(vector<vector<Point>>& contours, vector<array<Point, 3>>& gaps, int minEdge, float minRatioCircle, int minDepth);
 };
 
 void LandoltNodelet::onInit()
 {
+    NODELET_INFO("On Init Landolt");
     ros::NodeHandle &nh         = getNodeHandle();
     ros::NodeHandle &private_nh = getPrivateNodeHandle();
 
@@ -53,25 +55,28 @@ void LandoltNodelet::onInit()
     // Make sure we don't enter connectCb() between advertising and assigning to pub_rect_
     boost::lock_guard<boost::mutex> lock(connect_mutex_);
     pub_land_ = it_->advertise("/capra/detection/image_landolt", 1, connect_cb, connect_cb);
+    NODELET_INFO("Setup end.");
 }
 
 void LandoltNodelet::connectCb()
 {
+    NODELET_INFO("Connect.");
     boost::lock_guard<boost::mutex> lock(connect_mutex_);
     if (pub_land_.getNumSubscribers() == 0)
         sub_camera_.shutdown();
     else if (!sub_camera_)
     {   
         image_transport::TransportHints hints("raw", ros::TransportHints(), getPrivateNodeHandle());
-        sub_camera_ = it_->subscribeCamera("/capra/camera_3d/image_raw", queue_size_, &LandoltNodelet::imageCb, this, hints);
+        sub_camera_ = it_->subscribeCamera("/capra/camera_3d/rgb/image_raw", queue_size_, &LandoltNodelet::imageCb, this, hints);
     }
 }
 
 void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
                                 const sensor_msgs::CameraInfoConstPtr& info_msg)
 {
-    // Verify camera is actually calibrated
+    /* // Verify camera is actually calibrated
     if (info_msg->K[0] == 0.0) {
+        NODELET_INFO("E1");
         NODELET_ERROR_THROTTLE(30, "Landolt topic '%s' requested but camera publishing '%s' "
                             "is uncalibrated", pub_land_.getTopic().c_str(),
                             sub_camera_.getInfoTopic().c_str());
@@ -81,9 +86,10 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
     // If zero distortion, just pass the message along
     if (info_msg->D.empty() || info_msg->D[0] == 0.0)
     {
+        NODELET_INFO("E2");
         NODELET_ERROR_THROTTLE(30, "Landolt topic has zero distortion.");
         return;
-    }
+    } */
 
     cv_bridge::CvImagePtr img_ptr;
     try
@@ -95,9 +101,17 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
         ROS_ERROR("cv_bridge exception: %s", e.what());
         return;
     }
+    
+    markAndFindLandolt(img_ptr->image);
 
+    // Publish the ROS sensor_msgs image
+    pub_land_.publish(img_ptr->toImageMsg());
+}
+
+void LandoltNodelet::markAndFindLandolt(Mat imageRaw)
+{
     Mat thresholdMat;
-    cvtColor(img_ptr->image, thresholdMat, COLOR_BGR2GRAY); // convert to grayscale
+    cvtColor(imageRaw, thresholdMat, COLOR_BGR2GRAY); // convert to grayscale
     blur(thresholdMat, thresholdMat, Size(3, 3)); // apply blur to grayscaled image 
     threshold(thresholdMat, thresholdMat, 140, 255, THRESH_BINARY); // apply binary thresholding
 
@@ -105,7 +119,7 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
     findContours(thresholdMat, contours, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0));
 
     vector< array<Point, 3> > gaps;
-    findLandolt(contours, gaps);
+    findLandolt(contours, gaps, 12, 0.8f, 10);
 
     for (int i = 0; i < gaps.size(); i++) 
     {
@@ -120,14 +134,11 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
         minEnclosingCircle(points, center, radius);
         //Recenter the cercle at the center of the gaps
         center += cmath::normalizePoint(Point2f(gaps[i][2]) - center) * radius;
-        circle(img_ptr->image, center, radius, color, 3, 8, 0);
+        circle(imageRaw, center, radius, color, 3, 8, 0);
     }
-
-    // Publish the ROS sensor_msgs image
-    pub_land_.publish(img_ptr->toImageMsg());
 }
 
-void findLandolt(vector<vector<Point>>& contours, vector<array<Point, 3>> gaps, int minEdge = 12, float minRatioCircle = 0.8f, int minDepth = 10)
+void LandoltNodelet::findLandolt(vector<vector<Point>>& contours, vector<array<Point, 3>>& gaps, int minEdge, float minRatioCircle, int minDepth)
 {
     for (size_t i = 0; i < contours.size(); i++)
     {
