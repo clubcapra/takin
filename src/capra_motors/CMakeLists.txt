@@ -201,14 +201,3 @@ target_link_libraries(example ${SDL2_LIBRARIES})
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-
-message("Current architecture: " ${CMAKE_LIBRARY_ARCHITECTURE})
-
-
-if ("${CMAKE_LIBRARY_ARCHITECTURE}" STREQUAL "arm-linux-gnueabihf")
-  message("TEST4")
-elseif  ("${CMAKE_LIBRARY_ARCHITECTURE}" STREQUAL "aarch64-linux-gnu")
-  message("TEST5")
-else ()
-  message("TEST3")
-endif()
