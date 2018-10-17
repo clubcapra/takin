@@ -135,8 +135,8 @@ set_target_properties(${PROJECT_NAME}_lib PROPERTIES LINKER_LANGUAGE CXX)
 # add_dependencies(lk_rover ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # Declare a C++ executable
-add_executable( example  
-  src/example.cpp
+add_executable( motors_control  
+  src/motors_control.cpp
 )
 
 ## Add cmake target dependencies of the executable
@@ -147,12 +147,12 @@ add_executable( example
 #)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(example ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_Phoenix.a)
-target_link_libraries(example ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCCI.a)
-target_link_libraries(example ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
-target_link_libraries(example ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
-target_link_libraries(example Threads::Threads)
-target_link_libraries(example ${SDL2_LIBRARIES})
+target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_Phoenix.a)
+target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCCI.a)
+target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
+target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
+target_link_libraries(motors_control Threads::Threads)
+target_link_libraries(motors_control ${SDL2_LIBRARIES})
 
 #############
 ## Install ##
