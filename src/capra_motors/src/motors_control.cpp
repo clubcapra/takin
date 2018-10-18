@@ -18,7 +18,7 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 void joystickCallback(const geometry_msgs::Twist &twist)
 {
-    std::cout << twist << std:endl;
+    std::cout << twist << std::endl;
 }
 
 int main(int argc, char **argv)
