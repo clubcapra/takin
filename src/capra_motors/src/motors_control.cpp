@@ -7,7 +7,7 @@
 #include "Platform-linux-socket-can.h"
 #include <SDL2/SDL.h>
 #include "ros/ros.h"
-#include "std_msgs/String.h"
+#include <geometry_msgs/Twist.h>
 
 // SDL code from https://gist.github.com/fabiocolacio/423169234b8daf876d8eb75d8a5f2e95
 
@@ -16,9 +16,9 @@ using namespace ctre::phoenix::platform;
 using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
 
-void joystickCallback(const std_msgs::String::ConstPtr &msg)
+void joystickCallback(const geometry_msgs::Twist &twist)
 {
-    ROS_INFO("I heard: [%s]", msg->data.c_str());
+    ROS_INFO("I heard: [%s]", twist);
 }
 
 int main(int argc, char **argv)
