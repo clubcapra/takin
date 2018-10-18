@@ -16,9 +16,11 @@ using namespace ctre::phoenix::platform;
 using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
 
+float float1, float2;
+
 void joystickCallback(const geometry_msgs::Twist &twist)
 {
-    std::cout << twist << std::endl;
+    float1 = twist.linear.y;
 }
 
 int main(int argc, char **argv)
