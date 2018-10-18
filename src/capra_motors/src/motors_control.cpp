@@ -20,7 +20,7 @@ float float1, float2;
 
 void joystickCallback(const geometry_msgs::Twist &twist)
 {
-    float1 = twist.linear.y;
+    ROS_INFO("TEST");
 }
 
 int main(int argc, char **argv)
