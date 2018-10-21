@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-    TalonSRX *talonFL = new TalonSRX(11);
+    TalonSRX *talonFL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
     TalonSRX *talonRL = new TalonSRX(62); */
