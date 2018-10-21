@@ -10,6 +10,7 @@
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
 #include <sensor_msgs/Joy.h>
+#include <typeinfo.h>
 
 // SDL code from https://gist.github.com/fabiocolacio/423169234b8daf876d8eb75d8a5f2e95
 
@@ -22,27 +23,26 @@ float float1, float2;
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
-    ROS_INFO("I heard something");
-
     std::string interface = "can0";
 
-    /*     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+    ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
     TalonSRX *talonRL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
     TalonSRX *talonRL = new TalonSRX(62); 
+    */
 
-    if (SDL_JoystickGetButton(joy, 4))
+    if (joy->axes[6])
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
     }
 
-    talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
-    /* talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0); 
+    ROS_INFO(typeid(joy->axes[4]).name());
+
+    //talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
- */
 }
 
 int main(int argc, char **argv)
