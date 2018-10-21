@@ -1,12 +1,13 @@
 <launch>
 
- <!-- Capra Cmd_Vel Node-->
-  <node pkg="capra_motors" type="capra_motors" name="cmd_veli_node"/> 
+ <!-- Capra motor control-->
+  <node pkg="capra_motors" type="capra_motors" name="motors_control"/> 
+  <node pkg="capra_remote_controller" type="capra_remote_controller" name="remote_controller"/> 
 
 
  <!-- joy node -->
   <node respawn="true" pkg="joy"
-        type="joy_node" name="capra_motors_joy" >
+        type="joy_node" name="joy" >
     <param name="dev" type="string" value="/dev/input/js0" />
     <param name="deadzone" value="0.12" />
   </node>
