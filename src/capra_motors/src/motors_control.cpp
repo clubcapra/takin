@@ -20,11 +20,29 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
 
-void joystickCallback(const geometry_msgs::Twist::ConstPtr &vel_msg)
+void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
     ROS_INFO("I heard something");
 
-    printf("HELLLLLO THERE");
+    std::string interface = "can0";
+
+    /*     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+
+    TalonSRX *talonRL = new TalonSRX(62);
+    /*     TalonSRX *talonRL = new TalonSRX(61);
+    TalonSRX *talonFL = new TalonSRX(12);
+    TalonSRX *talonRL = new TalonSRX(62); 
+
+    if (SDL_JoystickGetButton(joy, 4))
+    {
+        ctre::phoenix::unmanaged::FeedEnable(100);
+    }
+
+    talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
+    /* talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0); 
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+ */
 }
 
 int main(int argc, char **argv)
@@ -34,78 +52,9 @@ int main(int argc, char **argv)
 
     ros::NodeHandle n;
 
-    std::string interface = "can0";
-
-    ros::Subscriber remote_control = n.subscribe("capra_remote_controller", 1000, joystickCallback);
+    ros::Subscriber remote_control = n.subscribe("joy", 1000, joystickCallback);
 
     ros::spin();
 
-    ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
-
-    TalonSRX *talonFL = new TalonSRX(62);
-    /*     TalonSRX *talonRL = new TalonSRX(61);
-    TalonSRX *talonFL = new TalonSRX(12);
-    TalonSRX *talonRL = new TalonSRX(62); */
-
-    // Initialize the joystick subsystem
-    SDL_Init(SDL_INIT_JOYSTICK);
-
-    // If there are no joysticks connected, quit the program
-    if (SDL_NumJoysticks() <= 0)
-    {
-        printf("There are no joysticks connected. Quitting now...\n");
-        SDL_Quit();
-        return -1;
-    }
-
-    // Open the joystick for reading and store its handle in the joy variable
-    SDL_Joystick *joy = SDL_JoystickOpen(0);
-
-    // If the joy variable is NULL, there was an error opening it.
-    if (joy != NULL)
-    {
-        // Get information about the joystick
-        const char *name = SDL_JoystickName(joy);
-        const int num_axes = SDL_JoystickNumAxes(joy);
-        const int num_buttons = SDL_JoystickNumButtons(joy);
-        const int num_hats = SDL_JoystickNumHats(joy);
-
-        printf("Now reading from joystick '%s' with:\n"
-               "%d axes\n"
-               "%d buttons\n"
-               "%d hats\n\n",
-               name,
-               num_axes,
-               num_buttons,
-               num_hats);
-
-        int quit = 0;
-
-        // Keep reading the state of the joystick in a loop
-        while (quit == 0)
-        {
-            if (SDL_QuitRequested())
-            {
-                quit = 1;
-            }
-
-            if (SDL_JoystickGetButton(joy, 4))
-            {
-                ctre::phoenix::unmanaged::FeedEnable(100);
-            }
-
-            talonFL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
-            /* talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0); */
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
-        }
-        SDL_JoystickClose(joy);
-    }
-    else
-    {
-        printf("Couldn't open the joystick. Quitting now...\n");
-    }
-
-    SDL_Quit();
     return 0;
 }
