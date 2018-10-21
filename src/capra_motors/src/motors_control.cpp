@@ -9,6 +9,7 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
+#include <sensor_msgs/Joy.h>
 
 // SDL code from https://gist.github.com/fabiocolacio/423169234b8daf876d8eb75d8a5f2e95
 
@@ -19,7 +20,7 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
 
-void joystickCallback(const geometry_msgs::Twist &msg)
+void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
     ROS_INFO("I heard something");
 
