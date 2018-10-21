@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   message_generation
+  geometry_msgs
 )
 
 find_package(Threads REQUIRED)
@@ -104,7 +105,7 @@ find_package(SDL2 REQUIRED)
 catkin_package(
  #INCLUDE_DIRS include
  #LIBRARIES capra_motors
- CATKIN_DEPENDS roscpp std_msgs
+ CATKIN_DEPENDS roscpp std_msgs geometry_msgs
 )
 
 
