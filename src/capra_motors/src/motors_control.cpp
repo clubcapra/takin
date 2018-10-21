@@ -18,21 +18,21 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
 
-/* void joystickCallback(geometry_msgs::Twist::ConstPtr& vel)
+ void joystickCallback(geometry_msgs::Twist::ConstPtr& vel)
 {
     ROS_INFO("TEST");
-} */
+} 
 
 int main(int argc, char **argv)
 {
 
-    //ros::init(argc, argv, "capra_motors_control");
+    ros::init(argc, argv, "capra_motors_control");
 
-    //ros::NodeHandle n;
+    ros::NodeHandle n;
 
     std::string interface = "can0";
 
-    //ros::Subscriber remote_control = n.subscribe("capra_remote_controller", 1000, joystickCallback);
+    ros::Subscriber remote_control = n.subscribe("capra_remote_controller", 1000, joystickCallback);
 
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 

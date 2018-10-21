@@ -154,6 +154,7 @@ target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCT
 target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
 target_link_libraries(motors_control Threads::Threads)
 target_link_libraries(motors_control ${SDL2_LIBRARIES})
+target_link_libraries(motors_control ${catkin_LIBRARIES})
 
 #############
 ## Install ##
