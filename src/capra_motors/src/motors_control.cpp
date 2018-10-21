@@ -22,6 +22,8 @@ float float1, float2;
 void joystickCallback(const geometry_msgs::Twist &msg)
 {
     ROS_INFO("I heard something");
+
+    printf("HELLLLLO THERE")
 }
 
 int main(int argc, char **argv)
