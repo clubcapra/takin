@@ -38,6 +38,8 @@ int main(int argc, char **argv)
 
     ros::Subscriber remote_control = n.subscribe("joy", 1000, joystickCallback);
 
+    ros::spin();
+
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
     TalonSRX *talonFL = new TalonSRX(62);
