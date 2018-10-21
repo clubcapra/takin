@@ -20,7 +20,7 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
 
-void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
+void joystickCallback(const geometry_msgs::Twist::ConstPtr &vel_msg)
 {
     ROS_INFO("I heard something");
 
