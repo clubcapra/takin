@@ -23,7 +23,6 @@ float float1, float2;
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
 
-
     TalonSRX *talonRL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
@@ -35,11 +34,10 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
         ctre::phoenix::unmanaged::FeedEnable(100);
     }
 
+    //ROS_INFO("RJS_X: [%f]", joy->axes[2]);
+    //ROS_INFO("RJS_Y: [%f]", joy->axes[3]);
 
-    ROS_INFO("RJS_X: [%f]", joy->axes[2]);
-    ROS_INFO("RJS_Y: [%f]", joy->axes[3]);
-
-    //talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
+    talonRL->Set(ControlMode::PercentOutput, joy->axes[3]);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
