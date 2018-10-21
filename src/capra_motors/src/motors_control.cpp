@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
+#include "std_msgs/String.h"
 
 // SDL code from https://gist.github.com/fabiocolacio/423169234b8daf876d8eb75d8a5f2e95
 
