@@ -39,7 +39,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 
     talonRL->Set(ControlMode::PercentOutput, joy->axes[3]);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
 int main(int argc, char **argv)
