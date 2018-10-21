@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
     ros::init(argc, argv, "capra_motors_control");
 
-    ros::NodeHandle n;
+    //ros::NodeHandle n;
 
     std::string interface = "can0";
 
