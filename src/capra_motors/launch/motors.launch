@@ -1,7 +1,7 @@
 <launch>
 
  <!-- Capra motor control-->
-  <node pkg="capra_motors" type="motors_control" name="motors_control"/> 
+  <node pkg="capra_motors" type="motors_control" name="motors_control" output="screen"/> 
   <node pkg="capra_remote_controller" type="capra_remote_controller" name="remote_controller"/> 
 
 
