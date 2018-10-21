@@ -18,7 +18,7 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
 
-void joystickCallback(const geometry_msgs::Twist &twist)
+void joystickCallback(geometry_msgs::Twist::ConstPtr& vel)
 {
     ROS_INFO("TEST");
 }
