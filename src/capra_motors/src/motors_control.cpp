@@ -38,7 +38,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     }
     std::string test = std::to_string(joy->axes[4]);
 
-    ROS_INFO(test.c_str());
+    ROS_INFO("TEST %s", test);
 
     //talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
 
