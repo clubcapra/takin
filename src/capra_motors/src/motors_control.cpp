@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
     std::string interface = "can0";
 
-    ros::Subscriber remote_control = n.subscribe("joy", 1000, joystickCallback);
+    ros::Subscriber remote_control = n.subscribe("capra_remote_controller", 1000, joystickCallback);
 
     ros::spin();
 
