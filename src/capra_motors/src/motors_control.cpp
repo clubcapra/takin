@@ -19,9 +19,9 @@ using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
 
-void joystickCallback(const std_msgs::String::ConstPtr &msg)
+void joystickCallback(const geometry_msgs::Twist &msg)
 {
-    ROS_INFO("I heard: [%s]", msg->data.c_str());
+    ROS_INFO("I heard something");
 }
 
 int main(int argc, char **argv)
