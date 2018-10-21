@@ -10,7 +10,6 @@
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
 #include <sensor_msgs/Joy.h>
-#include <typeinfo.h>
 
 // SDL code from https://gist.github.com/fabiocolacio/423169234b8daf876d8eb75d8a5f2e95
 
@@ -37,8 +36,9 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
     }
+    std::string test = std::to_string(joy->axes[4]);
 
-    ROS_INFO(typeid(joy->axes[4]).name());
+    ROS_INFO(test.c_str());
 
     //talonRL->Set(ControlMode::PercentOutput, ((double)SDL_JoystickGetAxis(joy, 1)) / 32767.0);
 
