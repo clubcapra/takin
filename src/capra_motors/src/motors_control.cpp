@@ -26,7 +26,7 @@ float float1, float2;
 int main(int argc, char **argv)
 {
 
-    ros::init(argc, argv, "capra_motors_control");
+    //ros::init(argc, argv, "capra_motors_control");
 
     //ros::NodeHandle n;
 
