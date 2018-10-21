@@ -23,7 +23,7 @@ void joystickCallback(const geometry_msgs::Twist &msg)
 {
     ROS_INFO("I heard something");
 
-    printf("HELLLLLO THERE")
+    printf("HELLLLLO THERE");
 }
 
 int main(int argc, char **argv)
