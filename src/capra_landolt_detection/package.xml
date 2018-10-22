@@ -20,6 +20,7 @@
   <depend>sensor_msgs</depend>
   <depend>roscpp</depend>
   <depend>nodelet</depend>
+  <depend>capra_msgs</depend>
   
   <export>
     <nodelet plugin="${prefix}/nodelet.xml" />

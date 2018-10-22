@@ -3,28 +3,36 @@ project(capra_landolt_detection)
 
 add_compile_options(-std=c++11)
 
+find_package(Boost REQUIRED COMPONENTS thread)
+find_package(OpenCV REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   image_transport
   roscpp
-  std_msgs
   sensor_msgs
+  std_msgs
   image_publisher
   roslint
+  capra_msgs
 )
 
 catkin_package(
-  INCLUDE_DIRS include
   LIBRARIES capra_nodelet_landolt
-  CATKIN_DEPENDS nodelet cv_bridge roscpp sensor_msgs
+  CATKIN_DEPENDS 
+    nodelet 
+    cv_bridge 
+    roscpp 
+    sensor_msgs 
+    capra_msgs 
+    std_msgs 
+    image_transport
 )
 
 include_directories(
-  include/${PROJECT_NAME}
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(capra_nodelet_landolt src/LandoltNodelet.cpp src/CMath.cpp src/CUtil.cpp)
+add_library(capra_nodelet_landolt src/LandoltNodelet.cpp)
 target_link_libraries(capra_nodelet_landolt ${catkin_LIBRARIES})
 
 if(catkin_EXPORTED_LIBRARIES)
