@@ -7,9 +7,6 @@
   <maintainer email="capra@clubcapra.com">Capra</maintainer>
 
   <license>GPLv3</license>
-
-  <!--   <doc_depend>doxygen</doc_depend> -->
-  <buildtool_depend>catkin</buildtool_depend>
   
   <buildtool_depend>catkin</buildtool_depend>
 

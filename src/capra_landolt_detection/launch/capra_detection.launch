@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="nodelet" type="nodelet" name="standalone_nodelet"  args="manager" output="screen"/>
+
+    <node pkg="nodelet" type="nodelet" name="LandoltNodelet" args="load capra/LandoltNodelet standalone_nodelet" output="screen"/>
+</launch>
