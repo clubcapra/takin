@@ -50,7 +50,7 @@ Here are the steps to build our project :
  ```sh
 $ git clone https://github.com/clubcapra/Takin
 $ cd Takin
-$ ./install.sh
+$ ./setup/install.bash
 ```
 
 You need to select the right setup file for your shell when sourcing.
