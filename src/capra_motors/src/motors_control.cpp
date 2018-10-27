@@ -29,15 +29,14 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     TalonSRX *talonRL = new TalonSRX(62); 
     */
 
-   ROS_INFO("TESTING %d",joy->buttons[7]);
-
-    if (joy->buttons[7] == 1)
+    if (joy->buttons[7])
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
     }
     
-    //ROS_INFO("RJS_X: [%f]", joy->axes[2]);
-    //ROS_INFO("RJS_Y: [%f]", joy->axes[3]);
+    /* if(joy->buttons[6]){
+        ctre::phoenix::        
+    } */
 
     talonRL->Set(ControlMode::PercentOutput, joy->axes[3]);
 
