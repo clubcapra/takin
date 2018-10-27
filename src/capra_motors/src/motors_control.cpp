@@ -32,9 +32,11 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     if (joy->axes[6])
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
-    } else (
+    }
+    else
+    {
         ctre::phoenix::unmanaged::FeedEnable(0);
-    )
+    }
 
     //ROS_INFO("RJS_X: [%f]", joy->axes[2]);
     //ROS_INFO("RJS_Y: [%f]", joy->axes[3]);
