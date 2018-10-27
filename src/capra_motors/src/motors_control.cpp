@@ -29,15 +29,11 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     TalonSRX *talonRL = new TalonSRX(62); 
     */
 
-    if (joy->axes[6])
+    if (joy->axes[7] == 1)
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
     }
-    else
-    {
-        ctre::phoenix::unmanaged::FeedEnable(0);
-    }
-
+    
     //ROS_INFO("RJS_X: [%f]", joy->axes[2]);
     //ROS_INFO("RJS_Y: [%f]", joy->axes[3]);
 
