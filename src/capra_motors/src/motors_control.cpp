@@ -29,7 +29,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     TalonSRX *talonRL = new TalonSRX(62); 
     */
 
-   ROS_INFO("TESTING %d",joy->axes[7])
+   ROS_INFO("TESTING %d",joy->axes[7]);
 
     if (joy->axes[7] == 1)
     {
