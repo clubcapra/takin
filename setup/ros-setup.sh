@@ -37,6 +37,11 @@ echo "${step}Installing ROS Dependancies...${reset}"
 echo "${step}Adding rules...${reset}"
 {
     sudo cp setup/49-capra.rules /etc/udev/rules.d/
+	
+	sudo cp setup/56-orbbec-usb.rules /etc/udev/rules.d/
+	sudo service udev reload
+	sudo service udev restart
+
     sudo addgroup $USER dialout
 }
 

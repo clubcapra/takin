@@ -5,24 +5,11 @@ if [ "$USER" = "root" ]; then
     exit 1
 fi
 
-allDone=0
-
-red=`tput setaf 1`
-green=`tput setaf 2`
-step=`tput setaf 6`
+red=`tput setaf 196`
+green=`tput setaf 70`
+step=`tput setaf 51`
+warning=`tput setaf 214`
 reset=`tput sgr0`
-
-abort()
-{
-	if [ $allDone -eq 0 ]
-	then
-	    echo "${red}
-=============================================
-Error install Takin. Aborting.
-Please check $logFile for details
-=============================================${reset}" >&2
-	fi
-}
 
 # Flag to exit if a command causes an error.
 set -e

@@ -24,8 +24,14 @@ echo "${step}Building workspace... This can take a while${reset}"
 echo "
 ${green}===========================================================================================
 Takin installation successful.
-===========================================================================================${reset}"
+===========================================================================================${reset}
+"
 
-allDone=1
+read -p "${warning}{Warning}${reset} To complete your installation, you need to reboot your computer. Do you want to reboot now ? [Y/n]" -n 1 -r
+
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo reboot now
+fi
 
 exit
