@@ -23,17 +23,23 @@ class LandoltNodelet : public nodelet::Nodelet
         LandoltNodelet() {}
         virtual void onInit();
     private:
+        // Subsciber
+        typedef tuple<Point2f, float, float> Gap;
         boost::shared_ptr<image_transport::ImageTransport> it_;
         image_transport::CameraSubscriber sub_camera_;
         int queue_size_;
 
+        // Publisher
         boost::mutex connect_mutex_;
+        image_transport::Publisher image_pub_;
         ros::Publisher landolt_pub_;
 
+        vector<float> cached_angles_;
+
         void connectCb();
-        void imageCb(const sensor_msgs::ImageConstPtr &image_msg, const sensor_msgs::CameraInfoConstPtr& info_msg);
-        void findLandoltGaps(Mat imageRaw, vector<capra_msgs::LandoltGap>& landoltGaps);
-        void findLandolt(vector<vector<Point>>& contours, vector<array<Point, 3>>& gaps, int minEdge, float minRatioCircle, int minDepth);
+        void imageCb(const sensor_msgs::ImageConstPtr &image_msg, 
+                     const sensor_msgs::CameraInfoConstPtr& info_msg);
+        void findLandoltGaps(const Mat imageRaw, vector<Gap>& gaps, int minEdge, float minRatioCircle, int minDepth);
 };
 
 float magnitudePoint(cv::Point2f diff) 
@@ -55,7 +61,6 @@ float angleBetween(cv::Point2f origin, cv::Point2f dest)
 
 void LandoltNodelet::onInit()
 {
-    NODELET_INFO("On Init Landolt");
     ros::NodeHandle &nh         = getNodeHandle();
     ros::NodeHandle &private_nh = getPrivateNodeHandle();
 
@@ -65,20 +70,25 @@ void LandoltNodelet::onInit()
     private_nh.param("queue_size", queue_size_, 5);
     
     ros::SubscriberStatusCallback connect_cb = boost::bind(&LandoltNodelet::connectCb, this);
+    image_transport::SubscriberStatusCallback img_connect_cb = boost::bind(&LandoltNodelet::connectCb, this);
     // Make sure we don't enter connectCb() between advertising and assigning to pub_rect_
     boost::lock_guard<boost::mutex> lock(connect_mutex_);
 
-    landolt_pub_ = nh.advertise<capra_msgs::Landolts>("/capra/detection/landolts", 1, connect_cb, connect_cb);
+    landolt_pub_ = nh.advertise<capra_msgs::Landolts>("/detection/landolts", 1, connect_cb, connect_cb);
+    image_pub_ = it_->advertise("/detection/image_landolts", 1, img_connect_cb, img_connect_cb);
 }
 
 void LandoltNodelet::connectCb()
 {
-    NODELET_INFO("Connect.");
     boost::lock_guard<boost::mutex> lock(connect_mutex_);
-    if (landolt_pub_.getNumSubscribers() == 0)
+    if (landolt_pub_.getNumSubscribers() == 0 && image_pub_.getNumSubscribers() == 0)
+    {
+        NODELET_INFO("Disconnecting to Landolt Detector...");
         sub_camera_.shutdown();
+    }
     else if (!sub_camera_)
     {   
+        NODELET_INFO("Connecting to Landolt Detector...");
         image_transport::TransportHints hints("raw", ros::TransportHints(), getPrivateNodeHandle());
         sub_camera_ = it_->subscribeCamera("/capra/camera_3d/rgb/image_raw", queue_size_, &LandoltNodelet::imageCb, this, hints);
     }
@@ -87,10 +97,10 @@ void LandoltNodelet::connectCb()
 void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
                                 const sensor_msgs::CameraInfoConstPtr& info_msg)
 {
-    cv_bridge::CvImageConstPtr img_ptr;
+    cv_bridge::CvImagePtr img_ptr;
     try
     {
-        img_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::BGR8);
+        img_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     }
     catch (cv_bridge::Exception& e)
     {
@@ -98,18 +108,34 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &msg,
         return;
     }
 
-    vector<capra_msgs::LandoltGap> landoltGaps;    
-    findLandoltGaps(img_ptr->image, landoltGaps);
+    vector<Gap> gaps;  
+    findLandoltGaps(img_ptr->image, gaps, 12, 0.8f, 10);
 
-    capra_msgs::Landolts landolts;
-    landolts.gaps = landoltGaps;
-    landolts.header.stamp = ros::Time::now();
-    landolts.image_header = img_ptr->header;
-    // Publish the ROS sensor_msgs image
-    landolt_pub_.publish(landolts);
+    vector<float> angles;
+    for (int i = 0; i < gaps.size(); i++) 
+    {
+        circle(img_ptr->image, get<0>(gaps[i]), get<1>(gaps[i]), Scalar(0,0,1), 3);
+        angles.push_back(get<2>(gaps[i]));
+    }
+
+    std_msgs::Header header;
+    header.stamp = ros::Time::now();
+    if(cached_angles_ == angles)
+    {
+        cached_angles_ = angles;
+
+        capra_msgs::Landolts landolts;
+        landolts.angles = cached_angles_;
+        landolts.header = header;
+        // Publish the ROS sensor_msgs image
+        landolt_pub_.publish(landolts);
+    }
+
+    img_ptr->header = header;
+    image_pub_.publish(img_ptr->toImageMsg());
 }
 
-void LandoltNodelet::findLandoltGaps(const Mat imageRaw, vector<capra_msgs::LandoltGap>& landoltGaps)
+void LandoltNodelet::findLandoltGaps(const Mat imageRaw, vector<Gap>& gaps, int minEdge, float minRatioCircle, int minDepth)
 {
     Mat thresholdMat;
     cvtColor(imageRaw, thresholdMat, COLOR_BGR2GRAY); // convert to grayscale
@@ -119,34 +145,6 @@ void LandoltNodelet::findLandoltGaps(const Mat imageRaw, vector<capra_msgs::Land
     vector<vector<Point>> contours; // list of contour points
     findContours(thresholdMat, contours, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0));
 
-    vector<array<Point, 3>> gaps;
-    findLandolt(contours, gaps, 12, 0.8f, 10);
-
-    for (int i = 0; i < gaps.size(); i++) 
-    {
-        vector<Point> points;
-        points.push_back(gaps[i][0]);
-        points.push_back(gaps[i][1]);
-
-        float radius;
-        Point2f center;
-        minEnclosingCircle(points, center, radius);
-        //Recenter the cercle at the center of the gaps
-        Point2f dir = normalizePoint(Point2f(gaps[i][2]) - center);
-        center += dir * radius;
-
-        capra_msgs::LandoltGap landoltGap;
-        landoltGap.gap.radius = radius;
-        landoltGap.gap.xcenter = center.x;
-        landoltGap.gap.ycenter = center.y;
-        landoltGap.angle = angleBetween(Point2f(1, 0), dir) + 180;
-
-        landoltGaps.push_back(landoltGap);
-    }
-}
-
-void LandoltNodelet::findLandolt(vector<vector<Point>>& contours, vector<array<Point, 3>>& gaps, int minEdge, float minRatioCircle, int minDepth)
-{
     for (size_t i = 0; i < contours.size(); i++)
     {
         if (contours[i].size() > minEdge)
@@ -184,18 +182,40 @@ void LandoltNodelet::findLandolt(vector<vector<Point>>& contours, vector<array<P
 
                 if (deepDefects.size() == 1)
                 {
-                    array<Point, 3> points;
                     const Vec4i& v = deepDefects[0];
 
-                    int startidx = v[0]; points[0] = Point(contours[i][startidx]);
-                    int endidx = v[1]; points[1] = Point(contours[i][endidx]);
-                    int faridx = v[2]; points[2] = Point(contours[i][faridx]);
+                    int startidx = v[0];
+                    int endidx = v[1];
+                    int faridx = v[2];
 
-                    gaps.push_back(points);
+                    vector<Point> points;
+                    points.push_back(Point(contours[i][startidx]));
+                    points.push_back(Point(contours[i][endidx]));
+                    
+                    float radius;
+                    Point2f center;
+                    minEnclosingCircle(points, center, radius);
+                    //Recenter the cercle at the center of the gaps
+                    Point2f dir = normalizePoint(Point2f(contours[i][faridx]) - center);
+                    center += dir * radius;
+
+                    float angle = angleBetween(Point2f(1, 0), dir) + 180;
+                    angle = (int)(angle / 45) * 45;
+
+                    Gap gap;
+                    get<0>(gap) = center;
+                    get<1>(gap) = radius;
+                    get<2>(gap) = angle;
+                    gaps.push_back(gap);
                 }
             }
         }	
     }
+
+    std::sort(begin(gaps), end(gaps),
+    [](Gap const &t1, Gap const &t2) {
+        return get<1>(t1) < get<1>(t2); // sort gap by radius
+    });
 }
 
 PLUGINLIB_EXPORT_CLASS(capra::LandoltNodelet, nodelet::Nodelet)
