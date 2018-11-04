@@ -11,14 +11,10 @@ public:
 private:
   void joyCallback(const sensor_msgs::Joy::ConstPtr &joy);
 
-  ros::NodeHandle nh_;
+  ros::NodeHandle nh;
 
-  int linear_x, linear_y;
-  int angular_x, angular_y;
-
-  double l_scale_, a_scale_;
-  ros::Publisher vel_pub_;
-  ros::Subscriber joy_sub_;
+  ros::Publisher joy_pub;
+  ros::Subscriber joy_sub;
 };
 
 /*
@@ -26,20 +22,11 @@ Create a node that uses the axes 3 and 4 for the linear value and 6 and 7 for th
 It convert it  to a cmd_vel format. 
 */
 
-CapraRemoteController::CapraRemoteController() : linear_x(3),
-                                                 linear_y(4),
-                                                 angular_x(6),
-                                                 angular_y(7)
+CapraRemoteController::CapraRemoteController()
 {
 
-  nh_.param("axis_linear", linear_x, linear_x);
-  nh_.param("axis_angular", linear_y, linear_y);
-  nh_.param("axis_angular", angular_x, angular_x);
-  nh_.param("axis_angular", angular_y, angular_y);
-  nh_.param("scale_linear", l_scale_, l_scale_);
-  nh_.param("scale_angular", a_scale_, a_scale_);
-
-  vel_pub_ = nh_.advertise<geometry_msgs::Twist>("capra_remote_controller", 1);
+  joy_sub = nh.subscribe<sensor_msgs::Joy>("joy", 100, &CapraRemoteController::joyCallback, this);
+  joy_pub = nh.advertise<sensor_msgs::Joy>("capra_rc_joy", 1);
 }
 
 /*
@@ -48,13 +35,7 @@ it.
 */
 void CapraRemoteController::joyCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
-  geometry_msgs::Twist twist;
-
-  twist.linear.y = (l_scale_ * joy->axes[linear_y] > 0) ? 1 : ((l_scale_ * joy->axes[linear_y] < 0) ? -1 : 0);
-  twist.linear.x = (l_scale_ * joy->axes[linear_x] > 0) ? 1 : ((l_scale_ * joy->axes[linear_x] < 0) ? -1 : 0);
-  twist.angular.y = (a_scale_ * joy->axes[angular_y] > 0) ? 1 : ((a_scale_ * joy->axes[angular_y] < 0) ? -1 : 0);
-  twist.angular.x = (a_scale_ * joy->axes[angular_x] > 0) ? 1 : ((a_scale_ * joy->axes[angular_x] < 0) ? -1 : 0);
-  vel_pub_.publish(twist);
+  joy_pub.publish(joy);
 }
 
 int main(int argc, char **argv)
