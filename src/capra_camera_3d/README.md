@@ -1,7 +1,7 @@
 # capra_camera_3d
 
  Capra-Takin's **capra_camera_3d** package is a wrapper for
- a FLIR lepton camera publishing point cloud data, infrared data,
+ the Orbec Astra Mini camera publishing point cloud data, infrared data,
  RGB data (see **Published topics** section) to Club Capra's rescue robot.
 
 ### Dependencies
