@@ -74,8 +74,8 @@ void LandoltNodelet::onInit()
     // Make sure we don't enter connectCb() between advertising and assigning to pub_rect_
     boost::lock_guard<boost::mutex> lock(connect_mutex_);
 
-    landolt_pub_ = nh.advertise<capra_msgs::Landolts>("/detection/landolts", 1, connect_cb, connect_cb);
-    image_pub_ = it_->advertise("/detection/image_landolts", 1, img_connect_cb, img_connect_cb);
+    landolt_pub_ = nh.advertise<capra_msgs::Landolts>("landolts", 1, connect_cb, connect_cb);
+    image_pub_ = it_->advertise("image", 1, img_connect_cb, img_connect_cb);
 }
 
 void LandoltNodelet::connectCb()
