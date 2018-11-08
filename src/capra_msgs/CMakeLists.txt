@@ -10,6 +10,8 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   Landolts.msg
+  BoundingCircles.msg
+  Point2f.msg
 )
 
 ## Generate services in the 'srv' folder

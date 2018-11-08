@@ -45,8 +45,11 @@ endif()
 
 if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
-  add_rostest_gtest(tests_mynode test/capra_detection.test test/utest.cpp)
-  target_link_libraries(tests_mynode ${catkin_LIBRARIES})
+  catkin_add_executable_with_gtest(landolt_test test/landolt_test.cpp)
+  add_rostest(test/capra_detection.test ARGS datapath:=${PROJECT_SOURCE_DIR}/test/sample/)
+  #catkin_add_gtest(landolt_test test/landolt_test.cpp WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/test/sample)
+  #add_rostest(test/capra_detection.test DEPENDENCIES landolt_test)
+  target_link_libraries(landolt_test ${catkin_LIBRARIES})
 endif()
 
 roslint_cpp()
