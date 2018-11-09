@@ -5,4 +5,8 @@
     <node pkg="nodelet" type="nodelet" name="LandoltNodelet" args="load capra/LandoltNodelet standalone_nodelet" output="screen">
         <param name="subscriber_image" type="str" value="/capra/camera_3d/rgb/image_raw" />
     </node>
+
+    <param name="datapath" value="$(arg datapath)"/>
+    
+    <test pkg="capra_landolt_detection" type="landolt_test" test-name="landolt_test" time-limit="10.0" />
 </launch>
