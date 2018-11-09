@@ -7,5 +7,6 @@
     </node>
 
     <param name="datapath" value="$(arg datapath)"/>
-    <test pkg="capra_landolt_detection" type="landolt_test" test-name="landolt_test" />
+    
+    <test pkg="capra_landolt_detection" type="landolt_test" test-name="landolt_test" time-limit="10.0" />
 </launch>

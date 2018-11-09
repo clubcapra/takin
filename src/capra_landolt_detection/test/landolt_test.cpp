@@ -182,24 +182,22 @@ TEST_F(LandoltTest, testImages)
         EXPECT_EQ(size, image_meta_.centers.size());
 
         const double radiusError = 3.0;
-        const double agnleError = 1.0;
+        const double boundingError = 3.0;
+        const double angleError = 1.0;
 
         for(int j = 0; j < size; j++)
         {
-            //Smaller the landolt is smaller the error radius should be
-            //We considerer half the radius as a acceptable error
-            double boundingError = received_radius_[j] / 2;
-
             bool hasFound = false;
             for(int k = 0; k < size; k++)
             {
                 //Search a landolt at the landolt position in the image
                 if(std::abs(image_meta_.centers[k].x - received_centers_[j].x) < boundingError &&
-                   std::abs(image_meta_.centers[k].y - received_centers_[j].y) < boundingError)
+                   std::abs(image_meta_.centers[k].y - received_centers_[j].y) < boundingError &&
+                    std::abs(image_meta_.radius[k] - received_radius_[j]) < radiusError &&
+                    std::abs(image_meta_.angles[k] - received_landolts_[j]) < angleError)
                 {
                     //Check if the radius and angle is the near the two values
-                    hasFound = std::abs(image_meta_.radius[k] - received_radius_[j]) < radiusError &&
-                               std::abs(image_meta_.angles[k] - received_landolts_[j]) < agnleError;
+                    hasFound = true;
                     break;
                 }
             }
