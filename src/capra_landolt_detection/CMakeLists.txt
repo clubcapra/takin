@@ -62,6 +62,6 @@ install(TARGETS capra_nodelet_landolt
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
-install(FILES nodelets.xml
+install(FILES nodelet.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
