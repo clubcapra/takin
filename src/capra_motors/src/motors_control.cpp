@@ -22,7 +22,6 @@ float float1, float2;
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
-
     TalonSRX *talonRL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
@@ -36,30 +35,21 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     }
     else
     {
-
         if (joy->buttons[7])
         {
             ctre::phoenix::unmanaged::FeedEnable(100);
         }
-
         talonRL->Set(ControlMode::PercentOutput, joy->axes[3]);
     }
 }
 
 int main(int argc, char **argv)
 {
-
     ros::init(argc, argv, "capra_motors_control");
-
     ros::NodeHandle n;
-
     std::string interface = "can0";
-
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
-
     ros::Subscriber remote_control = n.subscribe("capra_rc_joy", 1000, joystickCallback);
-
     ros::spin();
-
     return 0;
 }
