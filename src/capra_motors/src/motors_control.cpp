@@ -37,18 +37,18 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
         pressed = false;
     }
 
-    ROS_INFO("FEEDENDABLE : %d", feedEnableToggle);
-//    if (feedEnableToggle) {
-//        ROS_INFO("TEST MOTOR CONTROL");
-//        if (joy->axes[2] == 1.0) {
-//            ROS_INFO("TEST MOTOR FORWARD");
-//            ctre::phoenix::unmanaged::FeedEnable(100);
-//            talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
-//        } else {
-//            ctre::phoenix::unmanaged::FeedEnable(100);
-//            talonRL->Set(ControlMode::PercentOutput, 0.0);
-//        }
-//    }
+
+    if (feedEnableToggle) {
+        ROS_INFO("TEST MOTOR CONTROL");
+        if (joy->axes[2] == 1.0) {
+            ROS_INFO("TEST MOTOR FORWARD");
+            ctre::phoenix::unmanaged::FeedEnable(100);
+            talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
+        } else {
+            ctre::phoenix::unmanaged::FeedEnable(100);
+            talonRL->Set(ControlMode::PercentOutput, 0.0);
+        }
+    }
 }
 
 int main(int argc, char **argv);
