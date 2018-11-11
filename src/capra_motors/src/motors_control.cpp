@@ -32,11 +32,11 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
         pressed = false;
     }
 
+    ROS_INFO("FEED_ENABLE_TOGGLE : %d", feedEnableToggle);
     if (feedEnableToggle) {
         if (joy->axes[2] != 1.0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
             for (auto &motor:both_tracks) {
-
                 motor->Set(ControlMode::PercentOutput, 0.0);
             }
         } else if (joy->axes[1] > 0.0) { // Forward
