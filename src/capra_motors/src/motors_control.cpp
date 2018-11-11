@@ -31,14 +31,17 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     */
     if ((joy->buttons[0] && joy->buttons[6]))
     {
+        ROS_INFO("TEST FEED ENABLE CONDITION");
         feedEnableToggle = !feedEnableToggle;
     }
 
     if (feedEnableToggle)
     {
+        ROS_INFO("TEST MOTOR CONTROL");
         ctre::phoenix::unmanaged::FeedEnable(100);
         if (joy->axes[2] == 1.0)
         {
+            ROS_INFO("TEST MOTOR FORWARD");
             talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
         }
         else
