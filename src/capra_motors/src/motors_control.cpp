@@ -18,46 +18,39 @@ using namespace ctre::phoenix::platform;
 using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
 
-float float1, float2;
 bool feedEnableToggle = false;
+bool pressed;
 
-void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
-{
+void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
 
-    TalonSRX *talonRL = new TalonSRX(62);
+    TalonSRX *talonRL;
+    talonRL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
     TalonSRX *talonRL = new TalonSRX(62); 
     */
 
-    while (joy->buttons[0] != 0 && joy->buttons[6] != 0)
-    {
-        if (joy->buttons[0] == 1 && joy->buttons[6] == 1)
-        {
-            ROS_INFO("TEST FEED ENABLE CONDITION");
-            feedEnableToggle = !feedEnableToggle;
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
+    if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
+        pressed = true;
+    } else if (joy->buttons[0] == 0 && joy->buttons[6] == 0 && pressed) {
+        feedEnableToggle = !feedEnableToggle;
     }
 
-    if (feedEnableToggle)
-    {
+    if (feedEnableToggle) {
         ROS_INFO("TEST MOTOR CONTROL");
         ctre::phoenix::unmanaged::FeedEnable(100);
-        if (joy->axes[2] == 1.0)
-        {
+        if (joy->axes[2] == 1.0) {
             ROS_INFO("TEST MOTOR FORWARD");
             talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
-        }
-        else
-        {
+        } else {
             talonRL->Set(ControlMode::PercentOutput, 0.0);
         }
     }
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv);
+
+int main(int argc, char **argv) {
     ros::init(argc, argv, "capra_motors_control");
     ros::NodeHandle n;
     std::string interface = "can0";
