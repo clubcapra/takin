@@ -34,6 +34,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
         pressed = true;
     } else if (joy->buttons[0] == 0 && joy->buttons[6] == 0 && pressed) {
         feedEnableToggle = !feedEnableToggle;
+        pressed = false;
     }
 
     ROS_INFO("FEEDENDABLE : %d", feedEnableToggle);
