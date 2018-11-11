@@ -29,7 +29,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     TalonSRX *talonFL = new TalonSRX(12);
     TalonSRX *talonRL = new TalonSRX(62); 
     */
-    if ((joy->buttons[0] && joy->buttons[6]))
+    if (joy->buttons[0] == 1 && joy->buttons[6] == 1)
     {
         ROS_INFO("TEST FEED ENABLE CONDITION");
         feedEnableToggle = !feedEnableToggle;
