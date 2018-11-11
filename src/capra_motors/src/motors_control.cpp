@@ -5,11 +5,10 @@
 #include <chrono>
 #include <thread>
 #include "Platform-linux-socket-can.h"
-#include <SDL2/SDL.h>
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
-#include "motor.h"
+#include "MotorPhoenix.h"
 #include <sensor_msgs/Joy.h>
 //
 
@@ -23,14 +22,12 @@ using namespace ctre::phoenix::motorcontrol::can;
 bool feedEnableToggle = false;
 bool pressed;
 
-void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
+MotorPhoenix motor_FL(11, MotorPhoenix::LEFT_MOTOR);
+MotorPhoenix motor_FR(12, MotorPhoenix::RIGHT_MOTOR);
+MotorPhoenix motor_RL(61, MotorPhoenix::LEFT_MOTOR);
+MotorPhoenix motor_RR(62, MotorPhoenix::RIGHT_MOTOR);
 
-    TalonSRX *talonRL;
-    talonRL = new TalonSRX(62);
-    /*     TalonSRX *talonRL = new TalonSRX(61);
-    TalonSRX *talonFL = new TalonSRX(12);
-    TalonSRX *talonRL = new TalonSRX(62); 
-    */
+void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
 
     if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
         pressed = true;
@@ -39,16 +36,13 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
         pressed = false;
     }
 
-
     if (feedEnableToggle) {
-
         if (joy->axes[2] != 1.0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
-            talonRL->Set(ControlMode::PercentOutput, 0.0);
+            motor_FL.setPercentOutput(0.0);
         } else {
-            ROS_INFO("TEST MOTOR FORWARD");
             ctre::phoenix::unmanaged::FeedEnable(100);
-            talonRL->Set(ControlMode::PercentOutput, joy->axes[1]);
+            motor_FL.setPercentOutput(joy->axes[1]);
         }
     }
 }
