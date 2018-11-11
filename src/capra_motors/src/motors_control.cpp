@@ -9,7 +9,9 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
+#include "motor.h"
 #include <sensor_msgs/Joy.h>
+//
 
 // SDL code from https://gist.github.com/fabiocolacio/423169234b8daf876d8eb75d8a5f2e95
 
@@ -39,7 +41,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
 
 
     if (feedEnableToggle) {
-        ROS_INFO("TEST MOTOR CONTROL");
+
         if (joy->axes[2] != 1.0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
             talonRL->Set(ControlMode::PercentOutput, 0.0);
