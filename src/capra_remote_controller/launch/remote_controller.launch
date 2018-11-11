@@ -5,8 +5,7 @@
 
 
  <!-- joy node -->
-  <node respawn="true" pkg="joy"
-        type="joy_node" name="capra_rc_joy" >
+  <node respawn="true" pkg="joy" type="joy_node" name="capra_rc_joy" >
     <param name="dev" type="string" value="/dev/input/js0" />
     <param name="autorepeat_rate" value="100" />
     <param name="deadzone" value="0.12" />
