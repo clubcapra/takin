@@ -55,10 +55,10 @@ int main(int argc, char **argv) {
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-    left_track.emplace_back(11);
-    left_track.emplace_back(61);
-    right_track.emplace_back(12);
-    right_track.emplace_back(62);
+    left_track.push_back(TalonSRX(11));
+    left_track.push_back(TalonSRX(61));
+    right_track.push_back(TalonSRX(12));
+    right_track.push_back(TalonSRX(62));
 
     both_tracks.reserve(left_track.size() + right_track.size());
     both_tracks.insert(both_tracks.end(), left_track.begin(), left_track.end());
