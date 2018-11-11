@@ -41,6 +41,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
             }
         } else if (joy->axes[1] > 0.0) { // Forward
             ctre::phoenix::unmanaged::FeedEnable(100);
+            ROS_INFO("MOTOR INPUT %f",(joy->axes[5] + 1) / 2);
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, (joy->axes[5] + 1) / 2);
         }
