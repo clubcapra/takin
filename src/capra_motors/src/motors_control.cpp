@@ -20,9 +20,9 @@ using namespace ctre::phoenix::motorcontrol::can;
 bool feedEnableToggle = false;
 bool pressed;
 
-std::vector<TalonSRX*> left_track;
-std::vector<TalonSRX*> right_track;
-std::vector<TalonSRX*> both_tracks;
+std::vector<TalonSRX *> left_track;
+std::vector<TalonSRX *> right_track;
+std::vector<TalonSRX *> both_tracks;
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
     if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
@@ -55,9 +55,9 @@ int main(int argc, char **argv) {
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-    left_track.push_back(new TalonSRX(11));
+/*    left_track.push_back(new TalonSRX(11));
     left_track.push_back(new TalonSRX(61));
-    right_track.push_back(new TalonSRX(12));
+    right_track.push_back(new TalonSRX(12));*/
     right_track.push_back(new TalonSRX(62));
 
     both_tracks.reserve(left_track.size() + right_track.size());
