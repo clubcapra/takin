@@ -37,7 +37,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
     if (feedEnableToggle)
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
-        if (joy->axes[2] = 1.0)
+        if (joy->axes[2] == 1.0)
         {
             talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
         }
