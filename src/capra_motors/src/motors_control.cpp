@@ -19,29 +19,32 @@ using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
+const bool feedEnableToggle = false;
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
 
-    ROS_INFO("TEST TEST TEST");
     TalonSRX *talonRL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
     TalonSRX *talonRL = new TalonSRX(62); 
     */
+    if ((joy->buttons[0] && joy->buttons[6]))
+    {
+        feedEnableToggle = !feedEnableToggle;
+    }
 
-    if (joy->buttons[6])
+    if (feedEnableToggle)
     {
         ctre::phoenix::unmanaged::FeedEnable(100);
-        talonRL->Set(ControlMode::PercentOutput, 0);
-    }
-    else
-    {
-        if (joy->buttons[7])
+        if (joy->axes[2] = 1.0)
         {
-            ctre::phoenix::unmanaged::FeedEnable(100);
+            talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
         }
-        talonRL->Set(ControlMode::PercentOutput, joy->axes[3]);
+        else
+        {
+            talonRL->Set(ControlMode::PercentOutput, 0.0);
+        }
     }
 }
 
