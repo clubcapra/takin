@@ -8,7 +8,6 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
-#include "../../can_talon_srx_ros/include/wpilib/CanTalonSRX.h"
 #include <sensor_msgs/Joy.h>
 #include <vector>
 #include <memory>
