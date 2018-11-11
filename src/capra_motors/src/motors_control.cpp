@@ -23,7 +23,7 @@ float float1, float2;
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
 
-    ROS_INFO("TEST TEST TEST")
+    ROS_INFO("TEST TEST TEST");
     TalonSRX *talonRL = new TalonSRX(62);
     /*     TalonSRX *talonRL = new TalonSRX(61);
     TalonSRX *talonFL = new TalonSRX(12);
