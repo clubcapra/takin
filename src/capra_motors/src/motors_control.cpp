@@ -40,10 +40,10 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
 
     if (feedEnableToggle) {
         ROS_INFO("TEST MOTOR CONTROL");
-        if (joy->axes[2] == 1.0) {
+        if (joy->axes[2] != 1.0) {
             ROS_INFO("TEST MOTOR FORWARD");
             ctre::phoenix::unmanaged::FeedEnable(100);
-            talonRL->Set(ControlMode::PercentOutput, joy->axes[2]);
+            talonRL->Set(ControlMode::PercentOutput, joy->axes[1]);
         } else {
             ctre::phoenix::unmanaged::FeedEnable(100);
             talonRL->Set(ControlMode::PercentOutput, 0.0);
