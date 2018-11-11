@@ -19,7 +19,7 @@ using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
 
 float float1, float2;
-const bool feedEnableToggle = false;
+bool feedEnableToggle = false;
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
