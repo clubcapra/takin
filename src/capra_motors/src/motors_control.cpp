@@ -36,7 +36,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
         feedEnableToggle = !feedEnableToggle;
     }
 
-    ROS_INFO("FEEDENDABLE : %b", feedEnableToggle);
+    ROS_INFO("FEEDENDABLE : %d", feedEnableToggle);
 //    if (feedEnableToggle) {
 //        ROS_INFO("TEST MOTOR CONTROL");
 //        if (joy->axes[2] == 1.0) {
