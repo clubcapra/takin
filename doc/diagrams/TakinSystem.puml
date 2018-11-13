@@ -1,0 +1,22 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND
+
+Person(operatorPerson, "Operator", "A operator of the robot, with the static UI")
+Person(technicianPerson, "Technician", "A technician of the robot, with personal computer")
+System_Boundary(takinSystem, "Takin System") {
+    Container(toolsContainer, "Tools", "C++ and ROS", "Provide tools to repair, debug and monitor the robot")
+    Container(robotContainer, "Robot System", "C++ and ROS", "The Robot Operating System (ROS) that process user input and sensor to manage the robot")
+    Container(simulationContainer, "Simulation", "C++ and ROS", "Simulate the robot in real world situation and test functionality in critical state")
+    Container(webUiContainer, "Web UI", "JavaScript and Vue", "Provide all of the functionnalities to the operator via web browser")
+}
+
+Rel(operatorPerson, webUiContainer, "Uses")
+Rel(technicianPerson, toolsContainer, "Uses")
+
+Rel(webUiContainer, robotContainer, "Uses", "HTTPS")
+Rel(toolsContainer, robotContainer, "Uses", "SSH")
+Rel(simulationContainer, robotContainer, "Uses")
+
+@enduml
