@@ -25,6 +25,7 @@ std::vector<TalonSRX *> right_track;
 std::vector<TalonSRX *> both_tracks;
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
+    //  
     if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
         pressed = true;
     } else if (joy->buttons[0] == 0 && joy->buttons[6] == 0 && pressed) {
@@ -39,9 +40,10 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
             for (auto &motor:both_tracks) {
                 motor->Set(ControlMode::PercentOutput, 0.0);
             }
-        } else if (joy->axes[1] > 0.0) { // Forward
+        } // Forward
+        else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
-            ROS_INFO("MOTOR INPUT %f", (joy->axes[5] + 1) / 2);
+            ROS_INFO("MOTOR INPUT %f", 1 - (joy->axes[5] + 1) / 2);
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, 1 - (joy->axes[5] + 1) / 2);
         }
