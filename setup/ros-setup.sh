@@ -11,7 +11,6 @@ echo "${step}Installing ROS...${reset}"
 	sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 0xB01FA116
 
 	sudo apt-get update -y
-	sudo apt-get upgrade -y
 
 	if [ "$fullVersion" = "true" ]
 	then
