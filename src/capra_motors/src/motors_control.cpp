@@ -73,10 +73,7 @@ void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
 //void forwardCheck
 
 // To check with Marco.
-/*void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor) {
-    motor->SetInverted(true);
-    left_track.push_back(motor);
-}*/
+void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor);
 
 int main(int argc, char **argv);
 
@@ -89,8 +86,9 @@ int main(int argc, char **argv) {
 /*   left_track.push_back(new TalonSRX(FL));
     right_track.push_back(new TalonSRX(FR));*/
     TalonSRX *talonRL = new TalonSRX(RL);
-    talonRL->SetInverted(true);
-    left_track.push_back(talonRL);
+//    talonRL->SetInverted(true);
+//    left_track.push_back(talonRL);
+    addLeftMotor(left_track, talonRL);
     right_track.push_back(new TalonSRX(RR));
 
     both_tracks.reserve(left_track.size() + right_track.size());
@@ -101,4 +99,9 @@ int main(int argc, char **argv) {
     ros::Subscriber remote_control = n.subscribe("capra_rc_joy", 1000, joystickCallback);
     ros::spin();
     return 0;
+}
+
+void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor) {
+    motor->SetInverted(true);
+    left_track.push_back(motor);
 }
