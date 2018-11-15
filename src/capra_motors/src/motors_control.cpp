@@ -25,6 +25,12 @@ using namespace ctre::phoenix::motorcontrol::can;
 bool feedEnableToggle = false;
 bool pressed;
 
+
+TalonSRX *talonFL;
+TalonSRX *talonFR;
+TalonSRX *talonRL;
+TalonSRX *talonRR;
+
 std::vector<TalonSRX *> left_track;
 std::vector<TalonSRX *> right_track;
 std::vector<TalonSRX *> both_tracks;
@@ -66,6 +72,11 @@ void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
 
 //void forwardCheck
 
+// To check with Marco.
+/*void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor) {
+    motor->SetInverted(true);
+    left_track.push_back(motor);
+}*/
 
 int main(int argc, char **argv);
 
@@ -77,7 +88,9 @@ int main(int argc, char **argv) {
 
 /*   left_track.push_back(new TalonSRX(FL));
     right_track.push_back(new TalonSRX(FR));*/
-    left_track.push_back(new TalonSRX(RL));
+    TalonSRX *talonRL = new TalonSRX(RL);
+    talonRL->SetInverted(true);
+    left_track.push_back(talonRL);
     right_track.push_back(new TalonSRX(RR));
 
     both_tracks.reserve(left_track.size() + right_track.size());
