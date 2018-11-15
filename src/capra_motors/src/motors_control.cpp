@@ -35,15 +35,15 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
 
     ROS_INFO("FEED_ENABLE_TOGGLE : %d", feedEnableToggle);
     if (feedEnableToggle) {
-        if (joy->axes[2] == 1.0) {
-            ctre::phoenix::unmanaged::FeedEnable(100);
+        if (joy->axes[2] == -1.0) {
+            ctre::phoenix::unmanaged::FeedEnable(10);
             for (auto &motor:both_tracks) {
                 motor->Set(ControlMode::PercentOutput, 0.0);
             }
         } // Forward
         else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {
-            ctre::phoenix::unmanaged::FeedEnable(100);
-            ROS_INFO("MOTOR INPUT %f", 1 - (joy->axes[5] + 1) / 2);
+            ctre::phoenix::unmanaged::FeedEnable(10);
+            ROS_INFO("MOTOR INPUT %f", (1 - (joy->axes[5] + 1) / 2));
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, 1 - (joy->axes[5] + 1) / 2);
         }
