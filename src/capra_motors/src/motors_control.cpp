@@ -35,44 +35,14 @@ std::vector<TalonSRX *> left_track;
 std::vector<TalonSRX *> right_track;
 std::vector<TalonSRX *> both_tracks;
 
-void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
-    //  
-    if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
-        pressed = true;
-    } else if (joy->buttons[0] == 0 && joy->buttons[6] == 0 && pressed) {
-        feedEnableToggle = !feedEnableToggle;
-        pressed = false;
-    }
+void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy);
 
-    ROS_INFO("FEED_ENABLE_TOGGLE : %d", feedEnableToggle);
-    if (feedEnableToggle) {
-        if (joy->axes[2] != 1.0) {
-            ctre::phoenix::unmanaged::FeedEnable(10);
-            for (auto &motor:both_tracks) {
-                motor->Set(ControlMode::PercentOutput, 0.0);
-            }
-        } // Forward
-        else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {
-            ctre::phoenix::unmanaged::FeedEnable(10);
-            ROS_INFO("MOTOR INPUT %f", (1 - (joy->axes[5] + 1) / 2));
-            for (auto &motor:both_tracks)
-                motor->Set(ControlMode::PercentOutput, 1 - (joy->axes[5] + 1) / 2);
-        }
-    }
-}
+void checkFeedEnable(const sensor_msgs::Joy::ConstPtr &joy);
 
-void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
-    if (joy->axes[2] != 1.0) {
-        ctre::phoenix::unmanaged::FeedEnable(10);
-        for (auto &motor:both_tracks) {
-            motor->Set(ControlMode::PercentOutput, 0.0);
-        }
-    }
-}
+void moveMotors(const sensor_msgs::Joy::ConstPtr &joy);
 
-//void forwardCheck
+void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy);
 
-// To check with Marco.
 void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor);
 
 int main(int argc, char **argv);
@@ -83,12 +53,9 @@ int main(int argc, char **argv) {
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-/*   left_track.push_back(new TalonSRX(FL));
+/*   addLeftMotor(left_track, new TalonSRX(FL));
     right_track.push_back(new TalonSRX(FR));*/
-    TalonSRX *talonRL = new TalonSRX(RL);
-//    talonRL->SetInverted(true);
-//    left_track.push_back(talonRL);
-    addLeftMotor(left_track, talonRL);
+    addLeftMotor(left_track, new TalonSRX(RL));
     right_track.push_back(new TalonSRX(RR));
 
     both_tracks.reserve(left_track.size() + right_track.size());
@@ -105,3 +72,48 @@ void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor) {
     motor->SetInverted(true);
     left_track.push_back(motor);
 }
+
+void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
+
+    checkFeedEnable(joy);
+
+    brakeMotors(joy);
+
+    moveMotors(joy);
+}
+
+void checkFeedEnable(const sensor_msgs::Joy::ConstPtr &joy) {
+    if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
+        pressed = true;
+    } else if (joy->buttons[0] == 0 && joy->buttons[6] == 0 && pressed) {
+        feedEnableToggle = !feedEnableToggle;
+        pressed = false;
+    }
+    ROS_INFO("FEED_ENABLE_TOGGLE : %d", feedEnableToggle);
+}
+
+
+void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
+    if (feedEnableToggle) {
+        if (joy->axes[2] != 1.0) {
+            ctre::phoenix::unmanaged::FeedEnable(10);
+            for (auto &motor:both_tracks) {
+                motor->Set(ControlMode::PercentOutput, 0.0);
+            }
+        }
+    }
+}
+
+void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
+    if (feedEnableToggle) {
+        if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {
+            ctre::phoenix::unmanaged::FeedEnable(10);
+            ROS_INFO("MOTOR INPUT %f", (1 - (joy->axes[5] + 1) / 2));
+            for (auto &motor:both_tracks)
+                motor->Set(ControlMode::PercentOutput, 1 - (joy->axes[5] + 1) / 2);
+        }
+    }
+}
+
+
+
