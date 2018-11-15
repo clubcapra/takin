@@ -12,6 +12,11 @@
 #include <vector>
 #include <memory>
 
+#define RR 62
+#define RL 61
+#define FR 12
+#define FL 11
+
 using namespace ctre::phoenix;
 using namespace ctre::phoenix::platform;
 using namespace ctre::phoenix::motorcontrol;
@@ -35,7 +40,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
 
     ROS_INFO("FEED_ENABLE_TOGGLE : %d", feedEnableToggle);
     if (feedEnableToggle) {
-        if (joy->axes[2] == -1.0) {
+        if (joy->axes[2] != 1.0) {
             ctre::phoenix::unmanaged::FeedEnable(10);
             for (auto &motor:both_tracks) {
                 motor->Set(ControlMode::PercentOutput, 0.0);
@@ -50,6 +55,18 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
     }
 }
 
+void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
+    if (joy->axes[2] != 1.0) {
+        ctre::phoenix::unmanaged::FeedEnable(10);
+        for (auto &motor:both_tracks) {
+            motor->Set(ControlMode::PercentOutput, 0.0);
+        }
+    }
+}
+
+//void forwardCheck
+
+
 int main(int argc, char **argv);
 
 int main(int argc, char **argv) {
@@ -58,10 +75,10 @@ int main(int argc, char **argv) {
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-/*    left_track.push_back(new TalonSRX(11));
-    left_track.push_back(new TalonSRX(61));
-    right_track.push_back(new TalonSRX(12));*/
-    right_track.push_back(new TalonSRX(62));
+/*   left_track.push_back(new TalonSRX(FL));
+    right_track.push_back(new TalonSRX(FR));*/
+    left_track.push_back(new TalonSRX(RL));
+    right_track.push_back(new TalonSRX(RR));
 
     both_tracks.reserve(left_track.size() + right_track.size());
     both_tracks.insert(both_tracks.end(), left_track.begin(), left_track.end());
