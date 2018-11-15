@@ -2,7 +2,7 @@
 echo "${step}Installing Tools...${reset}"
 {
 	# Install installation tools
-	sudo apt-get install git -y
+	sudo apt-get install git python-wstool -y
 }
 
 echo "${step}Installing ROS...${reset}"
@@ -11,7 +11,6 @@ echo "${step}Installing ROS...${reset}"
 	sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 0xB01FA116
 
 	sudo apt-get update -y
-	sudo apt-get upgrade -y
 
 	if [ "$fullVersion" = "true" ]
 	then
@@ -32,6 +31,8 @@ echo "${step}Installing ROS Dependancies...${reset}"
 
 	rosdep update
 	rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+
+	wstool update -t src
 }
 
 echo "${step}Adding rules...${reset}"

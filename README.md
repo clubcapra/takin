@@ -8,17 +8,14 @@ This section will help you find what you need in Takin project.
 
 | Package | Description |
 | ------ | ------ |
-| [Simulation](src/capra_simulation/) | This package is the Gazebo to ROS interfacing stack for autonomous robot simulation.  |
-| [Navigation](src/capra_navigation/) | This package is the ROS navigation stack setup for capra's autonomous robot navigation. |
-| [QR Code](src/capra_qrcode_detection/) | This package is a simple wrapper around zbar_ros's barcode_reader, used to detect QR code data in real-time simulation. |
-| [Landolt Detection](src/capra_landolt_detection) | This package is a detector that find gap in Landolt C in a camera feed.  |
+| [QR Code](src/detections/capra_qrcode_detection/) | This package is a simple wrapper around zbar_ros's barcode_reader, used to detect QR code data in real-time simulation. |
+| [Landolt Detection](src/detections/capra_landolt_detection) | This package is a detector that find gap in Landolt C in a camera feed.  |
 | [CO2 Detection](src/capra_co2_detector) | This package is a ROS node to communicate with the Telaire T6703 CO2 sensor |
-| [Remote](src/capra_remote_controller/) | This package is a wrapper for a remote controller.  |
-| [Thermal](src/capra_thermal/) | This package is a wrapper around the FLIR Lepton thermal camera's ROS driver. |
-| [Motor](src/capra_motors/) | This package is a wrapper around the motors |
-| [IMU](src/capra_imu/) | This package contains the launch file for publishing many topics from the VN-300 driver |
-| [Camera](src/capra_camera/) | This package is a wrapper around the camera. |
-| [Camera3D](src/capra_camera_3d/) | This package is a wrapper around the camera 3D. |
+| [Remote](src/controllers/capra_remote_controller/) | This package is a wrapper for a remote controller.  |
+| [Motor](src/controllers/capra_motors/) | This package is a wrapper around the motors |
+| [IMU](src/sensors/capra_imu/) | This package contains the launch file for publishing many topics from the VN-300 driver |
+| [Camera](src/sensors/capra_camera/) | This package is a wrapper around the camera. |
+| [Camera3D](src/sensors/capra_camera_3d/) | This package is a wrapper around the camera 3D. |
 
 ## Getting Started
 
@@ -54,18 +51,6 @@ $ ./setup/install.bash
 ```
 
 You need to select the right setup file for your shell when sourcing.
-
-### Launch : Simulation
-
-Before launching the projet you must have built it (this implies that you have also sourced your environment) once before. After this, you can use ROS to launch the simulation. 
-
-```sh
-$ roslaunch capra_simulation simulation.launch
-```
-
-### Launch : Real case
-
-Right now the robot is not built, so there's no way to launch the robot in a real world scenario. 
 
 ## Contibution 
 
