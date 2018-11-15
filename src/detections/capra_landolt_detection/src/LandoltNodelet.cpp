@@ -40,7 +40,7 @@ private:
     void connectCb();
     void imageCb(const sensor_msgs::ImageConstPtr& image_msg,
                  const sensor_msgs::CameraInfoConstPtr& info_msg);
-    void findLandoltGaps(const cv::Mat imageRaw, Gaps& gaps, int minEdge, float minRatioCircle, int minDepth);
+    void findLandoltGaps(const cv::Mat &imageRaw, Gaps& gaps, int minEdge, float minRatioCircle, int minDepth);
 };
 
 float magnitudePoint(const cv::Point2f& diff)
@@ -95,7 +95,7 @@ void LandoltNodelet::connectCb()
     {   
         NODELET_INFO("Connect to Landolt Detector...");
         image_transport::TransportHints hints("raw", ros::TransportHints(), getPrivateNodeHandle());
-        sub_camera_ = it_->subscribeCamera("/capra/camera_3d/rgb/image_raw", queue_size_, &LandoltNodelet::imageCb, this, hints);
+        sub_camera_ = it_->subscribeCamera("/capra/camera_3d/rgb/image_raw", static_cast<uint32_t>(queue_size_), &LandoltNodelet::imageCb, this, hints);
     }
 }
 
@@ -135,11 +135,10 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &image_msg,
         boundings.radius = gaps.radius;
 
         std::vector<capra_msgs::Point2f> centers;
-        for(size_t i = 0; i < gaps.centers.size(); i++)
-        {
+        for (auto &i : gaps.centers) {
             capra_msgs::Point2f center;
-            center.x = gaps.centers[i].x;
-            center.y = gaps.centers[i].y;
+            center.x = i.x;
+            center.y = i.y;
             centers.push_back(center);
         }
         
@@ -152,14 +151,14 @@ void LandoltNodelet::imageCb(const sensor_msgs::ImageConstPtr &image_msg,
         cv_bridge::CvImage img_msg(header, sensor_msgs::image_encodings::BGR8, img_ptr->image);
         for (int i = 0; i < gaps.angles.size(); i++) 
         {
-            circle(img_msg.image, gaps.centers[i], gaps.radius[i], cv::Scalar(0,0,1), 3);
+            circle(img_msg.image, gaps.centers[i], static_cast<int>(gaps.radius[i]), cv::Scalar(0, 0, 1), 3);
         }
 
         image_pub_.publish(img_msg.toImageMsg());
     }
 }
 
-void LandoltNodelet::findLandoltGaps(const cv::Mat imageRaw, Gaps& gaps, int minEdge, float minRatioCircle, int minDepth)
+void LandoltNodelet::findLandoltGaps(const cv::Mat &imageRaw, Gaps& gaps, int minEdge, float minRatioCircle, int minDepth)
 {
     cv::Mat thresholdMat;
     cvtColor(imageRaw, thresholdMat, cv::COLOR_BGR2GRAY); // convert to grayscale
@@ -194,9 +193,7 @@ void LandoltNodelet::findLandoltGaps(const cv::Mat imageRaw, Gaps& gaps, int min
                 convexityDefects(contour, hullsI, defects);
 
                 std::vector<cv::Vec4i> deepDefects;
-                for (int j = 0; j < defects.size(); ++j)
-                {
-                    const cv::Vec4i& v = defects[j];
+                for (const auto &v : defects) {
                     float depth = (float)v[3] / 256;
                     if (depth > minDepth)
                     {
