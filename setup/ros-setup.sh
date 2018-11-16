@@ -12,7 +12,7 @@ echo "${step}Installing ROS...${reset}"
 
 	sudo apt-get update -y
 
-	if [ "$fullVersion" = "true" ]
+	if [[ "$fullVersion" = "true" ]]
 	then
 		sudo apt-get install ros-kinetic-desktop-full -y
 	else
@@ -20,19 +20,9 @@ echo "${step}Installing ROS...${reset}"
 	fi
 }
 
-#cd $TAKIN_DIR
-
 echo "${step}Installing ROS Dependancies...${reset}"
 {
-	if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]
-    then
-		sudo rosdep init
-    fi
-
-	rosdep update
-	rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
-
-	wstool update -t src
+	source setup/ros-dependencies.sh
 }
 
 echo "${step}Adding rules...${reset}"

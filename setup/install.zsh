@@ -27,6 +27,7 @@ Takin installation successful.
 "
 
 read "REPLY?${warning}{Warning}${reset} To complete your installation, you need to reboot your computer. Do you want to reboot now ? [Y/n]"
+echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then

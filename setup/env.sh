@@ -1,6 +1,6 @@
 #!/bin/bash
 # Verifies that the script is not ran as root.
-if [ "$USER" = "root" ]; then
+if [[ "$USER" = "root" ]]; then
     echo "Do not run install as root"
     exit 1
 fi
