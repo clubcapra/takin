@@ -143,7 +143,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         double power = 1 - (joy->axes[5] + 1) / 2;
 
         // Move L=1 and R=1
-        if (joy->axes[1] > 0.0 && power > 0) {
+        if (joy->axes[0] < 0.5 && joy->axes[1] > 5.0 && power > 0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
             ROS_INFO("MOTOR INPUT %f", power);
             for (auto &motor:both_tracks)
