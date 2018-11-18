@@ -124,6 +124,7 @@ void checkFeedEnable(const sensor_msgs::Joy::ConstPtr &joy) {
         feedEnableToggle = !feedEnableToggle;
         pressed = false;
     }
+    ROS_INFO("FEED ENABLE : %d", feedEnableToggle);
 }
 
 
@@ -143,16 +144,18 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         double power = 1 - (joy->axes[5] + 1) / 2;
 
         // Move L=1 and R=1
-        if (joy->axes[0] < 0.5 && joy->axes[1] > 5.0 && power > 0) {
+        if (joy->axes[0] < 0.5 && joy->axes[0] > -0.5 &&
+            joy->axes[1] > 0.5 && power > 0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
-            ROS_INFO("MOTOR INPUT %f", power);
+            ROS_INFO("MOTOR INPUT : %f", power);
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, power);
         }
             // Move L=1 and R=0
             //else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {}
             // Move L=1 and R=-1
-        else if (joy->axes[0] < 0.0 && joy->axes[1] < 0.5 && joy->axes[1] < -0.5 && power > 0) {
+        else if (joy->axes[0] < 0.0
+                 && joy->axes[1] < 0.5 && joy->axes[1] > -0.5 && power > 0) {
             for (auto &motor:left_track) {
                 motor->Set(ControlMode::PercentOutput, power);
             }
