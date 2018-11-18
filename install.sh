@@ -49,42 +49,20 @@ went wrong, check the logs ($logFile)
 
 TAKIN_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-dependancies=(
-	ros-kinetic-rgbd-launch 
-	ros-kinetic-camera-info-manager
-	ros-kinetic-astra-camera
-	ros-kinetic-astra-launch
-	ros-kinetic-octomap
-	ros-kinetic-serial
-	ros-kinetic-move-base-msgs
-	ros-kinetic-joy
-	ros-kinetic-joystick-drivers
-	ros-kinetic-image-publisher
-	ros-kinetic-image-transport
-	ros-kinetic-opencv3
-	ros-kinetic-zbar-ros
-	ros-kinetic-image-geometry
-	ros-kinetic-cv-bridge
-	ros-kinetic-tf
-	ros-kinetic-gmapping
-	ros-kinetic-move-base
-	ros-kinetic-map-server
-	ros-kinetic-amcl
-)
-
-uidependancies=(
-	ros-kinetic-rviz
-	ros-kinetic-gazebo-ros
-)
-
-read -p "Do you want to install the lightweight version ? [Y/n]" -n 1 -r
+read -p "Do you want to install the full-desktop version ? [Y/n]" -n 1 -r
 echo
 
-lightVersion=false
+fullVersion=false
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    lightVersion=true
+    fullVersion=true
 fi
+
+echo "Installing Packages..."
+{
+	# Install installation tools
+	sudo apt-get install git -y
+}
 
 echo "Installing ROS..."
 {
@@ -94,48 +72,40 @@ echo "Installing ROS..."
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
 
-	if [ "$lightVersion" = "true" ]
+	if [ "$fullVersion" = "true" ]
 	then
-		sudo apt-get install ros-kinetic-ros-base -y
-	else
 		sudo apt-get install ros-kinetic-desktop-full -y
+	else
+		sudo apt-get install ros-kinetic-ros-base -y
 	fi
+}
 
-	if [ -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]
+cd $TAKIN_DIR
+
+echo "Installing ROS Dependancies..."
+{
+	if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]
     then
-	echo "Rosdep already initialized, skipping... "
-    else
-	sudo rosdep init
+		sudo rosdep init
+    fi
+
 	rosdep update
 	rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
-    fi
 }
 
 echo "Adding rules..."
 {
-    sudo cp $TAKIN_DIR/49-capra.rules /etc/udev/rules.d/
+    sudo cp 49-capra.rules /etc/udev/rules.d/
     sudo addgroup $USER dialout
 }
 
 echo "Adding ros environment to .bashrc"
 {
-    echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-    source ~/.bashrc
-}
-
-echo "Installing Packages..."
-{
-	# Install installation tools
-	sudo apt-get install git -y
-
-	# Install other ros-kinetic packages
-	sudo apt-get install ${dependancies[@]} -y
-
-	# Install other ros-kinectic ui packages
-	if [ "$lightVersion" = "false" ]
-	then
-		sudo apt-get install ${uidependancies[@]} -y
+	if ! grep -q "source /opt/ros/kinetic/setup.bash" ~/.bashrc; then
+		echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 	fi
+
+    source ~/.bashrc
 }
 
 
@@ -143,7 +113,6 @@ echo "Building workspace... This can take a while"
 
 source /opt/ros/kinetic/setup.bash
 
-cd $TAKIN_DIR
 catkin_make >> $logFile
 
 source devel/setup.bash

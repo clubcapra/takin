@@ -6,6 +6,9 @@ add_compile_options(-std=c++14)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  rgbd_launch
+  astra_camera
+  astra_launch
 )
 
 catkin_package(
