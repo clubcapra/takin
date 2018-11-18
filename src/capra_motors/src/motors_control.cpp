@@ -45,9 +45,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy);
 
 void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy);
 
-void checkBrakeMode(const sensor_msgs::Joy::ConstPtr &joy);
-
-void changeBrakeMode(bool brakeMode);
+void changeBrakeMode(const sensor_msgs::Joy::ConstPtr &joy);
 
 void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor);
 
@@ -65,7 +63,7 @@ int main(int argc, char **argv) {
 /*   addLeftMotor(left_track, new TalonSRX(FL));
     right_track.push_back(new TalonSRX(FR));*/
     addLeftMotor(left_track, talonRL);
-    right_track.push_back( talonRR);
+    right_track.push_back(talonRR);
 
     both_tracks.reserve(left_track.size() + right_track.size());
     both_tracks.insert(both_tracks.end(), left_track.begin(), left_track.end());
@@ -83,38 +81,32 @@ void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor) {
 }
 
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
-
     checkFeedEnable(joy);
 
     brakeMotors(joy);
 
     moveMotors(joy);
 
-    checkBrakeMode(joy);
-
-    changeBrakeMode(brakeMode);
+    changeBrakeMode(joy);
 }
 
 
-void changeBrakeMode(bool brakeMode) {
-    if (brakeMode) {
-        for (auto &motor:both_tracks) {
-            motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
-        }
-    } else {
-        for (auto &motor:both_tracks) {
-            motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
-        }
-    }
-}
-
-void checkBrakeMode(const sensor_msgs::Joy::ConstPtr &joy) {
+void changeBrakeMode(const sensor_msgs::Joy::ConstPtr &joy) {
     if (feedEnableToggle) {
         if (joy->buttons[4] == 1 && !pressedBrakeMode) {
             pressedBrakeMode = true;
         } else if (joy->buttons[4] == 0 && pressedBrakeMode) {
             brakeMode = !brakeMode;
             pressedBrakeMode = false;
+        }
+        if (brakeMode) {
+            for (auto &motor:both_tracks) {
+                motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
+            }
+        } else {
+            for (auto &motor:both_tracks) {
+                motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+            }
         }
     }
 }
@@ -133,7 +125,7 @@ void checkFeedEnable(const sensor_msgs::Joy::ConstPtr &joy) {
 
 void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
     if (feedEnableToggle) {
-        if (joy->axes[2] != 1.0 && joy->axes[1] != 0.0) {
+        if (joy->axes[2] != 1.0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
             for (auto &motor:both_tracks) {
                 motor->Set(ControlMode::PercentOutput, 0.0);
@@ -147,78 +139,60 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         double power = 1 - (joy->axes[5] + 1) / 2;
         double x_axe = joy->axes[0];
         double y_axe = joy->axes[1];
+        double left_power;
+        double right_power;
         ctre::phoenix::unmanaged::FeedEnable(100);
         // Move L=1 and R=1
         if (x_axe < 0.25 && x_axe > -0.25 && y_axe > 0.25 && power > 0) {
-            for (auto &motor:both_tracks)
-                motor->Set(ControlMode::PercentOutput, power);
+            left_power = power;
+            right_power = power;
         }
             // Move L=1 and R=0
         else if (x_axe < -0.25 && x_axe > -0.75 && y_axe > 0.25 && power > 0) {
-            for (auto &motor:left_track) {
-                motor->Set(ControlMode::PercentOutput, power);
-            }
-            for (auto &motor:right_track) {
-                motor->Set(ControlMode::PercentOutput, 0.0);
-            }
+            left_power = power;
+            right_power = 0.0;
         }
             // Move L=1 and R=-1
         else if (x_axe < -0.25 && y_axe < 0.25 && y_axe > -0.25 && power > 0) {
-            for (auto &motor:left_track) {
-                motor->Set(ControlMode::PercentOutput, power);
-            }
-            for (auto &motor:right_track) {
-                motor->Set(ControlMode::PercentOutput, power * -1);
-            }
+            left_power = power;
+            right_power = power * -1;
         }
             // Move L=-1 and R=0
         else if (x_axe < -0.25 && y_axe < -0.25 && y_axe > -0.75 && power > 0) {
-            for (auto &motor:left_track) {
-                motor->Set(ControlMode::PercentOutput, power * -1);
-            }
-            for (auto &motor:right_track) {
-                motor->Set(ControlMode::PercentOutput, 0.0);
-            }
+            left_power = power * -1;
+            right_power = 0.0;
         }
             // Move L=-1 and R=-1
         else if (x_axe < 0.25 && x_axe > -0.25 && y_axe < -0.25 && power > 0) {
-            for (auto &motor:both_tracks) {
-                motor->Set(ControlMode::PercentOutput, power * -1);
-            }
+            left_power = power * -1;
+            right_power = power * -1;
         }
             // Move L=0 and R=-1
         else if (x_axe > 0.25 && x_axe < 0.75 && y_axe < -0.25 && power > 0) {
-
-            for (auto &motor:left_track) {
-                motor->Set(ControlMode::PercentOutput, 0.0);
-            }
-            for (auto &motor:right_track) {
-                motor->Set(ControlMode::PercentOutput, power * -1);
-            }
+            left_power = 0.0;
+            right_power = power * -1;
         }
             // Move L=-1 and R=1
         else if (x_axe > 0.25 && y_axe < -0.25 && y_axe < 0.25 && power > 0) {
-            for (auto &motor:left_track) {
-                motor->Set(ControlMode::PercentOutput, power * -1);
-            }
-            for (auto &motor:right_track) {
-                motor->Set(ControlMode::PercentOutput, power);
-            }
+            left_power = power * -1;
+            right_power = power;
         }
             // Move L=0 and R=1
         else if (x_axe > 0.25 && y_axe > 0.25 && y_axe < 0.75 && power > 0) {
-            for (auto &motor:left_track) {
-                motor->Set(ControlMode::PercentOutput, 0.0);
-            }
-            for (auto &motor:right_track) {
-                motor->Set(ControlMode::PercentOutput, power);
-            }
+            left_power = 0.0;
+            right_power = power;
         }
             // Default if not direction chosen
         else {
-            for (auto &motor:both_tracks) {
-                motor->Set(ControlMode::PercentOutput, 0.0);
-            }
+            left_power = 0.0;
+            right_power = 0.0;
+        }
+
+        for (auto &motor:left_track) {
+            motor->Set(ControlMode::PercentOutput, left_power);
+        }
+        for (auto &motor:right_track) {
+            motor->Set(ControlMode::PercentOutput, right_power);
         }
     }
 }
