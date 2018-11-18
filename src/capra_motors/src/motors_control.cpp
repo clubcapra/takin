@@ -59,10 +59,13 @@ int main(int argc, char **argv) {
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
+    talonRL = new TalonSRX(RL);
+    talonRR = new TalonSRX(RR);
+
 /*   addLeftMotor(left_track, new TalonSRX(FL));
     right_track.push_back(new TalonSRX(FR));*/
-    addLeftMotor(left_track, new TalonSRX(RL));
-    right_track.push_back(new TalonSRX(RR));
+    addLeftMotor(left_track, talonRL);
+    right_track.push_back( talonRR);
 
     both_tracks.reserve(left_track.size() + right_track.size());
     both_tracks.insert(both_tracks.end(), left_track.begin(), left_track.end());
