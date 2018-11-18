@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>capra_camera_3d</name>
+  <version>0.0.0</version>
+  <description>The capra_camera_3d package</description>
+
+  <maintainer email="capra@clubcapra.com">Capra</maintainer>
+
+  <license>GPLv3</license>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>rgbd_launch</depend>
+  <depend>astra_camera</depend>
+  <depend>astra_launch</depend>
+
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

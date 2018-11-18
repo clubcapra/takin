@@ -1,0 +1,12 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND
+
+System(takinSystem, "Takin System", "Allows user to control the robot and read data")
+Person(operatorPerson, "Operator", "A operator of the robot, with the static UI")
+Person(technicianPerson, "Technician", "A technician of the robot, with personal computer")
+
+Rel(operatorPerson, takinSystem, "Uses", "HTTPS")
+Rel(technicianPerson, takinSystem, "Uses", "SSH")
+@enduml

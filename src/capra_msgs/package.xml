@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>capra_msgs</name>
+  <version>0.0.0</version>
+  <description>The capra_msgs package</description>
+
+  <maintainer email="capra@clubcapra.com">Capra</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <depend>std_msgs</depend>
+
+  <export>
+
+  </export>
+</package>
