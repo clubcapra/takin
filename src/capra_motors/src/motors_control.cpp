@@ -107,6 +107,19 @@ void changeBrakeMode(bool brakeMode) {
     }
 }
 
+void checkBrakeMode(const sensor_msgs::Joy::ConstPtr &joy) {
+    if (feedEnableToggle) {
+        if (joy->buttons[4] == 1 && !pressedBrakeMode) {
+            pressedBrakeMode = true;
+        } else if (joy->buttons[4] == 0 && pressedBrakeMode) {
+            brakeMode = !brakeMode;
+            pressedBrakeMode = false;
+        }
+    }
+    ROS_INFO("BrakeMode value is : %d", brakeMode);
+}
+
+
 void checkFeedEnable(const sensor_msgs::Joy::ConstPtr &joy) {
     if (!pressed && joy->buttons[0] == 1 && joy->buttons[6] == 1) {
         pressed = true;
@@ -155,16 +168,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
     }
 }
 
-void checkBrakeMode(const sensor_msgs::Joy::ConstPtr &joy) {
-    if (feedEnableToggle) {
-        if (joy->buttons[4] == 1 && !pressedBrakeMode) {
-            pressedBrakeMode = true;
-        } else if (joy->buttons[4] == 0 && pressedBrakeMode) {
-            brakeMode = !brakeMode;
-            pressedBrakeMode = false;
-        }
-    }
-}
+
 
 
 
