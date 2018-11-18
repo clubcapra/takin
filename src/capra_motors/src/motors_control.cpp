@@ -144,9 +144,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         double power = 1 - (joy->axes[5] + 1) / 2;
         ctre::phoenix::unmanaged::FeedEnable(100);
         // Move L=1 and R=1
-        if (joy->axes[0] < 0.75 && joy->axes[0] > -0.25 &&
-            joy->axes[1] > 0.5 && power > 0) {
-
+        if (joy->axes[0] < 0.75 && joy->axes[0] > -0.25 && joy->axes[1] > 0.5 && power > 0) {
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, power);
         }
@@ -160,8 +158,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
             }
         }
             // Move L=1 and R=-1
-        else if (joy->axes[0] < 0.0
-                 && joy->axes[1] < 0.75 && joy->axes[1] > -0.25 && power > 0) {
+        else if (joy->axes[0] < -0.75 && joy->axes[1] < 0.75 && joy->axes[1] > -0.25 && power > 0) {
             for (auto &motor:left_track) {
                 motor->Set(ControlMode::PercentOutput, power);
             }
@@ -169,21 +166,54 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
                 motor->Set(ControlMode::PercentOutput, power * -1);
             }
         }
-        // Move L=0 and R=-1
-        //else if () {}
-        // Move L=-1 and R=-1
-        /* else if () {
+            // Move L=-1 and R=0
+        else if (joy->axes[1] > -0.75 && joy->axes[1] < -0.25 && power > 0) {
+            for (auto &motor:left_track) {
+                motor->Set(ControlMode::PercentOutput, power * -1);
+            }
+            for (auto &motor:right_track) {
+                motor->Set(ControlMode::PercentOutput, 0.0);
+            }
+        }
+            // Move L=-1 and R=-1
+        else if (joy->axes[0] < 0.25 && joy->axes[0] > -0.25 && joy->axes[1] > -0.5 && power > 0) {
+            for (auto &motor:both_tracks) {
+                motor->Set(ControlMode::PercentOutput, power * -1);
+            }
+        }
+            // Move L=0 and R=-1
+        else if (joy->axes[0] < 0.75 && joy->axes[0] > 0.25 && joy->axes[1] > -0.5 && power > 0) {
 
-         }*/
-        // Move L=-1 and R=0
-        //else if () {        }
-        // Move L=-1 and R=1
-        /*else if () {
-
-        }*/
-        // Move L=0 and R=1
-        //else if () {        }
-
+            for (auto &motor:left_track) {
+                motor->Set(ControlMode::PercentOutput, 0.0);
+            }
+            for (auto &motor:right_track) {
+                motor->Set(ControlMode::PercentOutput, power * -1);
+            }
+        }
+            // Move L=-1 and R=1
+        else if (joy->[1] < 0.25 && joy->[1] > -0.25 && joy->axes[0] > 0.5 && power > 0) {
+            for (auto &motor:left_track) {
+                motor->Set(ControlMode::PercentOutput, power * -1);
+            }
+            for(auto &motor:right_track){
+                motor->Set(ControlMode::PercentOutput, power);
+            }
+        }
+            // Move L=0 and R=1
+        else if (joy->axes[0] < 0.75 && joy->axes[0] > 0.25  && joy->axes[1] > 0.5 && power > 0) {
+            for (auto &motor:left_track) {
+                motor->Set(ControlMode::PercentOutput, 0.0);
+            }
+            for(auto &motor:right_track){
+                motor->Set(ControlMode::PercentOutput, power);
+            }
+        }
+        else {
+            for (auto &motor:both_tracks) {
+                motor->Set(ControlMode::PercentOutput, 0.0);
+            }
+        }
     }
 }
 
