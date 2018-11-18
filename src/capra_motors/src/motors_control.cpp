@@ -97,12 +97,10 @@ void changeBrakeMode(bool brakeMode) {
     if (brakeMode) {
         for (auto &motor:both_tracks) {
             motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
-            ROS_INFO("Setting brake mode to Coast");
         }
     } else {
         for (auto &motor:both_tracks) {
             motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
-            ROS_INFO("Setting brake mode to Brake");
         }
     }
 }
@@ -116,7 +114,6 @@ void checkBrakeMode(const sensor_msgs::Joy::ConstPtr &joy) {
             pressedBrakeMode = false;
         }
     }
-    ROS_INFO("BrakeMode value is : %d", brakeMode);
 }
 
 
@@ -143,27 +140,40 @@ void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
 
 void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
     if (feedEnableToggle) {
+        double power = 1 - (joy->axes[5] + 1) / 2;
+
         // Move L=1 and R=1
-        if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {
+        if (joy->axes[1] > 0.0 && power > 0) {
             ctre::phoenix::unmanaged::FeedEnable(100);
-            ROS_INFO("MOTOR INPUT %f", (1 - (joy->axes[5] + 1) / 2));
+            ROS_INFO("MOTOR INPUT %f", power);
             for (auto &motor:both_tracks)
-                motor->Set(ControlMode::PercentOutput, 1 - (joy->axes[5] + 1) / 2);
+                motor->Set(ControlMode::PercentOutput, power);
         }
-      /*      // Move L=1 and R=0
-        else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {}
+            // Move L=1 and R=0
+            //else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {}
             // Move L=1 and R=-1
-        else if () {}
-            // Move L=0 and R=-1
-        else if () {}
-            // Move L=-1 and R=-1
-        else if () {}
-            // Move L=-1 and R=0
-        else if () {}
-            // Move L=-1 and R=1
-        else if () {}
-            // Move L=0 and R=1
-        else if () {}*/
+        else if (joy->axes[0] < 0.0 && joy->axes[1] < 0.5 && joy->axes[1] < -0.5 && power > 0) {
+            for (auto &motor:left_track) {
+                motor->Set(ControlMode::PercentOutput, power);
+            }
+            for (auto &motor:right_track) {
+                motor->Set(ControlMode::PercentOutput, power * -1);
+            }
+        }
+        // Move L=0 and R=-1
+        //else if () {}
+        // Move L=-1 and R=-1
+        /* else if () {
+
+         }*/
+        // Move L=-1 and R=0
+        //else if () {        }
+        // Move L=-1 and R=1
+        /*else if () {
+
+        }*/
+        // Move L=0 and R=1
+        //else if () {        }
 
     }
 }
