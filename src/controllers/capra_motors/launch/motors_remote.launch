@@ -1,0 +1,19 @@
+<launch>
+
+  <!--<machine name="Jetson" user="capra" password=".simmons." address="192.168.1.123" default="true" env-loader="/home/capra/Code/TakinMotors/devel/env.sh"/>-->
+
+
+ <!-- Capra motor control-->
+  <node pkg="capra_motors" type="motors_control" name="motors_control" output="screen"/>
+  <!--<node pkg="capra_remote_controller" type="capra_remote_controller" name="remote_controller"/> -->
+
+
+ <!-- joy node -->
+  <!--<node respawn="true" pkg="joy" type="joy_node" name="joy" >-->
+    <!--<param name="dev" type="string" value="/dev/input/js0" />-->
+    <!--<param name="autorepeat_rate" value="100.0" />-->
+    <!--<param name="deadzone" value="0.12" />-->
+  <!--</node>-->
+
+
+</launch>

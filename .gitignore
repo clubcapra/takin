@@ -1,6 +1,5 @@
 build/
 bin/
-lib/
 install/
 build_isolated/
 devel_isolated/
@@ -68,7 +67,7 @@ CATKIN_IGNORE
 # Compiled Static libraries
 *.lai
 *.la
-*.a
+#*.a
 *.lib
 
 # Executables
@@ -93,7 +92,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+#lib/
 lib64/
 parts/
 sdist/
