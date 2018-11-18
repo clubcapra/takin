@@ -1,2 +1,0 @@
-#possible udev rules for imu device
-SUBSYSTEM=="tty", ATTRS{serial}=="FTVJUC1E", SYMLINK+="ttyUSB100"

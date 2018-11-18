@@ -1,0 +1,37 @@
+<sdf version='1.6'>
+  <model name='robotcapra'>
+    <link name='robotcapra'>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.12065 0 -0.079421 0 -0 0</pose>
+        <mass>23.124</mass>
+        <inertia>
+          <ixx>0.660306</ixx>
+          <ixy>-1.78746e-18</ixy>
+          <ixz>-1.09447e-34</ixz>
+          <iyy>0.303669</iyy>
+          <iyz>8.59691e-17</iyz>
+          <izz>0.815602</izz>
+        </inertia>
+      </inertial>
+      <collision name='robotcapra_collision'>
+        <pose frame=''>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://robotcapra/meshes/robotcapra.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='robotcapra_visual'>
+        <pose frame=''>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://robotcapra/meshes/robotcapra.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,238 @@
+<?xml version="1.0" ?>
+<robot name="capra6">
+
+    <joint name="capra6__JOINT_WHEEL_F_R" type="revolute">
+        <parent link="base_link"/>
+        <child link="capra6__link_0"/>
+        <origin rpy="0  0  0" xyz="0.28816  0.15376 -0.19177"/>
+        <axis xyz="-1  0  0"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <joint name="capra6__JOINT_WHEEL_R_R" type="revolute">
+        <parent link="base_link"/>
+        <child link="capra6__link_0_clone_0"/>
+        <origin rpy="0  0  0" xyz="0.29719 -0.15535 -0.19177"/>
+        <axis xyz="-1  0  0"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <joint name="capra6__JOINT_WHEEL_R_L" type="revolute">
+        <parent link="base_link"/>
+        <child link="capra6__link_0_clone_1"/>
+        <origin rpy="0  0  0" xyz="-0.05803 -0.15462 -0.19177"/>
+        <axis xyz="1  0  0"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <joint name="capra6__JOINT_WHEEL_F_L" type="revolute">
+        <parent link="base_link"/>
+        <child link="capra6__link_0_clone"/>
+        <origin rpy="0  0  0" xyz="-0.05127  0.15058 -0.19177"/>
+        <axis xyz="1  0  0"/>
+        <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+    </joint>
+
+    <link name="base_link">
+        <inertial>
+            <mass value="23.124"/>
+            <origin rpy="0  0  0" xyz="0.12065  0      -0.07942"/>
+            <inertia ixx="0.660306" ixy="-1.78746e-18" ixz="0" iyy="0.303669" iyz="8.59691e-17" izz="0.815602"/>
+        </inertial>
+        <collision name="base_link_collision">
+            <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+            <geometry>
+                <mesh filename="package://capra_simulation/models/meshes/robotcapra.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+        <collision name="base_link_fixed_joint_lump__laser_collision_1">
+            <origin rpy="0      0      1.5708" xyz="0.1   0.25  0.05"/>
+            <geometry>
+                <sphere radius="0.1"/>
+            </geometry>
+        </collision>
+        <visual name="base_link_visual">
+            <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+            <geometry>
+                <mesh filename="package://capra_simulation/models/meshes/robotcapra.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="capra6__link_0">
+        <inertial>
+            <mass value="1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        <collision name="capra6__collision">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </collision>
+        <visual name="capra6__visual">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="capra6__link_0_clone">
+        <inertial>
+            <mass value="1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        <collision name="capra6__collision">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </collision>
+        <visual name="capra6__visual">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="capra6__link_0_clone_0">
+        <inertial>
+            <mass value="1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        <collision name="capra6__collision">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </collision>
+        <visual name="capra6__visual">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="capra6__link_0_clone_1">
+        <inertial>
+            <mass value="1"/>
+            <origin rpy="0  0  0" xyz="0  0  0"/>
+            <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+        </inertial>
+        <collision name="capra6__collision">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </collision>
+        <visual name="capra6__visual">
+            <origin rpy="3.14159  1.57079  3.14159" xyz="0  0  0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="joint1" type="fixed">
+        <parent link="base_link" />
+        <child link="laser" />
+        <origin xyz="0.1 0.25 0.05" rpy="0 0 1.5707963267949" />
+    </joint>
+
+    <link name="laser">
+        <inertial>
+            <mass value="0" />
+            <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0" />
+        </inertial>
+        <collision>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo reference="laser">
+        <gravity>false</gravity>
+        <material>Gazebo/Red</material>
+
+        <sensor type="ray" name="sensor">
+
+            <!-- Position the ray sensor based on the specification. Also rotate
+                    it by 90 degrees around the X-axis so that the <horizontal> rays
+                    become vertical -->
+            <pose>0 0 0 0 0 0</pose>
+
+            <!-- Enable visualization to see the rays in the GUI -->
+            <visualize>true</visualize>
+
+            <!-- Set the update rate of the sensor -->
+            <update_rate>30</update_rate>
+
+            <ray>
+
+                <!-- The scan element contains the horizontal and vertical beams.
+                    We are leaving out the vertical beams for this tutorial. -->
+                <scan>
+
+                <!-- The horizontal beams -->
+                <horizontal>
+                    <!-- The velodyne has 32 beams(samples) -->
+                    <samples>540</samples>
+
+                    <resolution>1</resolution>
+
+                    <!-- Minimum angle in radians -->
+                    <min_angle>-2.3562</min_angle>
+
+                    <!-- Maximum angle in radians -->
+                    <max_angle>2.3562</max_angle>   
+                </horizontal>
+
+                </scan>
+
+                <!-- Range defines characteristics of an individual beam -->
+                <range>
+                    <!-- Minimum distance of the beam -->
+                    <min>0.2</min>
+
+                    <!-- Maximum distance of the beam -->
+                    <max>4</max>
+
+                    <!-- Linear resolution of the beam -->
+                    <resolution>0.1</resolution>
+                </range>
+
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+
+            <plugin name="laser" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>laser</frameName>
+            </plugin>
+
+            <always_on>1</always_on>
+            <update_rate>5</update_rate>
+            <visualize>true</visualize>
+        </sensor>
+    </gazebo>
+    <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>/cmd_vel</commandTopic>
+            <odometryTopic>/odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>20.0</odometryRate>
+            <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>
+
+    </gazebo>
+</robot>
