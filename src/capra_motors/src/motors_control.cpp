@@ -142,20 +142,26 @@ void brakeMotors(const sensor_msgs::Joy::ConstPtr &joy) {
 void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
     if (feedEnableToggle) {
         double power = 1 - (joy->axes[5] + 1) / 2;
-
+        ctre::phoenix::unmanaged::FeedEnable(100);
         // Move L=1 and R=1
-        if (joy->axes[0] < 0.5 && joy->axes[0] > -0.5 &&
+        if (joy->axes[0] < 0.75 && joy->axes[0] > -0.25 &&
             joy->axes[1] > 0.5 && power > 0) {
-            ctre::phoenix::unmanaged::FeedEnable(100);
-            ROS_INFO("MOTOR INPUT : %f", power);
+
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, power);
         }
             // Move L=1 and R=0
-            //else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {}
+        else if (joy->axes[0] > -0.75 && joy->axes[0] < -0.25 && power > 0) {
+            for (auto &motor:left_track) {
+                motor->Set(ControlMode::PercentOutput, power);
+            }
+            for (auto &motor:right_track) {
+                motor->Set(ControlMode::PercentOutput, 0.0);
+            }
+        }
             // Move L=1 and R=-1
         else if (joy->axes[0] < 0.0
-                 && joy->axes[1] < 0.5 && joy->axes[1] > -0.5 && power > 0) {
+                 && joy->axes[1] < 0.75 && joy->axes[1] > -0.25 && power > 0) {
             for (auto &motor:left_track) {
                 motor->Set(ControlMode::PercentOutput, power);
             }
