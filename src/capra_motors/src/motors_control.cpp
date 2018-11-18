@@ -83,7 +83,7 @@ void addLeftMotor(std::vector<TalonSRX *> &left_track, TalonSRX *motor) {
 void joystickCallback(const sensor_msgs::Joy::ConstPtr &joy) {
     checkFeedEnable(joy);
 
-    brakeMotors(joy);
+    //brakeMotors(joy);
 
     moveMotors(joy);
 
@@ -181,6 +181,11 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         else if (x_axe > 0.25 && y_axe > 0.25 && y_axe < 0.75 && power > 0) {
             left_power = 0.0;
             right_power = power;
+        }
+            // Brake function
+        else if (joy->axes[2] != 1.0) {
+            left_power = 0.0;
+            right_power = 0.0;
         }
             // Default if not direction chosen
         else {
