@@ -142,8 +142,14 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         double left_power;
         double right_power;
         ctre::phoenix::unmanaged::FeedEnable(100);
-        // Move L=1 and R=1
-        if (x_axe < 0.25 && x_axe > -0.25 && y_axe > 0.25 && power > 0) {
+
+        // Brake function
+        if (joy->axes[2] != 1.0) {
+            left_power = 0.0;
+            right_power = 0.0;
+        }
+            // Move L=1 and R=1
+        else if (x_axe < 0.25 && x_axe > -0.25 && y_axe > 0.25 && power > 0) {
             left_power = power;
             right_power = power;
         }
@@ -181,11 +187,6 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
         else if (x_axe > 0.25 && y_axe > 0.25 && y_axe < 0.75 && power > 0) {
             left_power = 0.0;
             right_power = power;
-        }
-            // Brake function
-        else if (joy->axes[2] != 1.0) {
-            left_power = 0.0;
-            right_power = 0.0;
         }
             // Default if not direction chosen
         else {
