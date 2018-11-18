@@ -150,7 +150,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
             for (auto &motor:both_tracks)
                 motor->Set(ControlMode::PercentOutput, 1 - (joy->axes[5] + 1) / 2);
         }
-            // Move L=1 and R=0
+      /*      // Move L=1 and R=0
         else if (joy->axes[1] > 0.0 && (1 - (joy->axes[5] + 1) / 2) > 0) {}
             // Move L=1 and R=-1
         else if () {}
@@ -163,7 +163,7 @@ void moveMotors(const sensor_msgs::Joy::ConstPtr &joy) {
             // Move L=-1 and R=1
         else if () {}
             // Move L=0 and R=1
-        else if () {}
+        else if () {}*/
 
     }
 }
