@@ -3,7 +3,6 @@ project(capra_motors)
 cmake_minimum_required(VERSION 3.1)
 add_definitions(-std=c++14)
 
-
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -12,10 +11,11 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   message_generation
   geometry_msgs
+  dynamic_reconfigure
 )
 
 find_package(Threads REQUIRED)
-find_package(SDL2 REQUIRED)
+#find_package(SDL2 REQUIRED)
 
 
 
@@ -88,10 +88,9 @@ find_package(SDL2 REQUIRED)
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
+generate_dynamic_reconfigure_options(
+    cfg/Motor.cfg
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -122,12 +121,24 @@ include_directories(
 )
 
 # Declare a C++ library
-add_library( ${PROJECT_NAME}_lib 
-  src/lib/aarch64/libCTRE_Phoenix.a
-  src/lib/aarch64/libCTRE_PhoenixCanutils.a
-  src/lib/aarch64/libCTRE_PhoenixCCI.a
-  src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a
-)
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    if (${CMAKE_SIZEOF_VOID_P} MATCHES "8")
+        add_library( ${PROJECT_NAME}_lib 
+          src/lib/x86-64/libCTRE_Phoenix.a
+          src/lib/x86-64/libCTRE_PhoenixCanutils.a
+          src/lib/x86-64/libCTRE_PhoenixCCI.a
+          src/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a
+        )
+    else()
+        add_library( ${PROJECT_NAME}_lib 
+          src/lib/aarch64/libCTRE_Phoenix.a
+          src/lib/aarch64/libCTRE_PhoenixCanutils.a
+          src/lib/aarch64/libCTRE_PhoenixCCI.a
+          src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a
+        )
+    endif()
+endif()
+
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES LINKER_LANGUAGE CXX)
 
 ## Add cmake target dependencies of the library
@@ -142,18 +153,27 @@ add_executable( motors_control
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-#add_dependencies(capra_motors
-#  ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#  ${catkin_EXPORTED_TARGETS}
-#)
+add_dependencies( motors_control
+    ${PROJECT_NAME}_gencfg
+)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_Phoenix.a)
-target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCCI.a)
-target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
-target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    if (${CMAKE_SIZEOF_VOID_P} MATCHES "8")
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_Phoenix.a)
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixCCI.a)
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixCanutils.a)
+    else()
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_Phoenix.a)
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCCI.a)
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
+      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
+    endif()
+endif()
+
 target_link_libraries(motors_control Threads::Threads)
-target_link_libraries(motors_control ${SDL2_LIBRARIES})
+#target_link_libraries(motors_control ${SDL2_LIBRARIES})
 target_link_libraries(motors_control ${catkin_LIBRARIES})
 
 #############
