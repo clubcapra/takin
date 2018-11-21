@@ -82,10 +82,10 @@ int main(int argc, char **argv) {
     server.setCallback(f);
 
     std::string interface = "can0";
-    //ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+    ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-    //left_track.push_back(std::make_unique<TalonSRX>(RL));
-    //right_track.push_back(std::make_unique<TalonSRX>(RR));
+    left_track.push_back(std::make_unique<TalonSRX>(RL));
+    right_track.push_back(std::make_unique<TalonSRX>(RR));
 
     for (auto &motor:left_track) {
         motor->SetInverted(true);
