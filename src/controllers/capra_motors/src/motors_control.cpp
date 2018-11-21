@@ -49,18 +49,17 @@ void configCallback(capra_motors::MotorConfig &config, uint32_t level) {
 
 void velocityCallback(const geometry_msgs::Twist &msg) {
 
-    double power = clamp(msg.linear.x, -1, 1);
-    double angle = clamp(msg.angular.z, -1, 1) * M_PI;
+    double linear = clamp(msg.linear.x, -1, 1);
+    double angle = clamp(msg.angular.z, -1, 1);
+    double power = std::sqrt(linear * linear + angle * angle);
 
-    double left_power = angle > 0 ? cos(angle) : power;
-    double right_power = angle < 0 ? cos(angle) : power;
+    double left_power = angle > 0 ? (1.0 - 2 * angle) * power : power;
+    double right_power = angle < 0 ? (1.0 + 2 * angle) * power : power;
 
-    //Mirror the track in reverse
-    if(power < 0)
+    if(linear < 0)
     {
-        double swap = left_power;
-        left_power = -right_power;
-        right_power = -swap;
+        left_power = -left_power;
+        right_power = -right_power;
     }
 
     ctre::phoenix::unmanaged::FeedEnable(100);
@@ -83,10 +82,10 @@ int main(int argc, char **argv) {
     server.setCallback(f);
 
     std::string interface = "can0";
-    ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+    //ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-    left_track.push_back(std::make_unique<TalonSRX>(RL));
-    right_track.push_back(std::make_unique<TalonSRX>(RR));
+    //left_track.push_back(std::make_unique<TalonSRX>(RL));
+    //right_track.push_back(std::make_unique<TalonSRX>(RR));
 
     for (auto &motor:left_track) {
         motor->SetInverted(true);
