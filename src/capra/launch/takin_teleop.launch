@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find capra_motors)/launch/motors_remote.launch"/>
+    <include file="$(find capra)/launch/teleop.launch"/>
+</launch>
