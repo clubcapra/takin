@@ -15,11 +15,6 @@
 #include <vector>
 #include <memory>
 
-#define RR 62
-#define RL 61
-#define FR 12
-#define FL 11
-
 std::vector<std::shared_ptr<TalonSRX>> left_track;
 std::vector<std::shared_ptr<TalonSRX>> right_track;
 
@@ -53,6 +48,11 @@ void velocityCallback(const geometry_msgs::Twist &msg) {
     double angle = clamp(msg.angular.z, -1, 1);
     double power = std::sqrt(linear * linear + angle * angle);
 
+    if (power != 0.0) {
+        angle /= power;
+        linear /= power;
+    }
+
     double left_power = angle > 0 ? (1.0 - 2 * angle) * power : power;
     double right_power = angle < 0 ? (1.0 + 2 * angle) * power : power;
 
@@ -83,16 +83,32 @@ int main(int argc, char **argv) {
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
-    left_track.push_back(std::make_shared<TalonSRX>(FL));
-    left_track.push_back(std::make_shared<TalonSRX>(RL));
-    right_track.push_back(std::make_shared<TalonSRX>(FR));
-    right_track.push_back(std::make_shared<TalonSRX>(RR));
-
+    int FL, FR, RL, RR;
+    if (n.getParam("/motors_control/front_left", FL)) {
+        ROS_INFO("front left motor detected : %d", FL);
+        left_track.push_back(std::make_shared<TalonSRX>(FL));
+    }
+    if (n.getParam("/motors_control/front_right", FR)) {
+        ROS_INFO("front right motor detected : %d", FR);
+        right_track.push_back(std::make_shared<TalonSRX>(FR));
+    }
+    if (n.getParam("/motors_control/rear_left", RL)) {
+        ROS_INFO("front left motor detected : %d", RL);
+        left_track.push_back(std::make_shared<TalonSRX>(RL));
+    }
+    if (n.getParam("/motors_control/rear_right", RR)) {
+        ROS_INFO("front left motor detected : %d", RR);
+        right_track.push_back(std::make_shared<TalonSRX>(RR));
+    }
     // Assuming will always have an equal number of motors in both tracks
     for (int i = 1; i < left_track.size(); ++i) {
         left_track[i]->Follow(*left_track[0].get());
-        right_track[i]->Follow(*right_track[0].get());
     }
+
+    for (int j = 1; j < right_track.size(); ++j) {
+        right_track[j]->Follow(*right_track[0].get());
+    }
+
 
     for (auto &motor:left_track) {
         motor->SetInverted(true);
