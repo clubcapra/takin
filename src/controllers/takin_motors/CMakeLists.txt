@@ -1,4 +1,4 @@
-project(capra_motors)
+project(takin_motors)
 
 cmake_minimum_required(VERSION 3.1)
 add_definitions(-std=c++14)
@@ -103,7 +103,7 @@ generate_dynamic_reconfigure_options(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
  #INCLUDE_DIRS include
- #LIBRARIES capra_motors
+ #LIBRARIES takin_motors
  CATKIN_DEPENDS roscpp std_msgs geometry_msgs
 )
 

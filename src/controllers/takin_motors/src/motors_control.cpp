@@ -6,7 +6,7 @@
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
 #include <dynamic_reconfigure/server.h>
-#include <capra_motors/MotorConfig.h>
+#include <takin_motors/MotorConfig.h>
 
 #include <string>
 #include <iostream>
@@ -22,7 +22,7 @@ double clamp(double n, double lower, double upper) {
     return std::max(lower, std::min(n, upper));
 }
 
-void configCallback(capra_motors::MotorConfig &config, uint32_t level) {
+void configCallback(takin_motors::MotorConfig &config, uint32_t level) {
 
     ctre::phoenix::motorcontrol::NeutralMode brakeMode;
     switch (config.brake_mode) {
@@ -73,11 +73,11 @@ void velocityCallback(const geometry_msgs::Twist &msg) {
 
 int main(int argc, char **argv) {
 
-    ros::init(argc, argv, "capra_motors_control");
+    ros::init(argc, argv, "takin_motors_control");
     ros::NodeHandle n;
 
-    dynamic_reconfigure::Server<capra_motors::MotorConfig> server;
-    dynamic_reconfigure::Server<capra_motors::MotorConfig>::CallbackType f = boost::bind(&configCallback, _1, _2);
+    dynamic_reconfigure::Server<takin_motors::MotorConfig> server;
+    dynamic_reconfigure::Server<takin_motors::MotorConfig>::CallbackType f = boost::bind(&configCallback, _1, _2);
     server.setCallback(f);
 
     std::string interface = "can0";
