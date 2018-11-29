@@ -42,10 +42,11 @@ void configCallback(takin_motors::MotorConfig &config, uint32_t level) {
     }
 }
 
-void velocityCallback(const geometry_msgs::Twist &msg) {
+//void velocityCallback(const geometry_msgs::Twist &msg, boost::_bi::value<ros::Subscriber> &remote_control) {
+void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber *remote_controller) {
 
-    double linear = clamp(msg.linear.x, -1, 1);
-    double angle = clamp(msg.angular.z, -1, 1);
+    double linear = clamp(msg->linear.x, -1, 1);
+    double angle = clamp(msg->angular.z, -1, 1);
     double power = std::sqrt(linear * linear + angle * angle);
 
     if (power != 0.0) {
@@ -59,6 +60,12 @@ void velocityCallback(const geometry_msgs::Twist &msg) {
     if (linear < 0) {
         left_power = -left_power;
         right_power = -right_power;
+    }
+
+    if (remote_controller->getNumPublishers() > 1) {
+        ROS_ERROR("Detected multiple publishers. Only 1 publisher is allowed. Setting power to 0.");
+        left_power = 0;
+        right_power = 0
     }
 
     ctre::phoenix::unmanaged::FeedEnable(100);
@@ -85,19 +92,15 @@ int main(int argc, char **argv) {
 
     int FL, FR, RL, RR;
     if (n.getParam("/motors_control/front_left", FL)) {
-        ROS_INFO("front left motor detected : %d", FL);
         left_track.push_back(std::make_shared<TalonSRX>(FL));
     }
     if (n.getParam("/motors_control/front_right", FR)) {
-        ROS_INFO("front right motor detected : %d", FR);
         right_track.push_back(std::make_shared<TalonSRX>(FR));
     }
     if (n.getParam("/motors_control/rear_left", RL)) {
-        ROS_INFO("front left motor detected : %d", RL);
         left_track.push_back(std::make_shared<TalonSRX>(RL));
     }
     if (n.getParam("/motors_control/rear_right", RR)) {
-        ROS_INFO("front left motor detected : %d", RR);
         right_track.push_back(std::make_shared<TalonSRX>(RR));
     }
     // Assuming will always have an equal number of motors in both tracks
@@ -109,11 +112,16 @@ int main(int argc, char **argv) {
         right_track[j]->Follow(*right_track[0].get());
     }
 
-
     for (auto &motor:left_track) {
         motor->SetInverted(true);
     }
-    ros::Subscriber remote_control = n.subscribe("cmd_vel", 1000, velocityCallback);
+
+
+    //ros::Subscriber remote_controller = n.subscribe("cmd_vel", 1000, velocityCallback);
+    ros::Subscriber remote_controller = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000,
+                                                                          boost::bind(&velocityCallback, _1,
+                                                                                      &remote_controller));
+
     ros::spin();
     return 0;
 }
