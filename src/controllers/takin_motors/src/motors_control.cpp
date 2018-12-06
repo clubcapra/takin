@@ -65,7 +65,7 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber
     if (remote_controller->getNumPublishers() > 1) {
         ROS_ERROR("Detected multiple publishers. Only 1 publisher is allowed. Setting power to 0.");
         left_power = 0;
-        right_power = 0
+        right_power = 0;
     }
 
     ctre::phoenix::unmanaged::FeedEnable(100);
