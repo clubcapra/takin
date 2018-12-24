@@ -75,8 +75,8 @@ echo "${STEP}Installing ROS Dependancies...${RESET}"
 
 echo "${STEP}Adding rules...${RESET}"
 {
-    sudo cp "$BASE_DIR/takin_bringup/49-imu.rules" /etc/udev/rules.d/
-	sudo cp "$BASE_DIR/takin_bringup/56-orbbec-usb.rules" /etc/udev/rules.d/
+    sudo cp "$BASE_DIR/takin_bringup/udev/49-imu.rules" /etc/udev/rules.d/
+	sudo cp "$BASE_DIR/takin_bringup/udev/56-orbbec-usb.rules" /etc/udev/rules.d/
 
 	sudo service udev reload
 	sudo service udev restart
