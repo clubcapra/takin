@@ -4,7 +4,7 @@
 
 
     <!-- Capra motor control-->
-    <node pkg="capra_motors" type="motors_control" name="motors_control" output="screen" >
+    <node pkg="takin_motors" type="motors_control" name="motors_control" output="screen" >
         <param name="front_left" type="int" value="11"/>
         <param name="front_right" type="int" value="12"/>
         <param name="rear_left" type="int" value="61"/>

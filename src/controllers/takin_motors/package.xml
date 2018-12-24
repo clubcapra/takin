@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>capra_motors</name>
+  <name>takin_motors</name>
   <version>0.0.0</version>
   <description>A ROS node wrapper for communicating with Talon SRX motor controllers over CAN</description>
 
