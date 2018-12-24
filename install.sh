@@ -48,14 +48,19 @@ echo "${STEP}Installing Tools...${RESET}"
 	sudo apt install -y python-wstool python-rosdep ninja-build
 }
 
-echo "${STEP}Merge ROS dependancies ...${RESET}"
-{
-	# Install installation tools
-	wstool init src
-	wstool merge -t src "$BASE_DIR/takin.rosinstall"
+if [[ ! -f "src/.rosinstall" ]]
+then
+    echo "${STEP}Merge ROS dependancies ...${RESET}"
+    {
+        # Install installation tools
+        wstool init src
+        wstool merge -t src "$BASE_DIR/takin.rosinstall"
 
-    wstool update -t src
-}
+        wstool update -t src
+    }
+else
+    echo "${WARNING}SKIPPED Merge ROS dependancies ...${RESET}"
+fi
 
 echo "${STEP}Installing ROS Dependancies...${RESET}"
 {
@@ -70,7 +75,7 @@ echo "${STEP}Installing ROS Dependancies...${RESET}"
 
 echo "${STEP}Adding rules...${RESET}"
 {
-    sudo cp "$BASE_DIR/takin_bringup/49-capra.rules" /etc/udev/rules.d/
+    sudo cp "$BASE_DIR/takin_bringup/49-imu.rules" /etc/udev/rules.d/
 	sudo cp "$BASE_DIR/takin_bringup/56-orbbec-usb.rules" /etc/udev/rules.d/
 
 	sudo service udev reload

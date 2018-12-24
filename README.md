@@ -33,7 +33,7 @@ Here are the steps to build our project :
  mkdir -p catkin_ws/src
  cd catkin_ws/src
  git clone https://github.com/clubcapra/Takin takin
- cd ../..
+ cd ..
  ./src/takin/install.sh
 ```
 
