@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find takin_motors)/launch/motors_remote.launch"/>
+    <include file="$(find takin_bringup)/launch/teleop.launch"/>
+</launch>
