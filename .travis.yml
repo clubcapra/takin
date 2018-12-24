@@ -75,7 +75,7 @@ before_install:
   - sudo rm /var/lib/dpkg/lock
   - sudo dpkg --configure -a
   - sudo apt-get update
-  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base ninja-build
+  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
