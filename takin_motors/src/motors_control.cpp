@@ -7,6 +7,7 @@
 #include "std_msgs/String.h"
 #include <dynamic_reconfigure/server.h>
 #include <takin_motors/MotorConfig.h>
+#include <takin_msgs/temp.h>
 
 #include <string>
 #include <iostream>
@@ -18,9 +19,25 @@
 std::vector<std::shared_ptr<TalonSRX>> left_track;
 std::vector<std::shared_ptr<TalonSRX>> right_track;
 
+ros::Subscriber remote_controller;
+
 double clamp(double n, double lower, double upper) {
     return std::max(lower, std::min(n, upper));
 }
+
+
+void publishTemperature(std::vector<std::shared_ptr<TalonSRX>> &left_track,
+                    std::vector<std::shared_ptr<TalonSRX>> &right_track,
+                    takin_msgs::temp &temp_msg) {
+    for (auto &motor:left_track) {
+        temp_msg.temps.push_back(motor->GetTemperature());
+    }
+
+    for (auto &motor:right_track) {
+        temp_msg.temps.push_back(motor->GetTemperature());
+    }
+}
+
 
 void configCallback(takin_motors::MotorConfig &config, uint32_t level) {
 
@@ -43,7 +60,7 @@ void configCallback(takin_motors::MotorConfig &config, uint32_t level) {
 }
 
 //void velocityCallback(const geometry_msgs::Twist &msg, boost::_bi::value<ros::Subscriber> &remote_control) {
-void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber *remote_controller) {
+void velocityCallback(const geometry_msgs::Twist::ConstPtr msg) {
 
     double linear = clamp(msg->linear.x, -1, 1);
     double angle = clamp(msg->angular.z, -1, 1);
@@ -62,7 +79,7 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber
         right_power = -right_power;
     }
 
-    if (remote_controller->getNumPublishers() > 1) {
+    if (remote_controller.getNumPublishers() > 1) {
         ROS_ERROR("Detected multiple publishers. Only 1 publisher is allowed. Setting power to 0.");
         left_power = 0;
         right_power = 0;
@@ -116,11 +133,22 @@ int main(int argc, char **argv) {
         motor->SetInverted(true);
     }
 
+    remote_controller = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, velocityCallback);
+    // ROS pub motors temp
+    ros::Publisher temp_pub = n.advertise<takin_msgs::temp>("temp", 1000);
+    ros::Rate loop_rate(10);
 
-    //ros::Subscriber remote_controller = n.subscribe("cmd_vel", 1000, velocityCallback);
-    ros::Subscriber remote_controller = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000,
-                                                                          boost::bind(&velocityCallback, _1,
-                                                                                      &remote_controller));
+    takin_msgs::temp temp_msg;
+
+    while (ros::ok()) {
+
+        publishTemperature(left_track, right_track, temp_msg);
+
+        temp_pub.publish(temp_msg);
+
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
 
     ros::spin();
     return 0;
