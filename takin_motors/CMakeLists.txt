@@ -153,9 +153,10 @@ add_executable(motors_control
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-#add_dependencies(motors_control
-#        ${PROJECT_NAME}_gencfg
-#        )
+add_dependencies(motors_control
+        ${catkin_EXPORTED_TARGETS}
+        )
+
 
 ## Specify libraries to link a library or executable target against
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
