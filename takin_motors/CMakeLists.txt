@@ -7,16 +7,16 @@ add_definitions(-std=c++14)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  std_msgs
-  message_generation
-  geometry_msgs
-  dynamic_reconfigure
-)
+        roscpp
+        std_msgs
+        message_generation
+        geometry_msgs
+        takin_msgs
+        sensor_msgs
+        )
 
 find_package(Threads REQUIRED)
 #find_package(SDL2 REQUIRED)
-
 
 
 ################################################
@@ -44,11 +44,11 @@ find_package(Threads REQUIRED)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+#add_message_files(
+#        FILES
+#        msg/temperature.msg
+#        #   Message2.msg
+#)
 # add_message_files(
 #    FILES
 # )
@@ -68,10 +68,10 @@ find_package(Threads REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+#generate_messages(
+#        DEPENDENCIES
+#        std_msgs
+#)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -88,9 +88,9 @@ find_package(Threads REQUIRED)
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
-    cfg/Motor.cfg
-)
+#generate_dynamic_reconfigure_options(
+#        cfg/Motor.cfg
+#)
 
 ###################################
 ## catkin specific configuration ##
@@ -102,9 +102,9 @@ generate_dynamic_reconfigure_options(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
- #INCLUDE_DIRS include
- #LIBRARIES takin_motors
- CATKIN_DEPENDS roscpp std_msgs geometry_msgs
+        #INCLUDE_DIRS include
+        #LIBRARIES takin_motors
+        CATKIN_DEPENDS roscpp std_msgs geometry_msgs message_runtime sensor_msgs takin_msgs
 )
 
 
@@ -116,28 +116,28 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+        include
+        ${catkin_INCLUDE_DIRS}
 )
 
 # Declare a C++ library
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     if (${CMAKE_SIZEOF_VOID_P} MATCHES "8")
-        add_library( ${PROJECT_NAME}_lib 
-          src/lib/x86-64/libCTRE_Phoenix.a
-          src/lib/x86-64/libCTRE_PhoenixCanutils.a
-          src/lib/x86-64/libCTRE_PhoenixCCI.a
-          src/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a
-        )
-    else()
-        add_library( ${PROJECT_NAME}_lib 
-          src/lib/aarch64/libCTRE_Phoenix.a
-          src/lib/aarch64/libCTRE_PhoenixCanutils.a
-          src/lib/aarch64/libCTRE_PhoenixCCI.a
-          src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a
-        )
-    endif()
-endif()
+        add_library(${PROJECT_NAME}_lib
+                src/lib/x86-64/libCTRE_Phoenix.a
+                src/lib/x86-64/libCTRE_PhoenixCanutils.a
+                src/lib/x86-64/libCTRE_PhoenixCCI.a
+                src/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a
+                )
+    else ()
+        add_library(${PROJECT_NAME}_lib
+                src/lib/aarch64/libCTRE_Phoenix.a
+                src/lib/aarch64/libCTRE_PhoenixCanutils.a
+                src/lib/aarch64/libCTRE_PhoenixCCI.a
+                src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a
+                )
+    endif ()
+endif ()
 
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES LINKER_LANGUAGE CXX)
 
@@ -147,30 +147,31 @@ set_target_properties(${PROJECT_NAME}_lib PROPERTIES LINKER_LANGUAGE CXX)
 # add_dependencies(lk_rover ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # Declare a C++ executable
-add_executable( motors_control  
-  src/motors_control.cpp
-)
+add_executable(motors_control
+        src/motors_control.cpp
+        )
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies( motors_control
-    ${PROJECT_NAME}_gencfg
-)
+add_dependencies(motors_control
+        ${catkin_EXPORTED_TARGETS}
+        )
+
 
 ## Specify libraries to link a library or executable target against
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     if (${CMAKE_SIZEOF_VOID_P} MATCHES "8")
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_Phoenix.a)
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixCCI.a)
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixCanutils.a)
-    else()
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_Phoenix.a)
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCCI.a)
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
-      target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
-    endif()
-endif()
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_Phoenix.a)
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixCCI.a)
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/x86-64/libCTRE_PhoenixCanutils.a)
+    else ()
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_Phoenix.a)
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCCI.a)
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
+        target_link_libraries(motors_control ${PROJECT_SOURCE_DIR}/src/lib/aarch64/libCTRE_PhoenixCanutils.a)
+    endif ()
+endif ()
 
 target_link_libraries(motors_control Threads::Threads)
 #target_link_libraries(motors_control ${SDL2_LIBRARIES})

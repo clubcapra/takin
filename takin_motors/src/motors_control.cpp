@@ -6,7 +6,8 @@
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/String.h"
 #include <dynamic_reconfigure/server.h>
-#include <takin_motors/MotorConfig.h>
+#include "sensor_msgs/Temperature.h"
+#include "takin_msgs/BrakeMode.h"
 
 #include <string>
 #include <iostream>
@@ -14,25 +15,41 @@
 #include <thread>
 #include <vector>
 #include <memory>
+#include <map>
 
 std::vector<std::shared_ptr<TalonSRX>> left_track;
 std::vector<std::shared_ptr<TalonSRX>> right_track;
+
+ros::Subscriber cmd_vel_sub;
+
+//front left, front right, rear left, rear right
+std::vector<std::string> motor_names = {"drive_FL", "drive_FR", "drive_RL", "drive_RR"};
+
 
 double clamp(double n, double lower, double upper) {
     return std::max(lower, std::min(n, upper));
 }
 
-void configCallback(takin_motors::MotorConfig &config, uint32_t level) {
-
-    ctre::phoenix::motorcontrol::NeutralMode brakeMode;
-    switch (config.brake_mode) {
-        case 1:
-            brakeMode = ctre::phoenix::motorcontrol::NeutralMode::Coast;
-            break;
-        default:
-            brakeMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
-            break;
+void publishTemperature(ros::Publisher &temperaturePublisher) {
+    int count = 0;
+    for (auto &motor:left_track) {
+        sensor_msgs::Temperature temperature;
+        temperature.header.frame_id = motor_names[count++];
+        temperature.header.stamp = ros::Time::now();
+        temperature.temperature = motor->GetTemperature();
+        temperaturePublisher.publish(temperature);
     }
+    for (auto &motor:right_track) {
+        sensor_msgs::Temperature temperature;
+        temperature.header.frame_id = motor_names[count++];
+        temperature.header.stamp = ros::Time::now();
+        temperature.temperature = motor->GetTemperature();
+        temperaturePublisher.publish(temperature);
+    }
+}
+
+bool changeBrakeMode(takin_msgs::BrakeModeRequest &req, takin_msgs::BrakeModeResponse &res) {
+    ctre::phoenix::motorcontrol::NeutralMode brakeMode = static_cast<ctre::phoenix::motorcontrol::NeutralMode>(req.brake_mode);
 
     for (auto &motor:left_track) {
         motor->SetNeutralMode(brakeMode);
@@ -40,10 +57,10 @@ void configCallback(takin_motors::MotorConfig &config, uint32_t level) {
     for (auto &motor:right_track) {
         motor->SetNeutralMode(brakeMode);
     }
+    return true;
 }
 
-//void velocityCallback(const geometry_msgs::Twist &msg, boost::_bi::value<ros::Subscriber> &remote_control) {
-void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber *remote_controller) {
+void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg) {
 
     double linear = clamp(msg->linear.x, -1, 1);
     double angle = clamp(msg->angular.z, -1, 1);
@@ -62,7 +79,7 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber
         right_power = -right_power;
     }
 
-    if (remote_controller->getNumPublishers() > 1) {
+    if (cmd_vel_sub.getNumPublishers() < 1) {
         ROS_ERROR("Detected multiple publishers. Only 1 publisher is allowed. Setting power to 0.");
         left_power = 0;
         right_power = 0;
@@ -78,29 +95,19 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg, ros::Subscriber
     }
 }
 
-int main(int argc, char **argv) {
+void setUpMotors(ros::NodeHandle &nh) {
 
-    ros::init(argc, argv, "takin_motors_control");
-    ros::NodeHandle n;
-
-    dynamic_reconfigure::Server<takin_motors::MotorConfig> server;
-    dynamic_reconfigure::Server<takin_motors::MotorConfig>::CallbackType f = boost::bind(&configCallback, _1, _2);
-    server.setCallback(f);
-
-    std::string interface = "can0";
-    ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
-
-    int FL, FR, RL, RR;
-    if (n.getParam("/motors_control/front_left", FL)) {
+    int FL, RL, FR, RR;
+    if (nh.getParam("/motors_control/front_left", FL)) {
         left_track.push_back(std::make_shared<TalonSRX>(FL));
     }
-    if (n.getParam("/motors_control/front_right", FR)) {
-        right_track.push_back(std::make_shared<TalonSRX>(FR));
-    }
-    if (n.getParam("/motors_control/rear_left", RL)) {
+    if (nh.getParam("/motors_control/rear_left", RL)) {
         left_track.push_back(std::make_shared<TalonSRX>(RL));
     }
-    if (n.getParam("/motors_control/rear_right", RR)) {
+    if (nh.getParam("/motors_control/front_right", FR)) {
+        right_track.push_back(std::make_shared<TalonSRX>(FR));
+    }
+    if (nh.getParam("/motors_control/rear_right", RR)) {
         right_track.push_back(std::make_shared<TalonSRX>(RR));
     }
     // Assuming will always have an equal number of motors in both tracks
@@ -115,14 +122,30 @@ int main(int argc, char **argv) {
     for (auto &motor:left_track) {
         motor->SetInverted(true);
     }
+}
 
+int main(int argc, char **argv) {
 
-    //ros::Subscriber remote_controller = n.subscribe("cmd_vel", 1000, velocityCallback);
-    ros::Subscriber remote_controller = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000,
-                                                                          boost::bind(&velocityCallback, _1,
-                                                                                      &remote_controller));
+    ros::init(argc, argv, "takin_motors_control");
+    ros::NodeHandle nh;
 
-    ros::spin();
+    std::string interface = "can0";
+    ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+    setUpMotors(nh);
+
+    cmd_vel_sub = nh.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, velocityCallback);
+    ros::ServiceServer brake_mode_srv = nh.advertiseService("change_brake_mode", changeBrakeMode);
+    ros::Publisher temperature_pub = nh.advertise<sensor_msgs::Temperature>("temperature", 1);
+
+    ros::Rate loop_rate(10);
+
+    while (ros::ok()) {
+        publishTemperature(temperature_pub);
+
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+
     return 0;
 }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
-    <name>takin_motors</name>
+    <name>takin_msgs</name>
     <version>0.0.0</version>
     <description>
-        A ROS node wrapper for communicating with Talon SRX motor controllers over CAN
+        This contains the messages, actions and services for interfacing with Takin software project.
     </description>
 
     <maintainer email="ludovicvanasse@gmail.com">Ludo</maintainer>
@@ -12,14 +12,8 @@
 
     <buildtool_depend>catkin</buildtool_depend>
 
-    <depend>roscpp</depend>
-    <depend>std_msgs</depend>
-    <depend>geometry_msgs</depend>
-    <!--<depend>dynamic_reconfigure</depend>-->
     <depend>message_generation</depend>
     <depend>message_runtime</depend>
-    <depend>sensor_msgs</depend>
-    <depend>takin_msgs</depend>
 
     <!-- The export tag contains other, unspecified, tags -->
     <export>
