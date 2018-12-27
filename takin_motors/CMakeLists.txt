@@ -11,8 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
         std_msgs
         message_generation
         geometry_msgs
-        dynamic_reconfigure
         takin_msgs
+        sensor_msgs
         )
 
 find_package(Threads REQUIRED)
@@ -46,7 +46,7 @@ find_package(Threads REQUIRED)
 ## Generate messages in the 'msg' folder
 #add_message_files(
 #        FILES
-#        msg/temp.msg
+#        msg/temperature.msg
 #        #   Message2.msg
 #)
 # add_message_files(
@@ -88,9 +88,9 @@ find_package(Threads REQUIRED)
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
-        cfg/Motor.cfg
-)
+#generate_dynamic_reconfigure_options(
+#        cfg/Motor.cfg
+#)
 
 ###################################
 ## catkin specific configuration ##
@@ -104,7 +104,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
         #INCLUDE_DIRS include
         #LIBRARIES takin_motors
-        CATKIN_DEPENDS roscpp std_msgs geometry_msgs message_runtime takin_msgs
+        CATKIN_DEPENDS roscpp std_msgs geometry_msgs message_runtime sensor_msgs takin_msgs
 )
 
 
@@ -153,9 +153,9 @@ add_executable(motors_control
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(motors_control
-        ${PROJECT_NAME}_gencfg
-        )
+#add_dependencies(motors_control
+#        ${PROJECT_NAME}_gencfg
+#        )
 
 ## Specify libraries to link a library or executable target against
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
