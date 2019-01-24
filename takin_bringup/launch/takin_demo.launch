@@ -1,0 +1,16 @@
+<launch>
+    <group ns="capra">
+
+        <!-- Sensors -->
+        <include file="$(find takin_bringup)/launch/camera_3d.launch"/>
+        <!-- <include file="$(find takin_bringup)/launch/imu.launch"/>
+        <include file="$(find takin_bringup)/launch/sick_tim.launch"/> 
+        <include file="$(find takin_bringup)/launch/flir_camera.launch"/> -->
+        
+        <!-- Detection
+        <include file="$(find darknet_ros)/launch/darknet_ros.launch"/> -->
+
+        <!-- Motor -->
+        <include file="$(find takin_motors)/launch/motors_remote.launch"/>
+    </group>    
+</launch>
