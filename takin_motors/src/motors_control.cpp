@@ -114,10 +114,6 @@ void setUpMotors(ros::NodeHandle &nh) {
         right_track[j]->Follow(*right_track[0].get());
     }
 
-    for (auto &motor:left_track) {
-        motor->SetInverted(true);
-    }
-
     ROS_INFO("Found motors, left: %d right: %d", (int)left_track.size(), (int)right_track.size());
 }
 
