@@ -64,12 +64,7 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg) {
 
     double linear = clamp(msg->linear.x, -1, 1);
     double angle = clamp(msg->angular.z, -1, 1);
-    double power = std::sqrt(linear * linear + angle * angle);
-
-    if (power != 0.0) {
-        angle /= power;
-        linear /= power;
-    }
+    double power = clamp(std::sqrt(linear * linear + angle * angle), -1, 1);
 
     double left_power = angle > 0 ? (1.0 - 2 * angle) * power : power;
     double right_power = angle < 0 ? (1.0 + 2 * angle) * power : power;
@@ -122,6 +117,8 @@ void setUpMotors(ros::NodeHandle &nh) {
     for (auto &motor:left_track) {
         motor->SetInverted(true);
     }
+
+    ROS_INFO("Found motors, left: %d right: %d", (int)left_track.size(), (int)right_track.size());
 }
 
 int main(int argc, char **argv) {
