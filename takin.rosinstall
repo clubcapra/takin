@@ -1,2 +1,1 @@
 - git: {local-name: vectornav, uri: 'https://github.com/dawonn/vectornav.git'}
-- git: {local-name: capra_landolt_ros, uri: 'https://github.com/clubcapra/capra_landolt_ros.git'}
