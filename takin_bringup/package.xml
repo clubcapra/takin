@@ -10,6 +10,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <exec_depend>joy</exec_depend>
+  <exec_depend>teleop_twist_joy</exec_depend>
+
   <exec_depend>rgbd_launch</exec_depend>
   <exec_depend>astra_camera</exec_depend>
   <exec_depend>astra_launch</exec_depend>
