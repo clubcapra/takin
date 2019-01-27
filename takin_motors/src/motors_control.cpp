@@ -64,10 +64,10 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg) {
 
     double linear = clamp(msg->linear.x, -1, 1);
     double angle = clamp(msg->angular.z, -1, 1);
-    double power = clamp(std::sqrt(linear * linear + angle * angle), -1, 1);
+    double power = clamp(std::sqrt(linear * linear + angle * angle), 0, 1);
 
-    double left_power = angle > 0 ? (1.0 - 2 * angle) * power : power;
-    double right_power = angle < 0 ? (1.0 + 2 * angle) * power : power;
+    double left_power = angle > 0 ? power - 2 * angle : power;
+    double right_power = angle < 0 ? power + 2 * angle : power;
 
     if (linear < 0) {
         left_power = -left_power;
