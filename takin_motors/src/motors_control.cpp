@@ -64,7 +64,7 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg) {
 
     double linear = clamp(msg->linear.x, -1, 1);
     double angle = clamp(msg->angular.z, -1, 1);
-    double power = clamp(std::sqrt(linear * linear + angle * angle), -1, 1);
+    double power = clamp(std::sqrt(linear * linear + angle * angle), 0, 1);
 
 
     double left_power = angle > 0 ? power - 2 * angle : power;
@@ -109,13 +109,6 @@ void setUpMotors(ros::NodeHandle &nh) {
         right_track.push_back(std::make_shared<TalonSRX>(RR));
     }
     // Assuming will always have an equal number of motors in both tracks
-//    for (int i = 1; i < left_track.size(); ++i) {
-//        left_track[i]->Follow(*left_track[0].get());
-//    }
-//
-//    for (int j = 1; j < right_track.size(); ++j) {
-//        right_track[j]->Follow(*right_track[0].get());
-//   }
 
     ROS_INFO("Found motors, left: %d right: %d", (int) left_track.size(), (int) right_track.size());
 }
