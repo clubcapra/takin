@@ -83,10 +83,10 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr &msg) {
     ctre::phoenix::unmanaged::FeedEnable(100);
 
     for (auto &motor:left_track) {
-        motor->Set(ControlMode::PercentOutput, left_power * 0.5);
+        motor->Set(ControlMode::PercentOutput, left_power);
     }
     for (auto &motor:right_track) {
-        motor->Set(ControlMode::PercentOutput, right_power * 0.5);
+        motor->Set(ControlMode::PercentOutput, right_power);
     }
 }
 
