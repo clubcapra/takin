@@ -6,12 +6,12 @@ add_definitions(-std=c++14)
 find_package(catkin REQUIRED COMPONENTS
         roscpp
         std_msgs
+        message_generation
         )
 
-find_package(Threads REQUIRED)
 
 catkin_package(
-        CATKIN_DEPENDS roscpp std_msgs 
+        CATKIN_DEPENDS roscpp std_msgs
 )
 
 
@@ -30,3 +30,4 @@ add_dependencies(estop
         ${catkin_EXPORTED_TARGETS}
         )
 
+target_link_libraries(estop ${catkin_LIBRARIES})
