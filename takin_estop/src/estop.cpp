@@ -3,6 +3,8 @@
 
 bool estop = true;
 
+
+
 bool toggleEstop(std_srvs::Trigger::Request &req,std_srvs::Trigger::Response &res){
     const bool prev_estop = estop;
 
@@ -15,16 +17,21 @@ bool toggleEstop(std_srvs::Trigger::Request &req,std_srvs::Trigger::Response &re
         res.success = static_cast<unsigned char>(false);
         res.message = "failed toggle estop";
     }
+
+    // set  GPIO 
+
     return true;
 }
 
 int main(int argc, char **argv) {
 
     ros::init(argc,argv,"takin_estop");
-    ros::NodeHandle n;
+    ros::NodeHandle nh;
 
-    ros::ServiceServer service = n.advertiseService("takin_estop",toggleEstop);
+    ros::ServiceServer service = nh.advertiseService("takin_estop",toggleEstop);
     ros::spin();
+
+
     /*ros::Rate loop_rate(10);
 
     while (ros::ok()) {
