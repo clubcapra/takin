@@ -16,7 +16,7 @@ catkin_package(
 
 
 include_directories(
-        include
+        include/jetsonGPIO
         ${catkin_INCLUDE_DIRS}
 )
 
