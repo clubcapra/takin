@@ -15,8 +15,10 @@ catkin_package(
 )
 
 
+add_library(jetsonGPIO include/jetsonGPIO/jetsonGPIO.c include/jetsonGPIO/jetsonGPIO.h)
+
 include_directories(
-        include/jetsonGPIO
+        include
         ${catkin_INCLUDE_DIRS}
 )
 
@@ -29,5 +31,7 @@ add_executable(estop
 add_dependencies(estop
         ${catkin_EXPORTED_TARGETS}
         )
+
+target_include_directories(estop PRIVATE jetsonGPIO)
 
 target_link_libraries(estop ${catkin_LIBRARIES})
