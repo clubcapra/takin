@@ -3,7 +3,7 @@
     <name>takin_estop</name>
     <version>0.0.0</version>
     <description>
-        A ROS node service for the soft estop_status on the robot
+        A ROS node service for logicial estop on the robot
     </description>
 
     <maintainer email="ludovicvanasse@gmail.com">Ludo</maintainer>
