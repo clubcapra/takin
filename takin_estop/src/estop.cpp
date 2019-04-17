@@ -2,32 +2,37 @@
 #include "std_srvs/Trigger.h"
 #include "jetsonGPIO/jetsonGPIO.c"
 
-bool estop_status = true;
-jetsonTX2GPIONumber estop_pin = jetsonTX2GPIONumber::gpio388;
+bool estop_value = true; //default value for the Estop.
+const jetsonTX2GPIONumber ESTOP_PIN = jetsonTX2GPIONumber::gpio388; //GPIO pin for the pin 37 on the J21 GPIO header
 
+/**
+ * Call back function for to toggle the Estop pin. This will change the electric output on the pin and enable or disable
+ * the estop.
+ */
 bool toggleEstop(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res) {
-    bool prev_estop = estop_status;
-    estop_status = !estop_status;
+    estop_value = !estop_value;
 
-    if (estop_status != prev_estop) {
-        res.success = static_cast<unsigned char>(true);
-        res.message = "successfully toggle estop";
-        (estop_status) ? gpioSetValue(estop_pin,1) : gpioSetValue(estop_pin,0);
+    if (estop_value) {
+        res.message = "successfully toggle estop to on";
+        gpioSetValue(ESTOP_PIN, 1);
     } else {
-        res.success = static_cast<unsigned char>(false);
-        res.message = "failed toggle estop";
+        res.message = "successfully toggle estop to off";
+        gpioSetValue(ESTOP_PIN, 0);
     }
-
+    res.success = static_cast<unsigned char>(true);
     return true;
 }
 
+/**
+ * Initialize the configuration to control the GPIO pin.
+ */
 void initializeGPIO() {
-    gpioExport(estop_pin);
-    gpioSetDirection(estop_pin, 1);
+    gpioExport(ESTOP_PIN);
+    gpioSetDirection(ESTOP_PIN, 1);
+    gpioSetValue(ESTOP_PIN, 1);
 }
 
 int main(int argc, char **argv) {
-
     ros::init(argc, argv, "takin_estop");
     ros::NodeHandle nh;
 
