@@ -11,11 +11,11 @@ bool toggleEstop(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &r
 
     if (estop_status != prev_estop) {
         res.success = static_cast<unsigned char>(true);
-        res.message = "successfully toggle estop_status";
+        res.message = "successfully toggle estop";
         (estop_status) ? gpioSetValue(estop_pin,1) : gpioSetValue(estop_pin,0);
     } else {
         res.success = static_cast<unsigned char>(false);
-        res.message = "failed toggle estop_status";
+        res.message = "failed toggle estop";
     }
 
     return true;
