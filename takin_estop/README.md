@@ -34,6 +34,12 @@ If you're having issue with this package there might be two cause.
 link [https://jkjung-avt.github.io/gpio-non-root/] where it explain how 
 to change the permission to fix this issue. Then try to restart the node
 to see if it worked.
+
+Also it is worth noting that there's a udev rules that configure the 
+initial permission parameter on the GPIO pin 388. This file can be found
+ in the gpio folder of this package. This file should be place inside 
+ the /etc/udev/rules.d/ folder. 
+ 
 2. The ROS node is not behaving correctly, so there's a number of thing
 you should try to fix this
     1. Did you compile and source properly?
