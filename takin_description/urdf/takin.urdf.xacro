@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="takin">
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://takin_description/meshes/main_frame.stl" />
+      </geometry>
+    </visual>
+  </link>
+
+  <xacro:include filename="$(find sick_tim)/urdf/sick_tim.urdf.xacro" />
+  <xacro:sick_tim310 name="laser" ros_topic="scan" />
+
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <box size="0.0381 0.0348 0.0109"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_to_laser_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_mount_link"/>
+  </joint>
+
+  <joint name="laser_mount_to_imu" type="fixed">
+    <parent link="laser_mount_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0.0 0.11"/>
+  </joint>
+
+</robot>
