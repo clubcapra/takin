@@ -1,6 +1,0 @@
-<launch>
-    <group ns="capra">
-        <include file="$(find takin_bringup)/launch/teleop.launch"/>        
-        <include file="$(find darknet_ros)/launch/darknet_ros.launch"/>
-    </group>    
-</launch>
