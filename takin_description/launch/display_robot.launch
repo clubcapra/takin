@@ -1,0 +1,9 @@
+<launch>  
+  <arg name="rvizconfig" default="$(find takin_description)/rviz/model.rviz" />
+
+  <param name="use_gui" value="true"/>
+
+  <include file="$(find takin_description)/launch/robot_description.launch"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+</launch>
