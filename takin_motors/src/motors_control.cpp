@@ -108,7 +108,7 @@ void setUpMotors(ros::NodeHandle &nh) {
     // Assuming will always have an equal number of motors in both tracks
     ROS_INFO("left track size:%d",left_track.size());
     for (int i = 1; i < left_track.size(); ++i) {
-        left_track[i]->Follow(*left_track[0].get());
+        //left_track[i]->Follow(*left_track[0].get());
     }
 
     for (int j = 1; j < right_track.size(); ++j) {
