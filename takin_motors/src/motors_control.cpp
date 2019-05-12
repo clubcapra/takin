@@ -106,6 +106,7 @@ void setUpMotors(ros::NodeHandle &nh) {
         right_track.push_back(std::make_shared<TalonSRX>(RR));
     }
     // Assuming will always have an equal number of motors in both tracks
+    ROS_INFO("left track size:%d",left_track.size());
     for (int i = 1; i < left_track.size(); ++i) {
         left_track[i]->Follow(*left_track[0].get());
     }
