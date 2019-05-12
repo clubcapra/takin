@@ -17,7 +17,8 @@
   <exec_depend>astra_camera</exec_depend>
   <exec_depend>astra_launch</exec_depend>
   <exec_depend>sick_tim</exec_depend>
-
+  <exec_depend>cartographer_ros</exec_depend>
+  <exec_depend>cartographer_rviz</exec_depend>
   <export>
 
   </export>

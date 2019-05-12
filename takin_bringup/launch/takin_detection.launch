@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+        <arg name="manager" value="/camera_3d/camera_3d_nodelet_manager" />
+
+        <include file="$(find takin_bringup)/launch/camera_3d.launch"/>
+
+        <group ns="landolt">
+            <node pkg="nodelet" type="nodelet" name="LandoltNodelet" args="load capra/LandoltNodelet $(arg manager)" output="screen">
+                <param name="camera_reading" type="str" value="/camera_3d/rgb/image_raw" />
+            </node>
+        </group>
+        <group ns="motion">
+            <include file="$(find capra_motion_detection)/launch/capra_motion_detection.launch" />
+        </group>
+        <group ns="qr">
+            <node pkg="nodelet" type="nodelet" name="BarcodeZbarNodelet" args="load capra/BarcodeZbarNodelet $(arg manager)" output="screen">
+                <param name="subscriber_image" type="str" value="/camera_3d/rgb/image_raw" />
+            </node>
+        </group>
+
+       <include file="$(find darknet_ros)/launch/hazmat.launch" />
+</launch>
