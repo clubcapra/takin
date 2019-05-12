@@ -1,4 +1,4 @@
-#Takin_motors
+# Takin_motors
 Takin_motors is a node that listen to a twist/cmd_vel message to control the drive which in then control the motors. 
 It also publish informations about the motors. The motors use the CANBus interface on the development board of the 
 Nvidia Jetson TX2.
