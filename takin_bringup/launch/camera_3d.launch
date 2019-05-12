@@ -1,5 +1,0 @@
-<launch>
-    <include file="$(find astra_launch)/launch/astra.launch" >
-        <arg name="camera" value="camera_3d" />
-    </include>
-</launch>
