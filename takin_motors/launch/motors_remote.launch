@@ -3,7 +3,7 @@
     <!--<machine name="Jetson" user="capra" password=".simmons." address="192.168.1.123" default="true" env-loader="/home/capra/Code/TakinMotors/devel/env.sh"/>-->
 
     <!-- See https://github.com/ros/ros_comm/issues/393 -->
-    <arg name="debug" default=""/> <!-- debug:="gdb -ex run --args" -->
+    <!-- <arg name="debug" default=""/> debug:="gdb -ex run -args" -->
     <!-- See also https://answers.ros.org/question/314136/segmentation-fault-core-dumped-depending-on-callback-queue-size/ -->
     <!-- Capra motor control-->
     <node pkg="takin_motors" type="motors_control" name="motors_control" output="screen" launch-prefix="$(arg debug)">
