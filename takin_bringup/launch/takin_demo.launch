@@ -9,5 +9,11 @@
 
         <!-- Motor -->
         <include file="$(find takin_motors)/launch/motors_remote.launch"/>
+
+        <!-- UI Data Server -->
+        <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+                <arg name="port" value="9090"/>
+        </include>
+	
     </group>    
 </launch>
