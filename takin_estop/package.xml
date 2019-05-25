@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>takin_estop</name>
+    <version>0.0.0</version>
+    <description>
+        A ROS node service for logicial estop on the robot
+    </description>
+
+    <maintainer email="ludovicvanasse@gmail.com">Ludo</maintainer>
+
+    <license>GPLv3</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <depend>roscpp</depend>
+    <depend>std_msgs</depend>
+
+    <!-- The export tag contains other, unspecified, tags -->
+    <export>
+        <!-- Other tools can request additional information be placed here -->
+
+    </export>
+</package>
+

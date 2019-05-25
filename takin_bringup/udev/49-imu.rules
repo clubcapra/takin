@@ -1,2 +1,0 @@
-#udev rules for IMU
-SUBSYSTEM=="tty", ATTRS{serial}=="FTVJUC1E", SYMLINK+="ttyUSB100"

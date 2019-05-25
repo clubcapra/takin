@@ -1,0 +1,5 @@
+<launch>
+    <!--<machine name="Jetson" user="capra" password=".simmons." address="192.168.1.123" default="true" env-loader="/home/capra/Code/TakinMotors/devel/env.sh"/>-->
+    <!-- Capra estop-->
+    <node pkg="takin_estop" type="estop" name="estop" output="screen"></node>
+</launch>
