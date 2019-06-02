@@ -15,7 +15,7 @@ catkin_package(
 )
 
 
-add_library(jetsonGPIO include/jetsonGPIO/jetsonGPIO.c include/jetsonGPIO/jetsonGPIO.h)
+add_library(jetsonGPIO_estop include/jetsonGPIO/jetsonGPIO.c include/jetsonGPIO/jetsonGPIO.h)
 
 include_directories(
         include

@@ -2,7 +2,7 @@
 ## Overview
 takin_estop is a simple node that provide a service to toggle on and off
  a logical estop. The program listen for service call and then turn on or 
- off the logical pin388 or the pin37 of the J21 header on the Jetson TX2.
+ off the logical pin298 or the pin21 of the J1 header on the Jetson TX2.
  <br/>
  <br/>
  The program use the library [https://github.com/MengHuanLee/jetsonTX2GPIO]
@@ -36,7 +36,7 @@ to change the permission to fix this issue. Then try to restart the node
 to see if it worked.
 
 Also it is worth noting that there's a udev rules that configure the 
-initial permission parameter on the GPIO pin 388. This file can be found
+initial permission parameter on the GPIO pin 298. This file can be found
  in the gpio folder of this package. This file should be place inside 
  the /etc/udev/rules.d/ folder. 
  

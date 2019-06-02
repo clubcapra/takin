@@ -3,7 +3,7 @@
 #include "jetsonGPIO/jetsonGPIO.c"
 
 bool estop_value = true; //default value for the Estop.
-const jetsonTX2GPIONumber ESTOP_PIN = jetsonTX2GPIONumber::gpio388; //GPIO pin for the pin 37 on the J21 GPIO header
+const jetsonTX2GPIONumber ESTOP_PIN = jetsonTX2GPIONumber::gpio298; //GPIO pin for the pin 21 on the J1 GPIO header
 
 /**
  * Call back function for to toggle the Estop pin. This will change the electric output on the pin and enable or disable
