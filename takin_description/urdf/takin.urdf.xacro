@@ -48,7 +48,9 @@
   <joint name="base_link_to_imu" type="fixed">
     <parent link="base_link"/>
     <child link="imu_link"/>
-    <origin xyz="0.0 0.04 0.0"/>
+    <!-- 0.003175 is the thickness of the frame. 
+    The base_link point is under the frame. -->
+    <origin xyz="0.0 0.04 ${imu_size_z/2 + 0.003175}"/>
   </joint>
 
 </robot>
