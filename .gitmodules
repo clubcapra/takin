@@ -34,3 +34,9 @@
 [submodule "vectornav"]
 	path = vectornav
 	url = https://github.com/clubcapra/vectornav.git
+[submodule "capra_flir_lepton_ros"]
+	path = capra_flir_lepton_ros
+	url = https://github.com/clubcapra/capra_flir_lepton_ros
+[submodule "pointgrey_camera_driver"]
+	path = pointgrey_camera_driver
+	url = https://github.com/clubcapra/pointgrey_camera_driver
