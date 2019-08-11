@@ -1,6 +1,7 @@
 [submodule "takin_motors"]
 	path = takin_motors
 	url = https://github.com/clubcapra/takin_motors.git
+	branch = master
 [submodule "takin_msgs"]
 	path = takin_msgs
 	url = https://github.com/clubcapra/takin_msgs.git
@@ -19,18 +20,12 @@
 [submodule "capra_telaire_ros"]
 	path = capra_telaire_ros
 	url = https://github.com/clubcapra/capra_telaire_ros.git
-[submodule "capra_landolt_ros"]
-	path = capra_landolt_ros
-	url = https://github.com/clubcapra/capra_landolt_ros.git
 [submodule "capra_motion_detection_ros"]
 	path = capra_motion_detection_ros
 	url = https://github.com/clubcapra/capra_motion_detection_ros.git
 [submodule "capra_darknet_ros"]
 	path = capra_darknet_ros
 	url = https://github.com/clubcapra/capra_darknet_ros.git
-[submodule "capra_zbar_ros"]
-	path = capra_zbar_ros
-	url = https://github.com/clubcapra/capra_zbar_ros.git
 [submodule "vectornav"]
 	path = vectornav
 	url = https://github.com/clubcapra/vectornav.git
