@@ -1,0 +1,14 @@
+<launch>
+
+    <!-- <include file="$(find vectornav)/launch/vectornav.launch" /> -->
+
+    <node pkg="vectornav" type="vnpub" name="vectornav"  output="screen" >
+
+        <param name="serial_port" type="string" value="/dev/ttyUSB0" />
+        <param name="serial_baud" type="int"    value="115200" />
+        <param name="async_output_rate" type="int"    value="40" />      
+        <param name="frame_id" type="string" value="base_link" />
+	
+	</node>
+    
+</launch>

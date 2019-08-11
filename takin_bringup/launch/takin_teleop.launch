@@ -1,0 +1,3 @@
+<launch>
+    <include file="$(find takin_motors)/launch/motors_remote.launch"/>
+</launch>
