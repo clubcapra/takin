@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="takin" >
+
+  <xacro:property name="imu_size_z" value="0.0109" />
+  <xacro:property name="lidar_name" value="laser" />
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://takin_description/meshes/main_frame.stl" />
+      </geometry>
+      <origin rpy="0 0 ${pi}"/>
+    </visual>
+  </link>
+
+  <xacro:include filename="$(find sick_tim)/urdf/sick_tim.urdf.xacro" />
+  <xacro:sick_tim551 name="${lidar_name}" ros_topic="scan" />
+
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <box size="0.0381 0.0348 ${imu_size_z}"/>
+      </geometry>
+      <origin rpy="0 0 ${pi/2}"/>
+    </visual>
+  </link>
+
+  <link name="camera_3d_depth_optical_frame">
+    <visual>
+      <geometry>
+        <box size="0.112 0.0318 0.0372"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_to_{lidar_name}_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="${lidar_name}_mount_link"/>
+    <origin xyz="0.0 0.205 0.268"/>
+  </joint>
+
+  <joint name="base_to_camera_3d" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_3d_depth_optical_frame"/>
+    <origin xyz="0.0029 0.25375 0.2083"/>
+  </joint>
+
+  <joint name="base_link_to_imu" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <!-- 0.003175 is the thickness of the frame. 
+    The base_link point is under the frame. -->
+    <origin xyz="0.0 0.04 ${imu_size_z/2 + 0.003175}"/>
+  </joint>
+
+</robot>

@@ -6,10 +6,6 @@
 	path = takin_msgs
 	url = https://github.com/clubcapra/takin_msgs.git
 	branch = master
-[submodule "takin_description"]
-	path = takin_description
-	url = https://github.com/clubcapra/takin_description.git
-	branch = master
 [submodule "takin_estop"]
 	path = takin_estop
 	url = https://github.com/clubcapra/takin_estop.git
