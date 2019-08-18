@@ -1,15 +1,3 @@
-[submodule "takin_motors"]
-	path = takin_motors
-	url = https://github.com/clubcapra/takin_motors.git
-	branch = master
-[submodule "takin_msgs"]
-	path = takin_msgs
-	url = https://github.com/clubcapra/takin_msgs.git
-	branch = master
-[submodule "takin_estop"]
-	path = takin_estop
-	url = https://github.com/clubcapra/takin_estop.git
-	branch = master
 [submodule "capra_headlights_ros"]
 	path = capra_headlights_ros
 	url = https://github.com/clubcapra/capra_headlights_ros.git
