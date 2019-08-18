@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+    
+   <remap from="audio" to="mic"/>
+    <!-- MS Lifecam Cinema Microphone -->
+    <include file="$(find audio_capture)/launch/capture.launch"></include>
+    <!-- CO2 sensor on I2C Bus -->
+    <include file="$(find capra_telaire_ros)/launch/telaire.launch"></include>
+    <!-- Thermal camera on I2C and SPI bus -->
+    <!-- <include file="$(find takin_bringup)/launch/flir_camera.launch"></include> -->
+    <!-- MS Lifecam Cinema Camera -->
+    <include file="$(find takin_arm)/launch/ms_lifecam.launch"></include>
+
+</launch>

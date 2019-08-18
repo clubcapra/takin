@@ -1,0 +1,24 @@
+[submodule "capra_headlights_ros"]
+	path = capra_headlights_ros
+	url = https://github.com/clubcapra/capra_headlights_ros.git
+	branch = master
+[submodule "capra_telaire_ros"]
+	path = capra_telaire_ros
+	url = https://github.com/clubcapra/capra_telaire_ros.git
+	branch = master
+[submodule "capra_motion_detection_ros"]
+	path = capra_motion_detection_ros
+	url = https://github.com/clubcapra/capra_motion_detection_ros.git
+	branch = master
+[submodule "capra_darknet_ros"]
+	path = capra_darknet_ros
+	url = https://github.com/clubcapra/capra_darknet_ros.git
+	branch = master
+[submodule "vectornav"]
+	path = vectornav
+	url = https://github.com/clubcapra/vectornav.git
+	branch = master
+[submodule "capra_flir_lepton_ros"]
+	path = capra_flir_lepton_ros
+	url = https://github.com/clubcapra/capra_flir_lepton_ros
+	branch = master

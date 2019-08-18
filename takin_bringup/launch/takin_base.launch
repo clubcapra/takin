@@ -1,0 +1,10 @@
+<launch>
+    <include file="$(find takin_estop)/launch/estop.launch"/>
+    <include file="$(find takin_bringup)/launch/takin_teleop.launch"/>
+    <include file="$(find takin_bringup)/launch/camera_3d.launch"/>
+    <include file="$(find takin_bringup)/launch/takin_slam.launch"/>
+    <include file="$(find takin_bringup)/launch/camera_rearview.launch"/> 
+    <include file="$(find takin_bringup)/launch/takin_speaker.launch"/>
+    <include file="$(find takin_bringup)/launch/takin_web_ui.launch"/>
+    <include file="$(find capra_headlights)/launch/headlights.launch"/>
+</launch>

@@ -5,20 +5,45 @@
 bool estop_value = true; //default value for the Estop.
 const jetsonTX2GPIONumber ESTOP_PIN = jetsonTX2GPIONumber::gpio298; //GPIO pin for the pin 21 on the J1 GPIO header
 
+
+// COMMENTED FOR REFERENCES PURPOSES
+///**
+// * Call back function for to toggle the Estop pin. This will change the electric output on the pin and enable or disable
+// * the estop.
+// */
+//bool toggleEstopEnable(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res) {
+//    estop_value = !estop_value;
+//
+//    if (estop_value) {
+//        res.message = "successfully toggle estop to on";
+//        gpioSetValue(ESTOP_PIN, 1);
+//    } else {
+//        res.message = "successfully toggle estop to off";
+//        gpioSetValue(ESTOP_PIN, 0);
+//    }
+//    res.success = static_cast<unsigned char>(true);
+//    return true;
+//}
+
+
 /**
  * Call back function for to toggle the Estop pin. This will change the electric output on the pin and enable or disable
  * the estop.
  */
-bool toggleEstop(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res) {
-    estop_value = !estop_value;
+bool toggleEstopEnable(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res) {
+    res.message = "successfully toggle estop to on";
+    gpioSetValue(ESTOP_PIN, 1);
+    res.success = static_cast<unsigned char>(true);
+    return true;
+}
 
-    if (estop_value) {
-        res.message = "successfully toggle estop to on";
-        gpioSetValue(ESTOP_PIN, 1);
-    } else {
-        res.message = "successfully toggle estop to off";
-        gpioSetValue(ESTOP_PIN, 0);
-    }
+/**
+ * Call back function for to toggle the Estop pin. This will change the electric output on the pin and enable or disable
+ * the estop.
+ */
+bool toggleEstopDisable(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res) {
+    res.message = "successfully toggle estop to off";
+    gpioSetValue(ESTOP_PIN, 0);
     res.success = static_cast<unsigned char>(true);
     return true;
 }
@@ -38,7 +63,8 @@ int main(int argc, char **argv) {
 
     initializeGPIO();
 
-    ros::ServiceServer service = nh.advertiseService("takin_estop", toggleEstop);
+    ros::ServiceServer serviceEnable = nh.advertiseService("takin_estop_enable", toggleEstopEnable);
+    ros::ServiceServer serviceDisable = nh.advertiseService("takin_estop_disable", toggleEstopDisable);
     ros::spin();
 
     return 0;

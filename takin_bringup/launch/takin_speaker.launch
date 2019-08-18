@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+    
+   <remap from="audio" to="speaker"/>
+    <include file="$(find audio_play)/launch/play.launch">
+    </include>
+
+</launch>
