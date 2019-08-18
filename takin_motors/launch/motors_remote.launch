@@ -1,0 +1,26 @@
+<launch>
+
+    <!--<machine name="Jetson" user="capra" password=".simmons." address="192.168.1.123" default="true" env-loader="/home/capra/Code/TakinMotors/devel/env.sh"/>-->
+
+    <!-- See https://github.com/ros/ros_comm/issues/393 -->
+    <arg name="debug" default=""/> <!-- debug:="gdb -ex run -args" -->
+    <!-- See also https://answers.ros.org/question/314136/segmentation-fault-core-dumped-depending-on-callback-queue-size/ -->
+    <!-- Capra motor control-->
+    <node pkg="takin_motors" type="motors_control" name="motors_control" output="screen" launch-prefix="$(arg debug)">
+        <param name="front_left" type="int" value="11"/>
+        <param name="front_right" type="int" value="12"/>
+        <param name="rear_left" type="int" value="61"/>
+        <param name="rear_right" type="int" value="62"/>
+    </node>
+    <!--<node pkg="capra_remote_controller" type="capra_remote_controller" name="remote_controller"/> -->
+
+
+    <!-- joy node -->
+    <!--<node respawn="true" pkg="joy" type="joy_node" name="joy" >-->
+    <!--<param name="dev" type="string" value="/dev/input/js0" />-->
+    <!--<param name="autorepeat_rate" value="100.0" />-->
+    <!--<param name="deadzone" value="0.12" />-->
+    <!--</node>-->
+
+
+</launch>
