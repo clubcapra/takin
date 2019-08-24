@@ -14,12 +14,9 @@
   <exec_depend>teleop_twist_joy</exec_depend>
 
   <exec_depend>rgbd_launch</exec_depend>
-  <exec_depend>astra_camera</exec_depend>
-  <exec_depend>astra_launch</exec_depend>
   <exec_depend>sick_tim</exec_depend>
   <exec_depend>cartographer_ros</exec_depend>
   <exec_depend>cartographer_rviz</exec_depend>
-  <exec_depend>hector_slam</exec_depend>
   <export>
 
   </export>
