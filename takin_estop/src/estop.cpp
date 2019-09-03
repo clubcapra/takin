@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "std_srvs/Trigger.h"
+#include "std_msgs/Bool.h"
 #include "jetsonGPIO/jetsonGPIO.c"
 
 bool estop_value = true; //default value for the Estop.
@@ -48,6 +49,16 @@ bool toggleEstopDisable(std_srvs::Trigger::Request &req, std_srvs::Trigger::Resp
     return true;
 }
 
+void publishEstopStatus(ros::Publisher *pub){
+    unsigned int status;
+    if (!gpioGetValue(ESTOP_PIN, &status))
+    {
+        std_msgs::Bool msg;
+        msg.data == (status == true);
+        pub->publish(msg);
+    }
+}
+
 /**
  * Initialize the configuration to control the GPIO pin.
  */
@@ -60,11 +71,13 @@ void initializeGPIO() {
 int main(int argc, char **argv) {
     ros::init(argc, argv, "takin_estop");
     ros::NodeHandle nh;
-
+    ros::Publisher estop_status_pub = nh.advertise<std_msgs::Bool>("takin_estop_status", 1);
     initializeGPIO();
 
     ros::ServiceServer serviceEnable = nh.advertiseService("takin_estop_enable", toggleEstopEnable);
     ros::ServiceServer serviceDisable = nh.advertiseService("takin_estop_disable", toggleEstopDisable);
+    
+    publishEstopStatus(&estop_status_pub);
     ros::spin();
 
     return 0;
