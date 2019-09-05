@@ -5,7 +5,7 @@
 
 bool estop_value = true; //default value for the Estop.
 const jetsonTX2GPIONumber ESTOP_PIN = jetsonTX2GPIONumber::gpio298; //GPIO pin for the pin 21 on the J1 GPIO header
-const jetsonTX2GPIONumber FEEDBACK_PIN = jetsonTX2GPIONumber::gpio388; //GPIO pin for the pin ## on the J1 GPIO header
+const jetsonTX2GPIONumber FEEDBACK_PIN = jetsonTX2GPIONumber::gpio298; //GPIO pin for the pin ## on the J1 GPIO header
 int hw_version;
 
 /**
