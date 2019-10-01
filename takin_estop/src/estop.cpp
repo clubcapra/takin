@@ -54,7 +54,7 @@ void initializeGPIO() {
 int main(int argc, char **argv) {
     ros::init(argc, argv, "takin_estop");
     ros::NodeHandle nh;
-    ros::Publisher estop_status_pub = nh.advertise<std_msgs::Bool>("takin_estop_status", 1, bool latch = true);
+    ros::Publisher estop_status_pub = nh.advertise<std_msgs::Bool>("takin_estop_status", 1, true);
     initializeGPIO();
 
     ros::ServiceServer serviceEnable = nh.advertiseService("takin_estop_enable", toggleEstopEnable);
