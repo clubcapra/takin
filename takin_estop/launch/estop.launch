@@ -1,5 +1,5 @@
 <launch>
-    <arg name="hw" value="1"/>
+    <arg name="hw" default="1"/>
     <!-- Capra estop-->
     <node pkg="takin_estop" type="estop" name="estop" output="screen">
         <param name="hw_version" type="int" value="$(arg hw)" />

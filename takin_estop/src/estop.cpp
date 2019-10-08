@@ -32,7 +32,7 @@ bool toggleEstopDisable(std_srvs::Trigger::Request &req, std_srvs::Trigger::Resp
 
 void publishEstopStatus(ros::NodeHandle *nh, ros::Publisher *pub){
     unsigned int status;
-    jetsonTX2GPIONumber pin = nh->getParam("hw_version", hw_version) == 2 ? FEEDBACK_PIN : ESTOP_PIN;
+    jetsonTX2GPIONumber pin = nh->getParamCached("hw_version", hw_version) == 2 ? FEEDBACK_PIN : ESTOP_PIN;
 
     if (!gpioGetValue(pin, &status))
     {
@@ -64,8 +64,9 @@ int main(int argc, char **argv) {
     while (ros::ok())
     {
         publishEstopStatus(&nh, &estop_status_pub);
-        // ros::spin(); // Replaced by ros::Rate
-        r.sleep();
+        r.sleep(); // Might not be required, to be tested.
+        ros::spinOnce();
+        
     }
 
     return 0;
