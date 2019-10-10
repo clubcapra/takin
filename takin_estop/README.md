@@ -2,7 +2,7 @@
 ## Overview
 takin_estop is a simple node that provide a service to toggle on and off
  a logical estop. The program listen for service call and then turn on or 
- off the logical pin298 or the pin21 of the J1 header on the Jetson TX2.
+ off the logical pin389 or the pin21 of the J1 header on the Jetson TX2.
  <br/>
  <br/>
  The program use the library [https://github.com/MengHuanLee/jetsonTX2GPIO]
@@ -27,7 +27,16 @@ To the if the service is started you can use the `rosservice` tool to call
 the service and see if there's a response. The command is this :
 <br/>
 <br/>
-`rosservice call /takin_estop`
+`rosservice call /takin_estop_disable`
+
+`rosservice call /takin_estop_enable`
+
+The estop status is published at a rate of 60Hz on: 
+
+`rostopic echo /takin_estop_status`
+
+The publisher is setup to publish only the current status of the robot. This means that if the node can't access the gpio pin, it won't publish anything as the status would be undetermined.
+
 ## Troubleshooting
 If you're having issue with this package there might be two cause.
 1. The GPIO pins are having permissions issues. There's a script at this
@@ -36,7 +45,7 @@ to change the permission to fix this issue. Then try to restart the node
 to see if it worked.
 
 Also it is worth noting that there's a udev rules that configure the 
-initial permission parameter on the GPIO pin 298. This file can be found
+initial permission parameter on the GPIO pin 389. This file can be found
  in the gpio folder of this package. This file should be place inside 
  the /etc/udev/rules.d/ folder. 
  
