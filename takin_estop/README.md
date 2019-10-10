@@ -35,7 +35,7 @@ The estop status is published at a rate of 60Hz on:
 
 `rostopic echo /takin_estop_status`
 
-The publisher is setup to publish only the real value of the robot, this means that if the node can't access the gpio pin, it won't publish anything.
+The publisher is setup to publish only the current status of the robot. This means that if the node can't access the gpio pin, it won't publish anything as the status would be undetermined.
 
 ## Troubleshooting
 If you're having issue with this package there might be two cause.

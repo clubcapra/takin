@@ -64,9 +64,8 @@ int main(int argc, char **argv) {
     while (ros::ok())
     {
         publishEstopStatus(&nh, &estop_status_pub);
-        r.sleep(); // Might not be required, to be tested.
+        r.sleep();
         ros::spinOnce();
-        
     }
 
     return 0;
