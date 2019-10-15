@@ -10,7 +10,7 @@ Capra-Takin is a ROS-based solution for managing and operating Club Capra's resc
 
 ## Getting Started
 
-This section will help you get ready to work on the Takin project. It is supposed to give you the necessary information to understand ROS and how our projet is built. There's also documentation on how to launch and use our project.
+This section will help you get ready to work on the Takin project. It is supposed to give you the necessary information to understand ROS and how our project is built. There's also documentation on how to launch and use our project.
 
 ### ROS Documentation \ Tutorial
 
@@ -20,19 +20,19 @@ It is a requirement to understand the basics of ROS and Linux to be proficient i
 
 As an initiation task, we ask that you complete the series of tutorials offered by ROS : [http://wiki.ros.org/ROS/Tutorials](http://wiki.ros.org/ROS/Tutorials). It is generally advised to stop at the roswtf tutorial.
 
-<!-- No simulation for the moment therefore this section is useless -->
-<!-- It is also recommanded to be familiar with Gazebo which is the simulation suite used in our project. The tutorial for Gazebo can be find at : [http://gazebosim.org/](http://gazebosim.org/). If you're assigned to a projet that contain simulation, it would be highly advise to at some Gazebo tutorial such as :
+<!-- No simulation for the moment, therefore, this section is useless -->
+<!-- It is also recommended to be familiar with Gazebo which is the simulation suite used in our project. The tutorial for Gazebo can be found at : [http://gazebosim.org/](http://gazebosim.org/). If you're assigned to a project that contains simulation, it would be highly advised to look at some Gazebo tutorial such as :
  
 * Overview and Installation
 * Understanding the GUI
 * Model Editor
 * Building Editor
 
-Those can be find the beginner section of the guided tutorial.  -->
+Those can be found the beginner section of the guided tutorial.  -->
 
 ### Building our project
 
-To build the projet the first time, you need to execute the `install.sh` which will configure, compile and regenerate the necessary bindings to use ROS with our nodes. After that you'll be able to use `catkin_make` and source your build manually.
+To build the project the first time, you need to execute the `install.sh` which will configure, compile and regenerate the necessary bindings to use ROS with our nodes. After that, you'll be able to use `catkin_make` and source your build manually.
 
 Here are the steps to build our project : 
 
@@ -56,7 +56,7 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ### Executing a node
-There are two option to launch a node.
+There are two options to launch a node.
 - rosrun 
 - roslaunch
 
@@ -82,13 +82,13 @@ To debug a node the following options exits:
 
     | Issue | Command |
     |------|------|
-    | Check if the device is available on your computer. (Ex: `takin_estop` won't run on anything else than a Jetson TX2) | `lsusb` or `ls /sys/class/gpio` or specific to your hw | 
+    | Check if the device is available on your computer. (Ex: `takin_estop` won't run on anything else than a Jetson TX2) | `lsusb` or `ls /sys/class/gpio` or specific to your hardware | 
     | Check if you have the proper udev copied in your folder.| `ls /etc/udev/rules.d/` |
     
 
 ## Contibution 
 
-If you want to contribute to the projet, you can fork it and then PR to add or modify code. 
+If you want to contribute to the project, you can fork it and then PR to add or modify code. 
 
 ### Standard
 
