@@ -18,13 +18,9 @@
 	path = vectornav
 	url = https://github.com/clubcapra/vectornav.git
 	branch = master
-[submodule "capra_flir_lepton_ros"]
-	path = capra_flir_lepton_ros
-	url = https://github.com/clubcapra/capra_flir_lepton_ros
-	branch = master
 [submodule "ros_astra_camera"]
 	path = ros_astra_camera
-	url = https://github.com/clubcapra/ros_astra_camera.git
+	url = https://github.com/orbbec/ros_astra_camera.git
 [submodule "ros_astra_launch"]
 	path = ros_astra_launch
-	url = https://github.com/clubcapra/ros_astra_launch.git
+	url = https://github.com/orbbec/ros_astra_launch.git
